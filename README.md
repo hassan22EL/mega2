@@ -1,7 +1,7 @@
 to add module in project copy module from modul.h with in inc folder in res.h in application 
  application for example to add module twi 
  copy this block 
-
+```
 /*
 ----------------------------------------------------------------------------------------
 |                                <TWI MODULE>                                          | 
@@ -22,7 +22,8 @@ to add module in project copy module from modul.h with in inc folder in res.h in
 |                          : under test in slave mode                                  |   
 ----------------------------------------------------------------------------------------
  */
- ``` 
+ ```
+ ```
  #define  TWI_MODULE                                    (0)
 #if    TWI_MODULE
 #define             TWI_TYPE                                      TWI_MASTER
@@ -37,15 +38,13 @@ to add module in project copy module from modul.h with in inc folder in res.h in
 4- GPIO in all cases use this defintion in all other modules or used in your application 
 5- after finsh edit all paramter in modules don't forget the active module by set one 
 6- after complete please include the res.h in resourse .h 
-
+```
 /*
  ****************************************************
  *                    Modules                       *
  * **************************************************
  */
 //add  include the res.h in application 
-
-```
 #include "../../mega2.X/src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h"
 ```
 5
