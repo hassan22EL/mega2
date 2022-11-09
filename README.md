@@ -1,9 +1,10 @@
-#A- install lib in your porject \
+**A- install lib in your porject** \
  1- git clone https://github.com/hassan22EL/mega2.git \
  2- add inc files in headers file in your project \
  3- install lib by mega/dis/mega.a to add in lib in your project \
 
- #B-to add module in project copy module from modul.h within inc folder in res.h in application 
+ **B- install module** 
+ to add module in project copy module from modul.h within inc folder in res.h in application 
  for example to add module twi copy this block from module.h and pate into res.h in your application
 ```
 /*
@@ -81,4 +82,4 @@
 //add  include the res.h in application 
 #include "../../mega2.X/src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h"
 ```
-look example in each driver to how implement a app with mega
+**look example in each driver to how implement a app with mega**
