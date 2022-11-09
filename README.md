@@ -6,7 +6,7 @@
  **B- install module** 
  to add module in project copy module from modul.h within inc folder in res.h in application 
  for example to add module twi copy this block from module.h and pate into res.h in your application
-```
+```ruby
 /*
 ----------------------------------------------------------------------------------------
 |                                <TWI MODULE>                                          | 
@@ -42,7 +42,7 @@
 4- GPIO in all cases use this defintion in all other modules or used in your application \
 5- after finsh edit all paramter in modules don't forget the active module by set one complete \
 
-```
+```ruby
 /*
 ----------------------------------------------------------------------------------------
 |                                <TWI MODULE>                                          | 
@@ -73,7 +73,7 @@
 #endif
 ```
 6- after complete please include the res.h in resourse .h 
-```
+```ruby
 /*
  ****************************************************
  *                    Modules                       *
