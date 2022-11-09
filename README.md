@@ -1,6 +1,7 @@
 A- install lib in your porject \
- 1- 
- 2-
+ 1- git clone https://github.com/hassan22EL/mega2.git \
+ 2- add inc files in headers file in your project \
+ 3- install lib by mega/dis/mega.a to add in lib in your project \
 
  B-to add module in project copy module from modul.h within inc folder in res.h in application 
  for example to add module twi copy this block from module.h and pate into res.h in your application
@@ -34,12 +35,12 @@ A- install lib in your porject \
 #define            TWI_SDA_PIN                                    NOT_A_PIN
 #endif
 ```
-1- copy this block from module.h in res.h in your appliction 
-2- change paramter required such twi as master or slave or have internal pull up or not 
-3- in case pull up chang pins in GPIO_Px  ==> GPIO_A0 or GPIO_A1 P--> port name , x is pin number 
-4- GPIO in all cases use this defintion in all other modules or used in your application 
-5- after finsh edit all paramter in modules don't forget the active module by set one 
-complete 
+1- copy this block from module.h in res.h in your appliction \
+2- change paramter required such twi as master or slave or have internal pull up or not \
+3- in case pull up chang pins in GPIO_Px  ==> GPIO_A0 or GPIO_A1 P--> port name , x is pin number \
+4- GPIO in all cases use this defintion in all other modules or used in your application \
+5- after finsh edit all paramter in modules don't forget the active module by set one \
+complete \
 ```
 /*
 ----------------------------------------------------------------------------------------
