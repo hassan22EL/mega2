@@ -206,8 +206,8 @@ static inline void _exeepromAssignAddress(uint8_t *addressbuf, uint32_t address)
  | < @param  address    : start address of the communication                                            |
  | < @param  buf        : pointer of the data                                                           |
  | < @param  length     : total byte write                                                              |
- | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                |
- |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     |
+ | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                
+ |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromWriteBlock(uint32_t address, uint8_t *buf, uint8_t length);
@@ -221,8 +221,8 @@ static uint8_t __exeepromWriteBlock(uint32_t address, uint8_t *buf, uint8_t leng
  | < @param  address    : start address of the communication                                            |
  | < @param  buf        : pointer of the data                                                           |
  | < @param  length     : total byte write                                                              |
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                |
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     |
+ | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
+ |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromReadBlock(uint32_t address, uint8_t *buf, uint8_t length); /*used read data buffer*/
@@ -233,9 +233,9 @@ static uint8_t __exeepromReadBlock(uint32_t address, uint8_t *buf, uint8_t lengt
  --------------------------------------------------------------------------------------------------------
  | < @Function          : unsigned char  __exeepromWritePage                                            |
  | < @Description       : update block is a read data and compare with write data                       |
- *                      : if not equal is write data                                                    |                                                           |
- | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                |
- |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     |
+ *                      : if not equal is write data                                                    |                                                           
+ | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                
+ |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromWritePage(); /*write page*/
@@ -254,9 +254,9 @@ static uint8_t __exeepromWritePage(); /*write page*/
  | < @Description       : in first read current address with size of the data and                       |
                         : the data is different switch to second state to write this data               |
  |                      : in the current address with size specific after write complete                |
- |                      : can read the same data from same address to verifiy this data                 |                                                  |                                                           |
- | < @return            : ExEEPROM_UPDATE_SUCCESS  internal update is done                              |                                                |
- |                      : ExEEPROM_UPDATE_PROGRESS internal update in progress                          |                     |
+ |                      : can read the same data from same address to verifiy this data                 |                                                  
+ | < @return            : ExEEPROM_UPDATE_SUCCESS  internal update is done                              |                                                
+ |                      : ExEEPROM_UPDATE_PROGRESS internal update in progress                          |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromUpdateBlock();
@@ -267,9 +267,9 @@ static uint8_t __exeepromUpdateBlock();
  --------------------------------------------------------------------------------------------------------
  | < @Function          : unsigned char  exeepromReadBlock                                              |
  | < @Description       : this function read data with specific address and size and put into           |
- |                      : interanl read buffer                                                          |                                                          |
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                |
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     |
+ |                      : interanl read buffer                                                          |                                                          
+ | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
+ |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
  --------------------------------------------------------------------------------------------------------
  */
 
@@ -319,8 +319,8 @@ static inline void _exeepromAssignAddress(uint8_t *addressbuf, uint32_t address)
  | < @param  address    : start address of the communication                                            |
  | < @param  buf        : pointer of the data                                                           |
  | < @param  length     : total byte write                                                              |
- | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                |
- |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     |
+ | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                
+ |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromWriteBlock(uint32_t address, uint8_t *buf, uint8_t length) {/*used write data buffer*/
@@ -354,8 +354,8 @@ static uint8_t __exeepromWriteBlock(uint32_t address, uint8_t *buf, uint8_t leng
  | < @param  address    : start address of the communication                                            |
  | < @param  buf        : pointer of the data                                                           |
  | < @param  length     : total byte write                                                              |
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                |
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     |
+ | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
+ |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromReadBlock(uint32_t address, uint8_t *buf, uint8_t length) {/*used read data buffer*/
@@ -385,9 +385,9 @@ static uint8_t __exeepromReadBlock(uint32_t address, uint8_t *buf, uint8_t lengt
  --------------------------------------------------------------------------------------------------------
  | < @Function          : unsigned char  __exeepromWritePage                                            |
  | < @Description       : update block is a read data and compare with write data                       |
- *                      : if not equal is write data                                                    |                                                           |
- | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                |
- |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     |
+ *                      : if not equal is write data                                                    |                                                           
+ | < @return            : ExEEPROM_WRITE_SUCCESS  internal write is done                                |                                                
+ |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromWritePage() {/*write page*/
@@ -428,9 +428,9 @@ static uint8_t __exeepromWritePage() {/*write page*/
  | < @Description       : in first read current address with size of the data and                       |
                         : the data is different switch to second state to write this data               |
  |                      : in the current address with size specific after write complete                |
- |                      : can read the same data from same address to verifiy this data                 |                                                  |                                                           |
- | < @return            : ExEEPROM_UPDATE_SUCCESS  internal update is done                              |                                                |
- |                      : ExEEPROM_UPDATE_PROGRESS internal update in progress                          |                     |
+ |                      : can read the same data from same address to verifiy this data                 |                                                                                                             
+ | < @return            : ExEEPROM_UPDATE_SUCCESS  internal update is done                              |                                                
+ |                      : ExEEPROM_UPDATE_PROGRESS internal update in progress                          |                     
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromUpdateBlock() {
@@ -471,9 +471,9 @@ static uint8_t __exeepromUpdateBlock() {
  --------------------------------------------------------------------------------------------------------
  | < @Function          : unsigned char  exeepromReadBlock                                              |
  | < @Description       : this function read data with specific address and size and put into           |
- |                      : interanl read buffer                                                          |                                                          |
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                |
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     |
+ |                      : interanl read buffer                                                          |                                                          
+ | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
+ |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
  --------------------------------------------------------------------------------------------------------
  */
 
@@ -497,8 +497,7 @@ static uint8_t exeepromReadBlock() {
  |                            < exeepromReset  >                                                        |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void exeepromReset                                              |
- | < @Description       : in at24cxx is reset eeprom after power unstable to remove last operation      |                                                          |                                                          |
- | < @return            : void                                                                          |                     
+ | < @Description       : in at24cxx is reset eeprom after power unstable to remove last operation      |                                                          
  --------------------------------------------------------------------------------------------------------
  */
 
@@ -588,7 +587,7 @@ exEEPROM_desc.u8State.b4_5 = 1;
  | < @Description       : this function assignent data into ex-eeprom description                       |
  *                      : and enable update  function with update one byte                              |
  | < @param  address    : specefic address to write data with write one byte                            |
- | < @param  byte       : data write into ex-eeprom                                                     |                               |
+ | < @param  byte       : data write into ex-eeprom                                                     |                               
  | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
@@ -614,7 +613,7 @@ void exeepromWriteByte(uint32_t address, uint8_t byte) {
  | < @Description       : this function assignent data into ex-eeprom description                       |
  *                      : and enable read  fuction and after compelete the data found                   |
  *                      : in internal buffer with specefic length                                       |
- | < @param  address    : specefic address to write data witj specific size                             |                                         |
+ | < @param  address    : specefic address to write data witj specific size                             |                                         
  | < @param  length     : total number of bytes to read from ex-eeprom                                  |
  | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
@@ -665,7 +664,7 @@ void exeepromReadByte(uint32_t address) {
  |                      : switch state from wait state to read operation id done switch state           |
  |                      : form read to wait and same operation with update operation                    |
  |                      : and enable read  fuction and after compelete the data found                   |
- |                      : in internal buffer with specefic one byte                                     |                      |                     
+ |                      : in internal buffer with specefic one byte                                     |                                    
  | < @return            : void                                                                          |                    
  --------------------------------------------------------------------------------------------------------
  */
@@ -696,7 +695,7 @@ void exeepromDriver() {
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void  exeepromDriver                                                          |
  | < @Description       : assignment default values of the ex-eeprom after powr on and start            |
- |                      : application the data into Read buffer is start application is 0xFF            |                                   |                      |                     
+ |                      : application the data into Read buffer is start application is 0xFF            |                                                     
  | < @return            : void                                                                          |                    
  --------------------------------------------------------------------------------------------------------
  */
