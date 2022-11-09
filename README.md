@@ -39,8 +39,8 @@ A- install lib in your porject \
 2- change paramter required such twi as master or slave or have internal pull up or not \
 3- in case pull up chang pins in GPIO_Px  ==> GPIO_A0 or GPIO_A1 P--> port name , x is pin number \
 4- GPIO in all cases use this defintion in all other modules or used in your application \
-5- after finsh edit all paramter in modules don't forget the active module by set one \
-complete \
+5- after finsh edit all paramter in modules don't forget the active module by set one complete \
+
 ```
 /*
 ----------------------------------------------------------------------------------------
