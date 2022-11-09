@@ -1,7 +1,7 @@
 to add module in project copy module from modul.h with in inc folder in res.h in application 
  application for example to add module twi 
  copy this block 
- ```
+
 /*
 ----------------------------------------------------------------------------------------
 |                                <TWI MODULE>                                          | 
@@ -22,7 +22,7 @@ to add module in project copy module from modul.h with in inc folder in res.h in
 |                          : under test in slave mode                                  |   
 ----------------------------------------------------------------------------------------
  */
- 
+ ``` 
  #define  TWI_MODULE                                    (0)
 #if    TWI_MODULE
 #define             TWI_TYPE                                      TWI_MASTER
