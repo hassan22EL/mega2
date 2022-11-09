@@ -1,5 +1,6 @@
-A- install lib in your porject
+A- install lib in your porject \
  1- 
+ 2-
 
  B-to add module in project copy module from modul.h within inc folder in res.h in application 
  for example to add module twi copy this block from module.h and pate into res.h in your application
