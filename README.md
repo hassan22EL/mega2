@@ -1,7 +1,8 @@
-to add module in project copy module from modul.h with in inc folder in res.h in application 
- application for example to add module twi 
- copy this block 
- 
+A- install lib in your porject
+ 1- 
+
+ B-to add module in project copy module from modul.h within inc folder in res.h in application 
+ for example to add module twi copy this block from module.h and pate into res.h in your application
 ```
 /*
 ----------------------------------------------------------------------------------------
