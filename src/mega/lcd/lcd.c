@@ -278,7 +278,7 @@ static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos);
  |                                 < lcdInit >                                                          |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdInit                                                               |
- | < @Description       : write command to init in 4 bit mode or 8 bit mode or clear ,........etc       |                                                         |
+ | < @Description       : write command to init in 4 bit mode or 8 bit mode or clear ,........etc       |                                                         
  | < @return            : 0   init done                                                                 |
  | < @return            : 1   in progress                                                               |
  --------------------------------------------------------------------------------------------------------
@@ -290,9 +290,9 @@ static uint8_t lcdInit();
  |                                 < lcdUpdate >                                                        |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdUpdate                                                             |
- | < @Description       : write data from lcd buffer and commands required do this                      |                                                         |
- | < @return            : LCD_ERORR when lcd is not ready                                               |                    |
- | < @return            : LCD_SUCCSS when lcd is write buffer done                                      |                                                             |
+ | < @Description       : write data from lcd buffer and commands required do this                      |                                                         
+ | < @return            : LCD_ERORR when lcd is not ready                                               |                    
+ | < @return            : LCD_SUCCSS when lcd is write buffer done                                      |                                                             
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdUpdate();
@@ -343,8 +343,8 @@ static void lcdSend(uint8_t u8Data);
  |                                 < lcdReadByte >                                                      |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdReadByte                                                           |
- | < @Description       : write byte frome lcd                                                          |                                           |
- | < @return            : read byte                                                                     |                                                             |
+ | < @Description       : write byte frome lcd                                                          |                                           
+ | < @return            : read byte                                                                     |                                                             
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdReadByte();
@@ -353,8 +353,8 @@ static uint8_t lcdReadByte();
  |                                 < lcdSendCommdHigh >                                                 |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void lcdSendCommdHigh                                                         |
- | < @Description       : just write high nibble of the byte command                                    |                                           |
- | < @return            : void                                                                          |                                                             |
+ | < @Description       : just write high nibble of the byte command                                    |                                           
+ | < @return            : void                                                                          |                                                             
  --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendCommdHigh(uint8_t u8Data);
@@ -511,8 +511,8 @@ static void lcdSend(uint8_t u8Data) {
  |                                 < lcdReadByte >                                                      |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdReadByte                                                           |
- | < @Description       : write byte frome lcd                                                          |                                           |
- | < @return            : read byte                                                                     |                                                             |
+ | < @Description       : write byte frome lcd                                                          |                                           
+ | < @return            : read byte                                                                     |                                                             
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdReadByte() {
@@ -557,8 +557,8 @@ static uint8_t lcdReadByte() {
  |                                 < lcdSendCommdHigh >                                                 |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void lcdSendCommdHigh                                                         |
- | < @Description       : just write high nibble of the byte command                                    |                                           |
- | < @return            : void                                                                          |                                                             |
+ | < @Description       : just write high nibble of the byte command                                    |                                           
+ | < @return            : void                                                                          |                                                             
  --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendCommdHigh(uint8_t u8Data) {
@@ -575,9 +575,9 @@ static void lcdSendCommdHigh(uint8_t u8Data) {
  |                                 < lcdUpdate >                                                        |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdUpdate                                                             |
- | < @Description       : write data from lcd buffer and commands required do this                      |                                                         |
- | < @return            : LCD_ERORR when lcd is not ready                                               |                    |
- | < @return            : LCD_SUCCSS when lcd is write buffer done                                      |                                                             |
+ | < @Description       : write data from lcd buffer and commands required do this                      |                                                         
+ | < @return            : LCD_ERORR when lcd is not ready                                               |                    
+ | < @return            : LCD_SUCCSS when lcd is write buffer done                                      |                                                             
  --------------------------------------------------------------------------------------------------------
  */
 
@@ -641,7 +641,7 @@ static uint8_t lcdUpdate() {
  |                                 < lcdInit >                                                          |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdInit                                                               |
- | < @Description       : write command to init in 4 bit mode or 8 bit mode or clear ,........etc       |                                                         |
+ | < @Description       : write command to init in 4 bit mode or 8 bit mode or clear ,........etc       |                                                         
  | < @return            : 0   init done                                                                 |
  | < @return            : 1   in progress                                                               |
  --------------------------------------------------------------------------------------------------------
