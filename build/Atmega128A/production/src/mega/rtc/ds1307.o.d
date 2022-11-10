@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/rtc/ds1307.o.d \
  src/mega/rtc/../../../inc/mega/../resource.h \
  src/mega/rtc/../../../inc/mega/../mega.h \
  src/mega/rtc/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/rtc/../../../inc/mega/buffers.h \
  src/mega/rtc/../../../inc/mega/../mega.h \
@@ -78,9 +78,9 @@ src/mega/rtc/../../../inc/mega/../mega.h:
 
 src/mega/rtc/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
+d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

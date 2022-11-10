@@ -136,23 +136,25 @@
 #endif
 
 /* 
- * *********************************************************************************************************************************************
- *                             LCD option                                                                                                   *     
- * *********************************************************************************************************************************************
- * @LCD_MODULE              : 0 module is not active
- *                          : 1 module is active
- * @LCD_NUMBER_OF_LINE      : LCD has a number of line  shuc as 2 , 4 , , 3 ,..etc                                                                     * 
- * @LCD_NUMBER_OF_BYTE      : LCD number of char per line   16 char , 20 char , ......etc                                                                      *
- * @LCD_RW                  : read pin in gpio pin such as GPIO_A0                                                                                              *
- * @LCD_RS                  : RS   pin in gpio pin such as GPIO_A0     
- * @LCD_EN                  : Enable pin in gpio pin such as GPIO_A0 
- * @LCD_D4                  : Data  bit 4 in gpio pin such as GPIO_A0     
- * @LCD_D5                  : Data  bit 4 in gpio pin such as GPIO_A0    
- * @LCD_D6                  : Data  bit 4 in gpio pin such as GPIO_A0    
- * @LCD_D7                  : Data  bit 4 in gpio pin such as GPIO_A0                                                                            *
- ***********************************************************************************************************************************************
- */
-#define  LCD_MODULE             (0)
+ ------------------------------------------------------------------------------------------------
+ |                          < LCD MODULE                                                         |                                          *     
+ -------------------------------------------------------------------------------------------------
+ | < LCD_MODULE              : 0 module is not active                                            |
+ |                           : 1 module is active                                                |
+ | < LCD_NUMBER_OF_LINE      : LCD has a number of line  shuc as 2 , 4 , , 3 ,..etc              |                                                       * 
+ | < LCD_NUMBER_OF_BYTE      : LCD number of char per line   16 char , 20 char , ......etc       |                                                               *
+ | < LCD_RW                  : read pin in gpio pin such as GPIO_A0                              |                                                          
+ | < LCD_RS                  : RS   pin in gpio pin such as GPIO_A1                              |
+ | < LCD_EN                  : Enable pin in gpio pin such as GPIO_A2                            |
+ | < LCD_D4                  : Data  bit 4 in gpio pin such as GPIO_A3                           |
+ | < LCD_D5                  : Data  bit 4 in gpio pin such as GPIO_A4                           |
+ | < LCD_D6                  : Data  bit 4 in gpio pin such as GPIO_A5                           |
+ | < LCD_D7                  : Data  bit 4 in gpio pin such as GPIO_A6                           |
+ | < SRAM USAGE              : 8-Byte in default                                                 |  
+ | < PROGRAM USAGE           : 826 Byte (413 Instruction)   in Master mode                       |                              |                                                                           *
+ -------------------------------------------------------------------------------------------------
+ */ 
+#define  LCD_MODULE               (0)
 #if  LCD_MODULE
 #define  LCD_NUMBER_OF_LINE        (2)
 #define  LCD_NUMBER_OF_BYTE        (16)

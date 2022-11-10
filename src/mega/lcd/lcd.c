@@ -1,191 +1,187 @@
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   lcd.c
- * Author       :   Hassan Elsaied
- * Data Memory  :   number of line * number of char per line  +  4byte is default 2*16 +4 = 36Byte
- * Program Space:   under upgrade
- * Version      :   Mega2v241022
- * Start Data   :   24-10-2022  20:00:00
- * End Data     :   24-10-2022  23:48:00
- * Work Time    :   5-hour
- * Comments     :   no comment
+
+/*
+--------------------------------------------------------------------------------------------------
+|                           < Module  Definition >                                               | 
+--------------------------------------------------------------------------------------------------
+| < FILE                     : lcd.c                                                             |                                  
+| < Author                   : Hassan Elsaied                                                    |
+| < Version                  : Mega2v241022                                                      |
+| < Refences                 : https://www.sparkfun.com/datasheets/LCD/HD44780.pdf               |
+| < SRAM USAGE               : 40-Byte  (32 Byte buffer , 4 byte time out , 4 byte internal used |
+| < PROGRAM USAGE            : 1938 Byte (1908 byte (969 Instruction)) + 30 Byte custom char     |                                    
+| < Hardware Usage           : GPIO                                                              |
+| < File Created             : 24-10-2022                                                        |
+--------------------------------------------------------------------------------------------------
  */
 
 #include "../../../inc/mega.h"
 #if defined (LCD_MODULE)
 #if  LCD_MODULE 
-/* 
- * ******************************************************************************
- *                        Macro  Definition                                     *
- * ******************************************************************************
- */
 
-/* 
- * ******************************************************************************
- *                        LCD  Text Alignment                                     *
- * ******************************************************************************
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < Macro  Definition >                                                 |
+ -------------------------------------------------------------------------------------------------------
+ */
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               <LCD  Text Alignment>                                                 |
+ -------------------------------------------------------------------------------------------------------
+ | < discuss :  this micro is call in pos write buffer the data centered in lcd                        |
+ -------------------------------------------------------------------------------------------------------
  */
 
 #define  LCD_TEXT_CENTER         (0xFF)
-/* 
- * ******************************************************************************
- *                        LCD  Buffer Size                                     *
- * ******************************************************************************
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               <LCD  Buffer Size>                                                    |
+ -------------------------------------------------------------------------------------------------------
  */
 #define  LCD_SIZE              (LCD_NUMBER_OF_BYTE * LCD_NUMBER_OF_LINE)
-
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               <  LCD option flags  >                                                |
+ -------------------------------------------------------------------------------------------------------
+ | < macro  LCD_BLINK      : bit 0 is this bit 1 enable blink or 0 disable blink                       |        
+ | < macro  LCD_CUSOR      : bit 1 is this bit 1 enable cursor or 0 disable cursor                     |
+ | < macro  LCD_DISPLAY    : bit 2 is this bit 1 enable display or 0 disable display                   |
+ -------------------------------------------------------------------------------------------------------
 #define   LCD_BLINK           (0)
 #define   LCD_CUSOR           (1)
 #define   LCD_DISPLAY         (2)
 
-/* 
- * ******************************************************************************
- *                        LCD  MODES                                            *
- * ******************************************************************************
- */
 
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < LCD  MODES  >                                                       |
+ -------------------------------------------------------------------------------------------------------
+ | < macro  LCD_8BIT_MODE      : lcd work with 8 bit data                                              |        
+ | < macro  LCD_4BIT_MODE      : lcd work with 4 bit data                                              |
+ | < macro  LCD_NONINTERACTIVE : lcd read not active                                                   |
+ | < macro  LCD_INTERAVTIVE    : lcd read active                                                       |
+ -------------------------------------------------------------------------------------------------------
+ 
+ */
 
 #define  LCD_8BIT_MODE        (0x01)
 #define  LCD_4BIT_MODE        (0x02)
 #define  LCD_NONINTERACTIVE   (0x03)
 #define  LCD_INTERAVTIVE      (0x04)
-#define  LCD_COMMAND          (0x05)
-#define  LCD_DATA             (0x06)
 
-/* 
- * ******************************************************************************
- *                        LCD  Commands                                        *
- * ******************************************************************************
+
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < LCD  Commands>                                                      |
+ -------------------------------------------------------------------------------------------------------
  */
-/* 
- * ******************************************************************************
- *                        LCD 8Bit Commands                                    *
- * ******************************************************************************
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < LCD 8Bit Commands>                                                  |
+ -------------------------------------------------------------------------------------------------------
+ | < macro  LCD_8BIT_COMMAND            : lcd work with 8 bit data command                             |        
+ | < macro  LCD_8BIT_2LINE_COMMAND      : set number of line 2 and font 5*10 dot                       |
+ ------------------------------------------------------------------------------------------------------- 
  */
 
 #define LCD_8BIT_COMMAND                (0x30)
-#define LCD_8BIT_2LINE_COMMAND          (0x38)   /*set number of line 2 and font 5*10 dot */
+#define LCD_8BIT_2LINE_COMMAND          (0x38)   
 
-/* 
- * ******************************************************************************
- *                        LCD 4Bit Commands                                    *
- * ******************************************************************************
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < LCD 4Bit Commands>                                                  |
+ -------------------------------------------------------------------------------------------------------
+ | < macro  LCD_4BIT_COMMAND       : lcd work with 4 bit data command                                  |        
+ | < macro  LCD_2LINE_COMMAND      : set number of line 2 and font 5*10 dot                            |
+ ------------------------------------------------------------------------------------------------------- 
  */
+#define LCD_4BIT_COMMAND           (0x20) 
+#define LCD_2LINE_COMMAND          (0x28)   
 
-
-#define LCD_4BIT_COMMAND           (0x20)  /*set 4bit mode*/
-#define LCD_2LINE_COMMAND          (0x28)   /*set number of line 2 and font 5*10 dot */
-
-/* 
- * ******************************************************************************
- *                        LCD Display Commands                                    *
- * ******************************************************************************
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               <LCD Display Commands >                                               |
+ -------------------------------------------------------------------------------------------------------
+ | < macro  LCD_DISPLAY_ON_COMMAND       : display on command                                          |        
+ | < macro  LCD_DISPLAY_OFF_COMMAND      : display off command                                         |
+ | < macro  LCD_CLEAR_COMMAND            : lcd clear                                                   |
+ | < macro  LCD_ENTRY_SET                : lcd entery set data                                         |
+ ------------------------------------------------------------------------------------------------------- 
  */
 
 
 #define LCD_DISPLAY_ON_COMMAND     (0x0C)  /*display ON  */
-#define LCD_DISPLAY_OFF_COMMAND    (0x08) /*display off*/
+#define LCD_DISPLAY_OFF_COMMAND    (0x08)  /*display off*/
 #define LCD_CLEAR_COMMAND          (0x01)   /*clear data*/
 #define LCD_ENTRY_SET              (0x06)   
 
-/* 
- * ******************************************************************************
- *                        LCD CGRMA Commands                                    *
- * ******************************************************************************
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               <LCD CGRMA Commands >                                                 |
+ -------------------------------------------------------------------------------------------------------
+ | < macro  LCD_CGRAM_ADDRESS_CHECK       : check lcd is ready or not if not ready automatic re- init  |                                         
+ | < macro  LCD_CGRRAM_MODE               : write data into cgram                                      |
+ | < macro  LCD_DDRAM_MODE                : write data into ddram                                      |
+ ------------------------------------------------------------------------------------------------------- 
  */
-
 
 #define  LCD_CGRAM_ADDRESS_CHECK   (0x3F) /*last char in cgram*/
 #define  LCD_CGRRAM_MODE           (0x40)
 #define  LCD_DDRAM_MODE            (0x80)
 
-/* 
- * ******************************************************************************
- *                        LCD Timing                                            *
- * ******************************************************************************
- */
-
-
-#define LCD_TIMING_POWER_ON    (15) /*uint 15ms*/
-#define LCD_TIMING_8BIT_LONG   (5) /*uint 5ms*/
-#define LCD_TIMING_CLEAR_COMMAND   (3) /*uint 3ms*/
-#define LCD_OPERATION_TIME     (40) /*uint 40us*/
-
-
-
-
 
 /*
- * ***************************************************************************************
- *                               LCD state                                               *
- * ***************************************************************************************
- * @param  LCD_IN_PROGRESS  : lcd internal operation
- * @param  LCD_ERORR        : lcd hardware not ready
- * @param  LCD_SUCCSS       : lcd is done 
+ -------------------------------------------------------------------------------------------------------
+ |                               <LCD State>                                                           |
+ -------------------------------------------------------------------------------------------------------
+ | < macro  LCD_IN_PROGRESS  : lcd internal operation                                                  |
+ | < macro  LCD_ERORR        : lcd hardware not ready                                                  |
+ | < macro  LCD_SUCCSS       : lcd is done                                                             |
+ -------------------------------------------------------------------------------------------------------
  */
 
 #define LCD_IN_PROGRESS  0x02
 #define LCD_ERORR        0x01
 #define LCD_SUCCSS       0x00
 
-
-
-
-
 /*
- * ***************************************************************************************
- *                               set position                                            *
- * ***************************************************************************************
+ --------------------------------------------------------------------------------------------------------
+ |                                 < LCD Variables >                                                    |
+ --------------------------------------------------------------------------------------------------------
+ | < @var  gu8LcdOPtion         : enable or disable cursor ,enable or disable blink, display on or off  |
+ | < @var  gu8LcdBufferIndex    : LCD buffer index at write data into lcd                               |
+ | < @var  gu8LCDFlags          : LCD State                                                             |
+ | < @var  gu8LCDPosition       : indicator cursor position and blank position when update lcd          |
+ --------------------------------------------------------------------------------------------------------
  */
-
+static volatile uint8_t gu8LcdOPtion;
+static volatile uint8_t gu8LcdBufferIndex;
+static volatile byte_Flags_t gu8LCDFlags;
 static volatile uint8_t gu8LCDPosition;
 /*
- * ***************************************************************************************
- *                               set LCD Buffer                                            *
- * ***************************************************************************************
- * LCD Size = LCD number of line * lcd number of char per line
+ --------------------------------------------------------------------------------------------------------
+ |                              < LCD Buffer >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @LCD Size   : LCD number of line * lcd number of char per line                                     |
+ --------------------------------------------------------------------------------------------------------
  */
 
 static volatile uint8_t gu8LCDBuffer[LCD_SIZE];
+
 /*
- * ***************************************************************************************
- *                               gu8LcdOPtion                                             *
- * ***************************************************************************************
- * option 
- * 1- enable or disable cursor 
- * 2- enable or disable blink
- * 3- display on or off 
+ --------------------------------------------------------------------------------------------------------
+ |                                 <  LCD Time OUT  >                                                    |
+ --------------------------------------------------------------------------------------------------------
  */
-static volatile uint8_t gu8LcdOPtion;
-/*
- * ***************************************************************************************
- *                              gu8LcdBufferIndex                                            *
- * ***************************************************************************************
- * Index to write current byte from buffer
- */
-static volatile uint8_t gu8LcdBufferIndex;
-/*
- * ***************************************************************************************
- *                              gu8LCDError                                            *
- * ***************************************************************************************
- * generate error when lcd is not ready
- * 
- */
-static volatile byte_Flags_t gu8LCDFlags;
-/*
- * ***************************************************************************************
- *                              lcd time out                                             *
- * ***************************************************************************************/
+
 static stTimer_TimeOut_t gsLCDTimer;
 
 /*
- * ***************************************************************************************
- *                              custome char tables                                            *
- * ***************************************************************************************
- * generate error when lcd is not ready
+ --------------------------------------------------------------------------------------------------------
+ |                                 <  custome char tables >                                             |
+ --------------------------------------------------------------------------------------------------------
  */
+
+
 static const uint8_t PROGMEM CGRAM_ZERO[] = {
     0b11111,
     0b00000,
@@ -206,7 +202,7 @@ static const uint8_t PROGMEM CGRAM_ONE[] = {
     0b10000,
     0b11111
 };
-static const  PROGMEM uint8_t CGRAM_TWO[] = {
+static const PROGMEM uint8_t CGRAM_TWO[] = {
     0b11111,
     0b11000,
     0b11000,
@@ -216,7 +212,7 @@ static const  PROGMEM uint8_t CGRAM_TWO[] = {
     0b11000,
     0b11111
 };
-static const  PROGMEM uint8_t CGRAM_THREE[] = {
+static const PROGMEM uint8_t CGRAM_THREE[] = {
     0b11111,
     0b11100,
     0b11100,
@@ -248,84 +244,182 @@ static const uint8_t PROGMEM CGRAM_FIVE[] = {
 };
 
 
+
 /*
- * *******************************************************************
- *                               lcdInit                             *
- * *******************************************************************
- * @benfit                 : write command to init in 4 bit mode or 8 bit mode or clear ,........etc
- * @return                 : 0  when init done 
- *                         : 1 when init in progress
- * 
+ --------------------------------------------------------------------------------------------------------
+ |                                 < Basic Function Definition >                                        |
+ --------------------------------------------------------------------------------------------------------
+ */
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < Pulse_En >                                                         |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  Pulse_En                                                                |
+ | < @Description       : pulse to write any data in lcd                                                |                   
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static inline void Pulse_En();
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdPosToAddress >                                                  |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdPosToAddress                                                       |
+ | < @Description       : convert line number and position to lcd ram address to read or write          |
+ | < @Param line        : specific line x and x from 0 to max line per lcd                              |
+ | < @Param u8pos       : specific char (y) in line and                                                 |                   
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdInit >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdInit                                                               |
+ | < @Description       : write command to init in 4 bit mode or 8 bit mode or clear ,........etc       |                                                         |
+ | < @return            : 0   init done                                                                 |
+ | < @return            : 1   in progress                                                               |
+ --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdInit();
 
 /*
- * ***************************************************************************************
- *                               lcdUpdate                                               *
- * ***************************************************************************************
- * @benfit                 : write data from lcd buffer and commands required do this 
- * @return                 : LCD_ERORR when lcd is not ready   or
- *                         : LCD_SUCCSS when lcd is write buffer done
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdUpdate >                                                        |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdUpdate                                                             |
+ | < @Description       : write data from lcd buffer and commands required do this                      |                                                         |
+ | < @return            : LCD_ERORR when lcd is not ready                                               |                    |
+ | < @return            : LCD_SUCCSS when lcd is write buffer done                                      |                                                             |
+ --------------------------------------------------------------------------------------------------------
  */
-
 static uint8_t lcdUpdate();
 /*
- * *******************************************************************
- *                               lcdWaitBusy                         *
- * *******************************************************************
- * @benfit                 : check lcd is busy by read two nibble of the lcd 
- *                         : the last bit in high nibble is stste of the lcd when high the lcd is busy else lcd ready
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdWaitBusy >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdWaitBusy                                                             |
+ | < @Description       : check lcd is busy by read two nibble of the lcd the last bit in high nibble   |
+ |                      : is state  of the lcd when high the lcd is busy else lcd ready                 |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdWaitBusy();
 /*
- * *******************************************************************
- *                               lcdSendCommand                      *
- * *******************************************************************
- * @benfit                 : write data into lcd with RS is enable high
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSendByte >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdSendByte                                                             |
+ | < @Description       : write data into lcd with RS is enable high                                    |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendByte(uint8_t u8Byte);
 /*
- * *******************************************************************
- *                               lcdSendCommand                      *
- * *******************************************************************
- * @benfit                 : write command into lcd with RS is enable low
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSendCommand >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdSendCommand                                                          |
+ | < @Description       : write command into lcd with RS is enable low                                  |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendCommand(uint8_t u8Cmd);
 /*
- * *******************************************************************
- *                               lcdSend                             *
- * *******************************************************************
- * @benfit                 : write data into lcd no rs is active this function share with write command and data
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSend >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdSend                                                                 |
+ | < @Description       : write data into lcd no rs is active this                                      |
+ |                       : Function share with write command and data                                   |                      
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSend(uint8_t u8Data);
 /*
- * *******************************************************************
- *                               lcdReadByte                             *
- * *******************************************************************
- * @benfit                 : write byte frome lcd
- * @return                 : read byte
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdReadByte >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdReadByte                                                           |
+ | < @Description       : write byte frome lcd                                                          |                                           |
+ | < @return            : read byte                                                                     |                                                             |
+ --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdReadByte();
 /*
- * *******************************************************************
- *                               lcdSendCommdHigh                             *
- * *******************************************************************
- * @benfit                 : just write high nibble of the byte command
- * @return                 :void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSendCommdHigh >                                                 |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdSendCommdHigh                                                         |
+ | < @Description       : just write high nibble of the byte command                                    |                                           |
+ | < @return            : void                                                                          |                                                             |
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendCommdHigh(uint8_t u8Data);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < Basic Function Implementions >                                     |
+ --------------------------------------------------------------------------------------------------------
+ */
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < Pulse_En >                                                         |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  Pulse_En                                                                |
+ | < @Description       : pulse to write any data in lcd                                                |                   
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+
+static inline void Pulse_En() __attribute__((always_inline, unused));
+
+static inline void Pulse_En() {
+    digitalPinWrite(LCD_EN, GPIO_HIGH);
+    digitalPinWrite(LCD_EN, GPIO_LOW);
+
+}
 
 /*
- * *******************************************************************
- *                               lcdWaitBusy                         *
- * *******************************************************************
- * @benfit                 : check lcd is busy by read two nibble of the lcd 
- *                         : the last bit in high nibble is stste of the lcd when high the lcd is busy else lcd ready
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdPosToAddress >                                                  |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdPosToAddress                                                       |
+ | < @Description       : convert line number and position to lcd ram address to read or write          |
+ | < @Param line        : specific line x and x from 0 to max line per lcd                              |
+ | < @Param u8pos       : specific char (y) in line and                                                 |                   
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+
+static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos) __attribute__((always_inline, unused));
+
+static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos) {
+    uint8_t u8Address;
+    u8pos &= 0x3F;
+    u8line &= 0x03;
+    if (u8line == 3) {
+        u8Address = ((LCD_LINE1_START + (LCD_NUMBER_OF_BYTE)) + u8pos);
+    } else if (u8line == 2) {
+        u8Address = ((LCD_LINE0_START + (LCD_NUMBER_OF_BYTE)) + u8pos);
+    } else if (u8line == 1) {
+        u8Address = ((LCD_LINE1_START) + u8pos);
+    } else {
+        u8Address = ((LCD_LINE0_START) + u8pos);
+    }
+    return (u8Address);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdWaitBusy >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdWaitBusy                                                             |
+ | < @Description       : check lcd is busy by read two nibble of the lcd the last bit in high nibble   |
+ |                      : is state  of the lcd when high the lcd is busy else lcd ready                 |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdWaitBusy() {
     uint8_t state;
@@ -359,11 +453,13 @@ static void lcdWaitBusy() {
 }
 
 /*
- * *******************************************************************
- *                               lcdSendCommand                      *
- * *******************************************************************
- * @benfit                 : write data into lcd with RS is enable high
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSendByte >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdSendByte                                                             |
+ | < @Description       : write data into lcd with RS is enable high                                    |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendByte(uint8_t u8Byte) {
     lcdWaitBusy();
@@ -372,11 +468,13 @@ static void lcdSendByte(uint8_t u8Byte) {
 }
 
 /*
- * *******************************************************************
- *                               lcdSendCommand                      *
- * *******************************************************************
- * @benfit                 : write command into lcd with RS is enable low
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSendCommand >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdSendCommand                                                          |
+ | < @Description       : write command into lcd with RS is enable low                                  |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendCommand(uint8_t u8Cmd) {
     lcdWaitBusy();
@@ -385,11 +483,14 @@ static void lcdSendCommand(uint8_t u8Cmd) {
 }
 
 /*
- * *******************************************************************
- *                               lcdSend                             *
- * *******************************************************************
- * @benfit                 : write data into lcd no rs is active this function share with write command and data
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSend >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  lcdSend                                                                 |
+ | < @Description       : write data into lcd no rs is active this                                      |
+                        : Function share with write command and data                                    |                      
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSend(uint8_t u8Data) {
     /*total time 8u = 800ns *4 + 1300ns  + 800ns *4 + 1300ns = 8000ns = */
@@ -406,11 +507,13 @@ static void lcdSend(uint8_t u8Data) {
 }
 
 /*
- * *******************************************************************
- *                               lcdReadByte                             *
- * *******************************************************************
- * @benfit                 : write byte frome lcd
- * @return                 : read byte
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdReadByte >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdReadByte                                                           |
+ | < @Description       : write byte frome lcd                                                          |                                           |
+ | < @return            : read byte                                                                     |                                                             |
+ --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdReadByte() {
     uint8_t u8Byte;
@@ -450,11 +553,13 @@ static uint8_t lcdReadByte() {
 }
 
 /*
- * *******************************************************************
- *                               lcdSendCommdHigh                             *
- * *******************************************************************
- * @benfit                 : just write high nibble of the byte command
- * @return                 :void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdSendCommdHigh >                                                 |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdSendCommdHigh                                                         |
+ | < @Description       : just write high nibble of the byte command                                    |                                           |
+ | < @return            : void                                                                          |                                                             |
+ --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendCommdHigh(uint8_t u8Data) {
     digitalPinWrite(LCD_RS, GPIO_LOW);
@@ -466,12 +571,14 @@ static void lcdSendCommdHigh(uint8_t u8Data) {
 }
 
 /*
- * ***************************************************************************************
- *                               lcdUpdate                                               *
- * ***************************************************************************************
- * @benfit                 : write data from lcd buffer and commands required do this 
- * @return                 : LCD_ERORR when lcd is not ready   or
- *                         : LCD_SUCCSS when lcd is write buffer done
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdUpdate >                                                        |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdUpdate                                                             |
+ | < @Description       : write data from lcd buffer and commands required do this                      |                                                         |
+ | < @return            : LCD_ERORR when lcd is not ready                                               |                    |
+ | < @return            : LCD_SUCCSS when lcd is write buffer done                                      |                                                             |
+ --------------------------------------------------------------------------------------------------------
  */
 
 static uint8_t lcdUpdate() {
@@ -530,12 +637,14 @@ static uint8_t lcdUpdate() {
 }
 
 /*
- * *******************************************************************
- *                               lcdInit                             *
- * *******************************************************************
- * @benfit                 : write command to init in 4 bit mode or 8 bit mode or clear ,........etc
- * @return                 : 0 : init done
- *                         : 1 in progress
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdInit >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdInit                                                               |
+ | < @Description       : write command to init in 4 bit mode or 8 bit mode or clear ,........etc       |                                                         |
+ | < @return            : 0   init done                                                                 |
+ | < @return            : 1   in progress                                                               |
+ --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdInit() {
 
@@ -596,14 +705,84 @@ static uint8_t lcdInit() {
     return (1);
 }
 
+
 /*
- * *******************************************************************
- *                               lcdHwInit                           *
- * *******************************************************************
- * @benfit                 : lcd  hardware init such gpio pins a
- * @return                 : void
+--------------------------------------------------------------------------------------------------
+|                           < user Functions >                                                   | 
+--------------------------------------------------------------------------------------------------
  */
 
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdNoBlink  >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdNoBlink                                                               |
+ | < @Description       : lcd stop blink                                                                |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+inline void lcdNoBlink() {
+    bitClear(gu8LcdOPtion, LCD_BLINK);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdBlink  >                                                        |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdBlink                                                                 |
+ | < @Description       : lcd enable blink in position x ,y                                             |
+ | < @Param u8line      : enable blink in specific line x and x from 0 to max line per lcd              |
+ | < @Param u8pos       : enable blink in specific char (y) in line and                                 |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+
+void inline lcdBlink(uint8_t u8line, uint8_t u8pos) {
+    gu8LCDPosition = lcdPosToAddress(u8line, u8pos);
+    bitSet(gu8LcdOPtion, LCD_BLINK);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdNoCursor  >                                                     |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdNoCursor                                                              |
+ | < @Description       : lcd stop cursor                                                               |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+inline void lcdNoCursor() {
+    bitClear(gu8LcdOPtion, LCD_CUSOR);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdCursor  >                                                       |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdCursor                                                                |
+ | < @Description       : lcd enable blink in position x ,y                                             |
+ | < @Param  u8line     : enable cursor in specific line x and x from 0 to max line per lcd             |
+ | < @Param  u8Pos      : enable cursor in specific char (y) in line and                                |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+
+inline void lcdCursor(uint8_t u8line, uint8_t u8pos) {
+    gu8LCDPosition = lcdPosToAddress(u8line, u8pos);
+    bitSet(gu8LcdOPtion, LCD_CUSOR);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdHwInit  >                                                       |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdHwInit                                                                |
+ | < @Description       : lcd gpio pin init a mode input or out  or ... etc                             |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
 void lcdHwInit() {
     /*4 bit mode*/
     gu8LCDFlags.byte = 0x00;
@@ -626,67 +805,17 @@ void lcdHwInit() {
 }
 
 /*
- * *******************************************************************
- *                               lcdNoBlink                           *
- * *******************************************************************
- * @benfit                 : lcd stop blink
- * @return                 : void
- */
-
-void lcdNoBlink() {
-    bitClear(gu8LcdOPtion, LCD_BLINK);
-}
-
-/*
- * *******************************************************************
- *                               lcdNoBlink                           *
- * *******************************************************************
- * @benfit                 : lcd enable blink in position x,y 
- * @param line             : line number 0 or 1 or 2 or ........etc 
- * @param u8pos            : pos char of in the line char 0 or 1 or .........etc
- * @return                 : void
- */
-void lcdBlink(uint8_t u8line, uint8_t u8pos) {
-    gu8LCDPosition = lcdPosToAddress(u8line, u8pos);
-    bitSet(gu8LcdOPtion, LCD_BLINK);
-}
-
-/*
- * *******************************************************************
- *                               lcdNoCursor                           *
- * *******************************************************************
- * @benfit                 : lcd stop cursor
- * @return                 : void
- */
-
-
-void lcdNoCursor() {
-    bitClear(gu8LcdOPtion, LCD_CUSOR);
-}
-
-/*
- * *******************************************************************
- *                               lcdCursor                           *
- * *******************************************************************
- * @benfit                 : lcd enable cursor in position x,y 
- * @param line             : line number 0 or 1 or 2 or ........etc 
- * @param u8pos            : pos char of in the line char 0 or 1 or .........etc
- * @return                 : void
- */
-void lcdCursor(uint8_t u8line, uint8_t u8pos) {
-    gu8LCDPosition = lcdPosToAddress(u8line, u8pos);
-    bitSet(gu8LcdOPtion, LCD_CUSOR);
-}
-
-/*
- * *******************************************************************
- *                               lcdwrite                           *
- * *******************************************************************
- * @benfit                 : write data into buffer with select position
- * param line              : line number 0 or 1 or 2 or ........etc 
- * @param pos              : start pos  of  the string in the line char 0 or 1 or .........etc
- * string                  : pointer to string to write into buffer
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdwrite >                                                         |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdwrite                                                                 |
+ | < @Description       : write data into buffer with select position                                   |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
+ | < @Param  pos        : write in specific char (y) in line and                                        |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @Param string      : data put into lcd buffer                                                      |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
  */
 
 void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
@@ -702,14 +831,19 @@ void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
 }
 
 /*
- * *******************************************************************
- *                               lcdIsCurrentNumber                  *
- * *******************************************************************
- * @benfit                 : check is specific position is a number or not into buffer
- * @param line             : line number 0 or 1 or 2 or ........etc 
- * @param pos              : start pos  of  the char in the line char 0 or 1 or .........etc
- * @return                 : 0 is buffer not contains a number in position and  1 if the position is a number
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdIsCurrentNumber >                                               |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdIsCurrentNumber                                                    |
+ | < @Description       : check is specific position is a number or not into buffer                     |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
+ | < @Param  pos        : write in specific char (y) in line and                                        |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @return            : 0  is buffer not contains a number in position and                            |
+ |                      : 1 if the position is a number                                                 |                         |
+ --------------------------------------------------------------------------------------------------------
  */
+
 uint8_t lcdIsCurrentNumber(uint8_t line, uint8_t pos) {
     uint8_t newPos;
     newPos = line * LCD_NUMBER_OF_BYTE + pos;
@@ -719,15 +853,16 @@ uint8_t lcdIsCurrentNumber(uint8_t line, uint8_t pos) {
 }
 
 /*
- * *******************************************************************
- *                              lcdCreateChar                        *
- * *******************************************************************
- * @benfit                 : create custom char into lcd 
- * @param u8location       : the address of the custome char to be create
- * @pu8Data                 : pointer to data of the char 
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdCreateChar >                                                    |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdCreateChar                                                            |
+ | < @Description       : create custom char into lcd                                                   |
+ | < @Param  u8location : write in specific location x in memory                                        |
+ | < @Param  pu8Data    : pointer of the data created                                                   |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
  */
-
 void lcdCreateChar(uint8_t u8location, const uint8_t *pu8Data) {
     u8location &= 0x07;
     u8location *= 8;
@@ -740,16 +875,18 @@ void lcdCreateChar(uint8_t u8location, const uint8_t *pu8Data) {
 }
 
 /*
- * *******************************************************************
- *                               lcdwrite                           *
- * *******************************************************************
- * @benfit                 : write address of the custom char  into buffer with select position
- * @param line              : line number 0 or 1 or 2 or ........etc 
- * @param pos              : start pos  of  the custome char  in the line char 0 or 1 or .........etc
- * index                   : address of char  to write into buffer
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdwrite >                                                         |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdwrite                                                                 |
+ | < @Description       :  write address of the custom char  into buffer                                |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
+ | < @Param  pos        : write in specific char (y) in line and                                        |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @param index       : address of char  to write into buffer                                         |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
  */
-
 void lcdwriteCGRAM(uint8_t line, uint8_t pos, uint8_t index) {
     uint8_t newPos;
     newPos = line * LCD_NUMBER_OF_BYTE + pos;
@@ -758,15 +895,19 @@ void lcdwriteCGRAM(uint8_t line, uint8_t pos, uint8_t index) {
 }
 
 /*
- * *********************************************************************************************************************
- *                               getlcdData                                                                            *
- * *********************************************************************************************************************
- * @benfit                 : get data frome lcd buffer start form pos as assignment into pointer of the string read 
- *                         : and max length data to be get is max size of the data pointer can to be read
- * @param str               : pointer to assignment data read from buffer
- * @param line             : line number 0 or 1 or 2 or ........etc 
- * @param pos              : start pos  into buffer to be read  in the line char 0 or 1 or .........etc
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < getlcdData >                                                       |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void getlcdData                                                               |
+ | < @Description       : get data frome lcd buffer start form pos                                      |
+ |                      : assignment into pointer of the string read and max length data to be get is   |
+ |                      : max size of the data pointer can to be read                                   |
+ | < @Param  str        : pointer to assignment data read from buffer                                   |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
+ | < @Param  pos        : write in specific char (y) in line and                                        |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
  */
 void getlcdData(char *str, uint8_t line, uint8_t pos) {
     uint8_t i, u8count;
@@ -782,15 +923,18 @@ void getlcdData(char *str, uint8_t line, uint8_t pos) {
 }
 
 /*
- * *******************************************************************
- *                               lcdClearlines                           *
- * *******************************************************************
- * @benfit                 : lcd can be clear a line into lcd buffer by write 0x20 into the buffer from address of the start line
- *                         :  0 or 1 or ..etc to end address of the line address dependent of number of char into line 
- * @param from             : start address of line  0 or 1 or ...........etc
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdClearlines >                                                    |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdClearlines                                                            |
+ | < @Description       : lcd can be clear a line into lcd buffer by write 0x20 into the buffer         |
+ |                      : from address of the start line 0 or 1 or ..etc to end address of the line     |
+ |                      : address dependent of number of char into line                                 |                                |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
  */
-
 void lcdClearlines(uint8_t from) {
     for (uint8_t i = from * LCD_NUMBER_OF_BYTE; i < LCD_SIZE; i++) {
         gu8LCDBuffer[i] = 0x20;
@@ -799,12 +943,14 @@ void lcdClearlines(uint8_t from) {
 }
 
 /*
- * ***************************************************************************************************************
- *                                lcdClearlines                                                                   *
- * ***************************************************************************************************************
- * @benfit                 : lcd can be clear a buffer for all lines into lcd by write 0x20 into the buffer
- *                         : from address of the  line 0 to line n  
- * @return                 : void
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdClear >                                                         |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdClear                                                                 |
+ | < @Description       : lcd can be  for all lines into lcd by write 0x20 into the buffer              |
+ |                      : from address of the start line 0  to end address of the line                  |         
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
  */
 void lcdClear() {
     for (uint8_t j = 0; j < LCD_SIZE; j++) {
@@ -813,11 +959,14 @@ void lcdClear() {
     gu8LCDFlags.b5 = 1;
 }
 
-/* ***************************************************************************************************************
- *                                Lcd Driver                                                                  *
- * ***************************************************************************************************************
- * @benfit                 : run at back ground of the system if is error or success run user 
- * @return                 : void
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdDriver >                                                        |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void Driver                                                                   |
+ | < @Description       : run in background to write data from buffer into lcd                          |      
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
  */
 
 void lcdDriver() {
@@ -837,13 +986,15 @@ void lcdDriver() {
     }
 }
 
-/* ***************************************************************************************************************
- *                                 lcdIsBusy                                                                  *
- * ***************************************************************************************************************
- * @benfit                 : check lcd  is ready to write new data or not
- * @return                 : 0 when  lcd is ready or 1 lcd has not ready
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdIsBusy >                                                        |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t lcdIsBusy                                                             |
+ | < @Description       : check lcd is ready to write new data or not                                   |        
+ | < @return            : LCD_SUCCESS when  lcd is ready and other case lcd has not ready               |                                                                       |
+ --------------------------------------------------------------------------------------------------------
  */
-
 uint8_t lcdIsBusy() {
     return (gu8LCDFlags.b5);
 }

@@ -13,8 +13,8 @@ build/Atmega128A/production/src/mega.o.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  src/../inc/mega/clock.h src/../inc/mega/../resource.h \
  src/../inc/mega/../mega.h src/../inc/mega/../resource.h \
- src/../inc/mega/../../../mega2.X/src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h \
- src/../inc/mega/../../../mega2.X/src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h \
+ src/../inc/mega/../../../NurseMaster.X/inc/res.h \
+ src/../inc/mega/../../../NurseMaster.X/inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/../inc/mega/buffers.h src/../inc/mega/../mega.h \
  src/../inc/resource.h src/../inc/mega/macros.h src/../inc/mega/types.h \
@@ -66,9 +66,9 @@ src/../inc/mega/../mega.h:
 
 src/../inc/mega/../resource.h:
 
-src/../inc/mega/../../../mega2.X/src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h:
+src/../inc/mega/../../../NurseMaster.X/inc/res.h:
 
-src/../inc/mega/../../../mega2.X/src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h:
+src/../inc/mega/../../../NurseMaster.X/inc/appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

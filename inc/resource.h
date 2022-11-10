@@ -45,7 +45,7 @@
 //add  include the res.h in application 
 
 
-#include "../../mega2.X/src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h"
+#include "../../NurseMaster.X/inc/res.h"
 
 #endif
 

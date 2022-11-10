@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  src/mega/lcd/../../../inc/mega/../resource.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
  src/mega/lcd/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/lcd/../../../inc/mega/buffers.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
@@ -78,9 +78,9 @@ src/mega/lcd/../../../inc/mega/../mega.h:
 
 src/mega/lcd/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
+d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
