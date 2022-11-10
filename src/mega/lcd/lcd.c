@@ -929,7 +929,7 @@ void getlcdData(char *str, uint8_t line, uint8_t pos) {
  | < @Function          : void lcdClearlines                                                            |
  | < @Description       : lcd can be clear a line into lcd buffer by write 0x20 into the buffer         |
  |                      : from address of the start line 0 or 1 or ..etc to end address of the line     |
- |                      : address dependent of number of char into line                                 |                                |
+ |                      : address dependent of number of char into line                                 |                                
  | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
  |                      : y is 0 to max number of byte per line                                         |
  | < @return            : void                                                                          |
