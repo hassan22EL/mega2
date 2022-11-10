@@ -840,7 +840,7 @@ void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
  | < @Param  pos        : write in specific char (y) in line and                                        |
  |                      : y is 0 to max number of byte per line                                         |
  | < @return            : 0  is buffer not contains a number in position and                            |
- |                      : 1 if the position is a number                                                 |                         |
+ |                      : 1 if the position is a number                                                 |                         
  --------------------------------------------------------------------------------------------------------
  */
 
