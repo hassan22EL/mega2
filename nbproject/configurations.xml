@@ -41,6 +41,44 @@
           <logicalFolder name="cmsa" displayName="cmsa" projectFiles="true">
             <itemPath>src/mega/cmsa/csma.c</itemPath>
           </logicalFolder>
+          <logicalFolder name="ds1307" displayName="ds1307" projectFiles="true">
+            <logicalFolder name="example" displayName="example" projectFiles="true">
+              <logicalFolder name="ds1307.X" displayName="ds1307.X" projectFiles="true">
+                <logicalFolder name="debug" displayName="debug" projectFiles="true">
+                  <logicalFolder name="ATmega128" displayName="ATmega128" projectFiles="true">
+                  </logicalFolder>
+                  <logicalFolder name="ATmega328" displayName="ATmega328" projectFiles="true">
+                  </logicalFolder>
+                  <logicalFolder name="Atmega8" displayName="Atmega8" projectFiles="true">
+                  </logicalFolder>
+                  <logicalFolder name="default" displayName="default" projectFiles="true">
+                  </logicalFolder>
+                </logicalFolder>
+                <logicalFolder name="dist" displayName="dist" projectFiles="true">
+                  <logicalFolder name="ATmega128" displayName="ATmega128" projectFiles="true">
+                    <logicalFolder name="production" displayName="production" projectFiles="true">
+                    </logicalFolder>
+                  </logicalFolder>
+                  <logicalFolder name="ATmega328" displayName="ATmega328" projectFiles="true">
+                    <logicalFolder name="production" displayName="production" projectFiles="true">
+                    </logicalFolder>
+                  </logicalFolder>
+                  <logicalFolder name="Atmega8" displayName="Atmega8" projectFiles="true">
+                    <logicalFolder name="production" displayName="production" projectFiles="true">
+                    </logicalFolder>
+                  </logicalFolder>
+                </logicalFolder>
+                <logicalFolder name="inc" displayName="inc" projectFiles="true">
+                </logicalFolder>
+                <logicalFolder name="lib" displayName="lib" projectFiles="true">
+                </logicalFolder>
+                <logicalFolder name="src" displayName="src" projectFiles="true">
+                  <itemPath>src/mega/ds1307/example/ds1307.X/src/app.c</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+            </logicalFolder>
+            <itemPath>src/mega/ds1307/ds1307.c</itemPath>
+          </logicalFolder>
           <logicalFolder name="exeeprom" displayName="exeeprom" projectFiles="true">
             <logicalFolder name="examples" displayName="examples" projectFiles="true">
             </logicalFolder>
@@ -56,9 +94,6 @@
           </logicalFolder>
           <logicalFolder name="lcd" displayName="lcd" projectFiles="true">
             <itemPath>src/mega/lcd/lcd.c</itemPath>
-          </logicalFolder>
-          <logicalFolder name="rtc" displayName="rtc" projectFiles="true">
-            <itemPath>src/mega/rtc/ds1307.c</itemPath>
           </logicalFolder>
           <logicalFolder name="system" displayName="system" projectFiles="true">
             <logicalFolder name="examples" displayName="examples" projectFiles="true">

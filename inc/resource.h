@@ -45,7 +45,7 @@
 //add  include the res.h in application 
 
 
-#include "../../mega2.X/src/mega/rtc/example/ds1307.X/inc/res.h"
+#include "../../mega2.X/src/mega/ds1307/example/ds1307.X/inc/res.h"
 
 #endif
 

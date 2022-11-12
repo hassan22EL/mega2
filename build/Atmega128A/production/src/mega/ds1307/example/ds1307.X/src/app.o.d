@@ -1,7 +1,10 @@
-build/Atmega128A/production/src/mega/buffers/buffers.o.d \
- build/Atmega128A/production/src/mega/buffers/buffers.o: \
- src/mega/buffers/buffers.c src/mega/buffers/../../../inc/mega/buffers.h \
- src/mega/buffers/../../../inc/mega/../mega.h \
+build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
+ build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o: \
+ src/mega/ds1307/example/ds1307.X/src/app.c \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
+ src/mega/ds1307/example/ds1307.X/src/../inc/app.h \
+ src/mega/ds1307/example/ds1307.X/src/../inc/appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -13,17 +16,16 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- src/mega/buffers/../../../inc/mega/../mega/clock.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\res.h \
  d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/buffers.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- src/mega/buffers/../../../inc/mega/../mega/buffers.h \
- src/mega/buffers/../../../inc/mega/../resource.h \
- src/mega/buffers/../../../inc/mega/../mega/macros.h \
- src/mega/buffers/../../../inc/mega/../mega/types.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/macros.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/types.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
@@ -35,21 +37,24 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
- src/mega/buffers/../../../inc/mega/../mega/gpio.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- src/mega/buffers/../../../inc/mega/../mega/system.h \
- src/mega/buffers/../../../inc/mega/../mega/usart.h \
- src/mega/buffers/../../../inc/mega/../mega/lcd.h \
- src/mega/buffers/../../../inc/mega/../mega/twi.h \
- src/mega/buffers/../../../inc/mega/../mega/exEprom.h \
- src/mega/buffers/../../../inc/mega/../mega/time.h \
- src/mega/buffers/../../../inc/mega/../mega/ds1307.h \
- src/mega/buffers/../../../inc/mega/../mega/keypad.h \
- src/mega/buffers/../../../inc/mega/../mega/csma.h
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/gpio.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/system.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/usart.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/lcd.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/twi.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/exEprom.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/time.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/ds1307.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h
 
-src/mega/buffers/../../../inc/mega/buffers.h:
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
-src/mega/buffers/../../../inc/mega/../mega.h:
+src/mega/ds1307/example/ds1307.X/src/../inc/app.h:
+
+src/mega/ds1307/example/ds1307.X/src/../inc/appRes.h:
+
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -73,7 +78,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
-src/mega/buffers/../../../inc/mega/../mega/clock.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/clock.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
@@ -85,15 +90,13 @@ d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\res.
 
 d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\appRes.h:
 
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/buffers.h:
+
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-src/mega/buffers/../../../inc/mega/../mega/buffers.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/macros.h:
 
-src/mega/buffers/../../../inc/mega/../resource.h:
-
-src/mega/buffers/../../../inc/mega/../mega/macros.h:
-
-src/mega/buffers/../../../inc/mega/../mega/types.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/types.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 
@@ -117,24 +120,22 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
 
-src/mega/buffers/../../../inc/mega/../mega/gpio.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/gpio.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/system.h:
 
-src/mega/buffers/../../../inc/mega/../mega/system.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/usart.h:
 
-src/mega/buffers/../../../inc/mega/../mega/usart.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/lcd.h:
 
-src/mega/buffers/../../../inc/mega/../mega/lcd.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/twi.h:
 
-src/mega/buffers/../../../inc/mega/../mega/twi.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/exEprom.h:
 
-src/mega/buffers/../../../inc/mega/../mega/exEprom.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/time.h:
 
-src/mega/buffers/../../../inc/mega/../mega/time.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/ds1307.h:
 
-src/mega/buffers/../../../inc/mega/../mega/ds1307.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h:
 
-src/mega/buffers/../../../inc/mega/../mega/keypad.h:
-
-src/mega/buffers/../../../inc/mega/../mega/csma.h:
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h:
