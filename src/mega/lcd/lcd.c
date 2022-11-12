@@ -14,6 +14,8 @@
 --------------------------------------------------------------------------------------------------
  */
 
+#include <stdint-gcc.h>
+
 #include "../../../inc/mega.h"
 #if defined (LCD_MODULE)
 #if  LCD_MODULE 
@@ -46,6 +48,7 @@
  | < macro  LCD_CUSOR      : bit 1 is this bit 1 enable cursor or 0 disable cursor                     |
  | < macro  LCD_DISPLAY    : bit 2 is this bit 1 enable display or 0 disable display                   |
  -------------------------------------------------------------------------------------------------------
+ */
 #define   LCD_BLINK           (0)
 #define   LCD_CUSOR           (1)
 #define   LCD_DISPLAY         (2)
@@ -166,15 +169,6 @@ static volatile uint8_t gu8LCDPosition;
  */
 
 static volatile uint8_t gu8LCDBuffer[LCD_SIZE];
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                                 <  LCD Time OUT  >                                                    |
- --------------------------------------------------------------------------------------------------------
- */
-
-static stTimer_TimeOut_t gsLCDTimer;
-
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 <  custome char tables >                                             |
@@ -182,7 +176,7 @@ static stTimer_TimeOut_t gsLCDTimer;
  */
 
 
-static const uint8_t PROGMEM CGRAM_ZERO[] = {
+static const PROGMEM uint8_t CGRAM_ZERO[] = {
     0b11111,
     0b00000,
     0b00000,
@@ -192,7 +186,7 @@ static const uint8_t PROGMEM CGRAM_ZERO[] = {
     0b00000,
     0b11111
 };
-static const uint8_t PROGMEM CGRAM_ONE[] = {
+static const PROGMEM uint8_t CGRAM_ONE[] = {
     0b11111,
     0b10000,
     0b10000,
@@ -222,7 +216,7 @@ static const PROGMEM uint8_t CGRAM_THREE[] = {
     0b11100,
     0b11111
 };
-static const uint8_t PROGMEM CGRAM_FOUR[] = {
+static const PROGMEM uint8_t CGRAM_FOUR[] = {
     0b11111,
     0b11110,
     0b11110,
@@ -232,7 +226,7 @@ static const uint8_t PROGMEM CGRAM_FOUR[] = {
     0b11110,
     0b11111
 };
-static const uint8_t PROGMEM CGRAM_FIVE[] = {
+static const PROGMEM uint8_t CGRAM_FIVE[] = {
     0b11111,
     0b11111,
     0b11111,
@@ -378,7 +372,6 @@ static inline void Pulse_En() __attribute__((always_inline, unused));
 static inline void Pulse_En() {
     digitalPinWrite(LCD_EN, GPIO_HIGH);
     digitalPinWrite(LCD_EN, GPIO_LOW);
-
 }
 
 /*
@@ -424,27 +417,25 @@ static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos) {
 static void lcdWaitBusy() {
     uint8_t state;
     state = 0;
-
+    uint16_t timeout;
     digitalpinMode(LCD_D4, MODE_INPUT); /* 600ns*/
     digitalpinMode(LCD_D5, MODE_INPUT); /*600ns*/
     digitalpinMode(LCD_D6, MODE_INPUT); /*600ns*/
     digitalpinMode(LCD_D7, MODE_INPUT); /*600ns*/
     digitalPinWrite(LCD_RS, GPIO_LOW); //RS=0; /*600ns*/
     digitalPinWrite(LCD_RW, GPIO_HIGH); //RW=1 /*600ns*/
-    sysSetPeriodUs(&gsLCDTimer, 100);
-
-    /*get micros and compare*/
+    timeout = microsecondsToClockCycles(100);
     do {
         digitalPinWrite(LCD_EN, GPIO_HIGH);
-        if (sysIsTimeoutUs(&gsLCDTimer) == 0) {
-            gu8LCDFlags.b7 = 1;
-            break;
-        }
+        _NOP();
+        timeout--;
         state = digitalPinRead(LCD_D7);
         digitalPinWrite(LCD_EN, GPIO_LOW);
         Pulse_En();
-    } while (state);
-
+    } while (state && timeout);
+    if (!timeout) {
+        gu8LCDFlags.b7 = 1;
+    }
     digitalpinMode(LCD_D4, MODE_OUTPUT);
     digitalpinMode(LCD_D5, MODE_OUTPUT);
     digitalpinMode(LCD_D6, MODE_OUTPUT);
@@ -583,57 +574,39 @@ static void lcdSendCommdHigh(uint8_t u8Data) {
 
 static uint8_t lcdUpdate() {
 
-    /*case 0*/
-    if (!gu8LCDFlags.b0 && !gu8LCDFlags.b1) {
-        lcdSendCommand((LCD_CGRRAM_MODE | LCD_CGRAM_ADDRESS_CHECK));
-        if (lcdReadByte() != (LCD_CGRAM_ADDRESS_CHECK)) {
-            gu8LCDFlags.b0 = 1;
-            gu8LCDFlags.b1 = 0;
-        }
-    } else if (gu8LCDFlags.b0 && !gu8LCDFlags.b1) {
-        if (lcdInit() == 0) {
-            gu8LCDFlags.b0 = 0;
+    if (!gu8LCDFlags.b1) {
+        lcdSendCommand(LCD_CGRRAM_MODE | LCD_CGRAM_ADDRESS_CHECK);
+        if (lcdReadByte() != (LCD_CGRRAM_MODE | LCD_CGRAM_ADDRESS_CHECK)) {
+            if (lcdInit() == LCD_ERORR) {
+                /*call back error*/
+                return LCD_ERORR;
+            }
             gu8LCDFlags.b1 = 1;
+            return LCD_IN_PROGRESS;
         }
-        if (gu8LCDFlags.b7) {
-            gu8LCDFlags.b7 = 0;
-            gu8LCDFlags.b0 = 0;
-            gu8LCDFlags.b1 = 0;
-            return (LCD_ERORR);
-        }
-
-    } else {
-        if (gu8LcdBufferIndex < LCD_SIZE) {
-            if (gu8LcdBufferIndex % LCD_NUMBER_OF_BYTE == 0) {
-                lcdSendCommand(lcdPosToAddress((gu8LcdBufferIndex / LCD_NUMBER_OF_BYTE), 0));
-                if (gu8LCDFlags.b7) {
-                    gu8LCDFlags.b7 = 0;
-                    gu8LCDFlags.b1 = 0;
-                    gu8LCDFlags.b0 = 0;
-                    gu8LcdBufferIndex = 0;
-                    return (LCD_ERORR);
-                }
-            }
-            lcdSendByte(gu8LCDBuffer[gu8LcdBufferIndex]);
-            if (gu8LCDFlags.b7) {
-                gu8LCDFlags.b7 = 0;
-                gu8LCDFlags.b0 = 0;
-                gu8LCDFlags.b1 = 0;
-                return (LCD_ERORR);
-            }
-            gu8LcdBufferIndex++;
-            /*break after 100u*/
-        } else {
-            gu8LCDFlags.b7 = 0;
-            gu8LCDFlags.b0 = 0;
-            gu8LCDFlags.b1 = 0;
-            gu8LcdBufferIndex = 0;
-            lcdSendCommand(gu8LCDPosition);
-            lcdSendCommand(LCD_DISPLAY_ON_COMMAND | gu8LcdOPtion);
-            return (LCD_SUCCSS);
-        }
+        gu8LCDFlags.b1 = 1;
     }
-    return (LCD_IN_PROGRESS);
+
+    if (gu8LcdBufferIndex < LCD_SIZE) {
+        if (gu8LcdBufferIndex % LCD_NUMBER_OF_BYTE == 0) {
+            lcdSendCommand(lcdPosToAddress((gu8LcdBufferIndex / LCD_NUMBER_OF_BYTE), 0));
+        }
+        lcdSendByte(gu8LCDBuffer[gu8LcdBufferIndex]);
+        if (gu8LCDFlags.b7) {
+            /*generate error */
+            gu8LCDFlags.b7 = 0;
+            return LCD_ERORR;
+        }
+        gu8LcdBufferIndex++;
+    } else {
+
+        gu8LcdBufferIndex = 0;
+        lcdSendCommand(gu8LCDPosition);
+        lcdSendCommand(LCD_DISPLAY_ON_COMMAND | gu8LcdOPtion);
+
+        return (LCD_SUCCSS);
+    }
+    return LCD_IN_PROGRESS;
 }
 
 /*
@@ -642,74 +615,43 @@ static uint8_t lcdUpdate() {
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdInit                                                               |
  | < @Description       : write command to init in 4 bit mode or 8 bit mode or clear ,........etc       |                                                         
- | < @return            : 0   init done                                                                 |
- | < @return            : 1   in progress                                                               |
+ | < @return            : LCD_SUCESS   init done                                                        |
+ | < @return            : LCD_ERROR    LCD not ready                                                    |
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdInit() {
 
-
-    if (!gu8LCDFlags.b3 && !gu8LCDFlags.b0) {
-        sysSetPeriodMS(&gsLCDTimer, 15);
-        for (uint8_t i = 0; i < LCD_SIZE; i++)
-            gu8LCDBuffer[i] = ' ';
-        gu8LcdOPtion = LCD_DISPLAY_ON_COMMAND; /*the display on*/
-        gu8LCDPosition = 0;
-        gu8LcdBufferIndex = 0;
-        gu8LCDFlags.b3 = 1;
-        gu8LCDFlags.b4 = 0;
-
-    } else if (gu8LCDFlags.b3 && !gu8LCDFlags.b4) {
-        if (sysIsTimeoutMs(&gsLCDTimer) == 0) {
-            lcdSendCommdHigh(LCD_8BIT_COMMAND);
-            gu8LCDFlags.b3 = 0;
-            gu8LCDFlags.b4 = 1;
-            sysSetPeriodUs(&gsLCDTimer, 4500);
-        }
-    } else if (!gu8LCDFlags.b3 && gu8LCDFlags.b4) {
-        if (sysIsTimeoutUs(&gsLCDTimer) == 0) {
-            gu8LCDFlags.b3 = 1;
-            gu8LCDFlags.b4 = 1;
-            sysSetPeriodUs(&gsLCDTimer, 100);
-            lcdSendCommdHigh(LCD_8BIT_COMMAND);
-        }
-    } else {
-        if (sysIsTimeoutUs(&gsLCDTimer) == 0) {
-            lcdSendCommdHigh(LCD_8BIT_COMMAND);
-#if GPIO2_USE_INLINE_FUNCTIONS
-            _delay_us(37);
-#else
-            _delay_us(25);
-#endif
-            lcdSendCommdHigh(LCD_4BIT_COMMAND);
-#if GPIO2_USE_INLINE_FUNCTIONS
-            _delay_us(37);
-#else
-            _delay_us(25);
-#endif
-            lcdSendCommand(LCD_2LINE_COMMAND);
-            lcdSendCommand(LCD_DISPLAY_ON_COMMAND);
-            lcdSendCommand(LCD_CLEAR_COMMAND);
-            lcdSendCommand(LCD_ENTRY_SET);
-            /*Create custom chars*/
-            lcdCreateChar(0, CGRAM_ZERO);
-            lcdCreateChar(1, CGRAM_ONE);
-            lcdCreateChar(2, CGRAM_TWO);
-            lcdCreateChar(3, CGRAM_THREE);
-            lcdCreateChar(4, CGRAM_FOUR);
-            lcdCreateChar(5, CGRAM_FIVE);
-            gu8LCDFlags.byte = 0x00;
-            return (0);
-        }
+    for (uint8_t i = 0; i < LCD_SIZE; i++)
+        gu8LCDBuffer[i] = ' ';
+    gu8LcdOPtion = LCD_DISPLAY_ON_COMMAND; /*the display on*/
+    gu8LCDPosition = 0;
+    gu8LcdBufferIndex = 0;
+    _delay_ms(15);
+    lcdSendCommdHigh(LCD_8BIT_COMMAND);
+    _delay_ms(5);
+    lcdSendCommdHigh(LCD_8BIT_COMMAND);
+    _delay_us(100);
+    lcdSendCommdHigh(LCD_8BIT_COMMAND);
+    _delay_us(40);
+    lcdSendCommdHigh(LCD_4BIT_COMMAND);
+    _delay_us(40);
+    lcdSendCommand(LCD_2LINE_COMMAND);
+    lcdSendCommand(LCD_DISPLAY_ON_COMMAND);
+    lcdSendCommand(LCD_CLEAR_COMMAND);
+    lcdSendCommand(LCD_ENTRY_SET);
+    if (gu8LCDFlags.b7) {
+        gu8LCDFlags.b7 = 0;
+        return LCD_ERORR;
     }
-    return (1);
+    return LCD_SUCCSS;
+
 }
 
 
 /*
---------------------------------------------------------------------------------------------------
-|                           < user Functions >                                                   | 
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+|                           < User Functions >                                                         | 
+--------------------------------------------------------------------------------------------------------
  */
 
 /*
@@ -802,6 +744,7 @@ void lcdHwInit() {
     digitalpinMode(LCD_D5, MODE_OUTPUT);
     digitalpinMode(LCD_D6, MODE_OUTPUT);
     digitalpinMode(LCD_D7, MODE_OUTPUT);
+
 }
 
 /*
@@ -827,7 +770,7 @@ void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
     }
     for (uint8_t i = 0; i < strlen(string); i++)
         gu8LCDBuffer[newPos + i] = string[i];
-    gu8LCDFlags.b5 = 1;
+    gu8LCDFlags.b0 = 1;
 }
 
 /*
@@ -891,7 +834,7 @@ void lcdwriteCGRAM(uint8_t line, uint8_t pos, uint8_t index) {
     uint8_t newPos;
     newPos = line * LCD_NUMBER_OF_BYTE + pos;
     gu8LCDBuffer[newPos] = index;
-    gu8LCDFlags.b5 = 1;
+    gu8LCDFlags.b0 = 1;
 }
 
 /*
@@ -930,8 +873,7 @@ void getlcdData(char *str, uint8_t line, uint8_t pos) {
  | < @Description       : lcd can be clear a line into lcd buffer by write 0x20 into the buffer         |
  |                      : from address of the start line 0 or 1 or ..etc to end address of the line     |
  |                      : address dependent of number of char into line                                 |                                
- | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
- |                      : y is 0 to max number of byte per line                                         |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |                                        
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
@@ -939,7 +881,7 @@ void lcdClearlines(uint8_t from) {
     for (uint8_t i = from * LCD_NUMBER_OF_BYTE; i < LCD_SIZE; i++) {
         gu8LCDBuffer[i] = 0x20;
     }
-    gu8LCDFlags.b5 = 1;
+    gu8LCDFlags.b0 = 1;
 }
 
 /*
@@ -956,7 +898,7 @@ void lcdClear() {
     for (uint8_t j = 0; j < LCD_SIZE; j++) {
         gu8LCDBuffer[j] = 0x20;
     }
-    gu8LCDFlags.b5 = 1;
+    gu8LCDFlags.b0 = 1;
 }
 
 /*
@@ -971,18 +913,15 @@ void lcdClear() {
 
 void lcdDriver() {
     uint8_t state;
-    if (!gu8LCDFlags.b5) {
-        return;
-    }
-    state = lcdUpdate();
-    if (state == LCD_SUCCSS) {
-        gu8LCDFlags.b5 = 0;
-        return;
-    }
-    if (state == LCD_ERORR) {
-        /*run callback of the system error*/
-        gu8LCDFlags.b5 = 0;
-        return;
+    if (gu8LCDFlags.b0) {
+        state = lcdUpdate();
+        if (state == LCD_SUCCSS) {
+            gu8LCDFlags.b0 = 0;
+        } else if (state == LCD_ERORR) {
+            gu8LCDFlags.b0 = 0;
+        }
+
+
     }
 }
 
@@ -992,11 +931,14 @@ void lcdDriver() {
  --------------------------------------------------------------------------------------------------------
  | < @Function          : uint8_t lcdIsBusy                                                             |
  | < @Description       : check lcd is ready to write new data or not                                   |        
- | < @return            : LCD_SUCCESS when  lcd is ready and other case lcd has not ready               |                                                                       |
+ | < @return            : 0 when  lcd is ready and other case lcd has not ready                         |                                                                       |
  --------------------------------------------------------------------------------------------------------
  */
 uint8_t lcdIsBusy() {
-    return (gu8LCDFlags.b5);
+    if (gu8LCDFlags.b0) {
+        return (1);
+    }
+    return (0);
 }
 
 #endif

@@ -1,5 +1,6 @@
 build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  build/Atmega128A/production/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  src/mega/lcd/../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
@@ -45,6 +46,8 @@ build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  src/mega/lcd/../../../inc/mega/ds1307.h \
  src/mega/lcd/../../../inc/mega/keypad.h \
  src/mega/lcd/../../../inc/mega/csma.h
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/mega/lcd/../../../inc/mega.h:
 
