@@ -1,5 +1,6 @@
 build/Atmega128A/production/src/mega/rtc/ds1307.o.d \
  build/Atmega128A/production/src/mega/rtc/ds1307.o: src/mega/rtc/ds1307.c \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  src/mega/rtc/../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
@@ -16,8 +17,8 @@ build/Atmega128A/production/src/mega/rtc/ds1307.o.d \
  src/mega/rtc/../../../inc/mega/../resource.h \
  src/mega/rtc/../../../inc/mega/../mega.h \
  src/mega/rtc/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\rtc\example\ds1307.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\rtc\example\ds1307.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/rtc/../../../inc/mega/buffers.h \
  src/mega/rtc/../../../inc/mega/../mega.h \
@@ -45,6 +46,8 @@ build/Atmega128A/production/src/mega/rtc/ds1307.o.d \
  src/mega/rtc/../../../inc/mega/ds1307.h \
  src/mega/rtc/../../../inc/mega/keypad.h \
  src/mega/rtc/../../../inc/mega/csma.h
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/mega/rtc/../../../inc/mega.h:
 
@@ -78,9 +81,9 @@ src/mega/rtc/../../../inc/mega/../mega.h:
 
 src/mega/rtc/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\rtc\example\ds1307.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\rtc\example\ds1307.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

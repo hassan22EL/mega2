@@ -62,7 +62,7 @@
  | @note : @UARTx_BUADRATE      : x  0 to 3 if defined more UART please defined the baud rate every uart     |
  *       : @UART_XYZ            : not supported in current version the usart is work only 8nit data and      |
  *       :                      : and  no parity and 1-stop bit in new version can support this and          |
- *       :                      : @X is a number of bits and @Y type the parity and @Z is n-stop bits        |                                                 |
+ *       :                      : @X is a number of bits and @Y type the parity and @Z is n-stop bits        |                                                 
  -------------------------------------------------------------------------------------------------------------
  */
 #define  USART_MODULE                                                           (0)
@@ -123,7 +123,7 @@
  |                            : @Time Out  4 Byte                                                                                    |
  |                            : @eeprom description 11 Byte                                                                          |
  |                            : @Internal Read Buffer default used 16 Byte                                                           |
- | < PROGRAM_USAGE            : 1158 byte (579 Instruction)                                                                          |                                                                                                     |                   
+ | < PROGRAM_USAGE            : 1158 byte (579 Instruction)                                                                          |                                                                                                                        
  -------------------------------------------------------------------------------------------------------------------------------------
  */
 #define  EX_EEPROM_MODULE             (0)
@@ -136,8 +136,8 @@
 #endif
 
 /* 
- ------------------------------------------------------------------------------------------------
- |                          < LCD MODULE                                                         |                                          *     
+ -------------------------------------------------------------------------------------------------
+ |                          < LCD MODULE                                                         |                                            
  -------------------------------------------------------------------------------------------------
  | < LCD_MODULE              : 0 module is not active                                            |
  |                           : 1 module is active                                                |
@@ -173,16 +173,18 @@
 
 
 /* 
- * *********************************************************************************************************************************************
- *                             DS1307 option                                                                                                   *     
- * *********************************************************************************************************************************************
- * @DS1307_MODULE               : 0 module is not active
- *                              : 1 module is active
- * @DS1307_MODE                 : DS1307_MODE_12H DS1307 work with AM and PM
- *                              : DS1307_MODE_24H  DS1307 work witch normal clock   
- * @DS1307_PERDIOC_READ_PER_MIN : DS1307 Read clock every a min clock     
- * @note : DS1307 in this version not support a 12 hour clock operation                                                           *                                                                            *
- ***********************************************************************************************************************************************
+ -------------------------------------------------------------------------------------------------
+ |                          < DS1307 MODULE >                                                    |                                             
+ -------------------------------------------------------------------------------------------------
+ | < DS1307_MODULE                : 0 module is not active                                       |
+ |                                : 1 module is active                                           |
+ | < DS1307_MODE                  : DS1307_MODE_12H  DS1307 work with AM and PM                  |
+ |                                : DS1307_MODE_24H  DS1307 work witch normal clock              |
+ | < DS1307_PERDIOC_READ_PER_MIN  : DS1307 Read clock every a min clock                          |
+ | < SRAM USAGE                   : 21-Byte                                                      |  
+ | < PROGRAM USAGE                : 1888 Byte (944 Instruction)                                  |
+ | < @note                        : in this version not support a 12 hour clock operation        |                                                                                                              
+ -------------------------------------------------------------------------------------------------
  */
 #define  DS1307_MODULE             (0)
 #if DS1307_MODULE

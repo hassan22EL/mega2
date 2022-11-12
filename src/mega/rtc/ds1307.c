@@ -1,27 +1,34 @@
 
-
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   ds1307.h
- * Author       :   Hassan Elsaied
- * Data Memory  :   total byte used 0 Byte  
- * Program Space:   under upgrade
- * Version      :   Mega2v241022
- * Start Data   :   24-10-2022  20:00:00
- * End Data     :   24-10-2022  23:48:00
- * Work Time    :   1-hour
- * Comments     :   no comment
- *  
+/*
+------------------------------------------------------------------------------------------
+|                          < Module  Definition >                                        | 
+------------------------------------------------------------------------------------------
+| < FILE                   : ds1307.c                                                    |                                  
+| < Author                 : Hassan Elsaied                                              | 
+| < Version                : Mega2v241022                                                |
+| < References             : no-used references in this documents                        |
+| < SRAM_USAGE             : 21 Byte                                                     |
+|                          : 1-Byte state                                                |
+|                          : 9-Byte TWI-interface                                        |
+|                          : 7-Byte Internal Buffer                                      |
+|                          : 4-Byte Time Out                                             |
+| < PROGRAM USAGE          : 1888 Byte (944 Instruction)                                 |
+| < Hardware Usage         : I2C  as a master                                            |
+| < File Created           : 24-10-2022                                                  |
+-------------------------------------------------------------------------------------------
  */
+
+#include <stdint-gcc.h>
+
 #include "../../../inc/mega.h"
 #if defined (DS1307_MODULE)
 #if  DS1307_MODULE
 
-#ifndef TWI_MODULE  || (TWI_MODULE == MODULE_DIABLE)
+#ifndef TWI_MODULE 
 #error  please enable TWI module and select type master mode or master slave mode us used exeeprom module
-#else 
+#elif (TWI_MODULE == MODULE_DIABLE)
+#error  please enable TWI module and select type master mode or master slave mode us used exeeprom module
+#else
 #if TWI_TYPE == TWI_SLAVE
 #error  select type master mode or master slave mode us used exeeprom module
 #endif
@@ -30,26 +37,26 @@
 
 
 /*
- * *******************************************************************
- *                             micros                                *
- * *******************************************************************
- * */
-
-
+ -------------------------------------------------------------------------------------------------------
+ |                               < Macro  Definition >                                                 |
+ -------------------------------------------------------------------------------------------------------
+ */
 
 
 /*
- * *******************************************************************
- *                             DS1307_ADDRESS                          *
- * *******************************************************************
- * */
+ -------------------------------------------------------------------------------------------------------
+ |                               < DS1307_ADDRESS >                                                    |
+ -------------------------------------------------------------------------------------------------------
+ */
+
+
 #define  DS1307_ADDRESS          (0xD0)
-
 /*
- * *******************************************************************
- *                             Clock mode                              *
- * *******************************************************************
- * */
+ -------------------------------------------------------------------------------------------------------
+ |                               < Clock mode  >                                                        |
+ -------------------------------------------------------------------------------------------------------
+ */
+
 
 #define DS1307_MODE_24H                (0)
 #define DS1307_MODE_12H                (1)
@@ -59,10 +66,10 @@
 #endif
 
 /*
- * *******************************************************************
- *                             internal address                        *
- * *******************************************************************
- * */
+ -------------------------------------------------------------------------------------------------------
+ |                               < internal address  >                                                 |
+ -------------------------------------------------------------------------------------------------------
+ */
 #define  DS1307_SECONDE_ADDRESS        (0x00)
 #define  DS1307_MIN_ADDRESS            (0x01)
 #define  DS1307_HOUR_ADDRESS           (0x02)
@@ -72,24 +79,25 @@
 #define  DS1307_YEAR_ADDRESS           (0x06)
 #define  DS1307_CONTROL_ADDRESS        (0x07)
 
-/*DS1307 CLOCK GENERATOR*/
-
-
-
-
-
-
-
-
-
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < internal address Length>                                            |
+ -------------------------------------------------------------------------------------------------------
+ */
 
 #define     DS1307_SLAVE_ADDRESS_LENGTH           TWI_SLAVE_ONE_BYTE_SIZE
-#define     DS1307_DATA_LENGTH                    (7)
 /*
- * *******************************************************************
- *                DS1307 internal read ever n min                    *
- * *******************************************************************
- * */
+ -------------------------------------------------------------------------------------------------------
+ |                               < Buffer Length  >                                                    |
+ -------------------------------------------------------------------------------------------------------
+ */
+#define     DS1307_DATA_LENGTH                    (7)
+
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < DS1307 internal read ever n min  >                                  |
+ -------------------------------------------------------------------------------------------------------
+ */
 
 #ifndef     DS1307_PERDIOC_READ_PER_MIN
 #define     DS1307_PERDIOC_READ_PER_MIN                         (5UL)
@@ -97,41 +105,41 @@
 
 #define    DS1307_PERDIOC_READ                        (DS1307_PERDIOC_READ_PER_MIN * 60UL)
 /*
- * *******************************************************************
- *               DS1307   internal read ever n min                   *
- * *******************************************************************
- * */
+ -------------------------------------------------------------------------------------------------------
+ |                               < DS1307 Status>                                                      |
+ -------------------------------------------------------------------------------------------------------
+ */
 
 static byte_Flags_t gu8ds1307States;
-/*
- * *******************************************************************
- *                             DS1307 Buffer                         *
- * *******************************************************************
- * */
 
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < DS1307 Buffer>                                                      |
+ -------------------------------------------------------------------------------------------------------
+ */
 static uint8_t gu8ds1307Buffer[DS1307_DATA_LENGTH];
 /*
- * *******************************************************************
- *                             DS1307 Timeout                         *
- * *******************************************************************
- * */
-
+ -------------------------------------------------------------------------------------------------------
+ |                               < DS1307 Time Out >                                                    |
+ -------------------------------------------------------------------------------------------------------
+ */
 static stTimer_TimeOut_t gsDs1307TimeOut;
 
 
+
 /*
- * *******************************************************************
- *                               Two wire interface access           *
- * *******************************************************************
- * @benfit               : Twi struct 
- * @Uasge                : 8 Byte
- * @param Chip           : slave address
- * @param address        : buffer of internal address max used 3 byte
- * @param address length : how many byte used of 3 byte address
- * @param buffer         : pointer of data
- * @param length         : number of byte data to read or write
- * @param data: pointer to write buffer or read buffer
- * 
+ --------------------------------------------------------------------------------------------------------
+ |                                <  TWI Access   >                                                     |
+ --------------------------------------------------------------------------------------------------------
+ | < Description          : Twi struct                                                                  |
+ | < Uasge                : 9 Byte                                                                      |
+ | < param Chip           : slave address                                                               |
+ | < param address        : buffer of internal address max used 3 byte                                  |
+ | < param address length : how many byte used of 3 byte address                                        |
+ | < param buffer         : pointer of data                                                             |
+ | < param length         : number of byte data to read or write                                        |
+ | < param data           : pointer to write buffer                                                     |              
+ --------------------------------------------------------------------------------------------------------
  */
 static twi_package_t gstDs1307TwiPag;
 
@@ -139,50 +147,58 @@ static twi_package_t gstDs1307TwiPag;
 
 
 
-
-
-
-
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                   <  Basic operations  >                                             |
+ --------------------------------------------------------------------------------------------------------
+ */
 
 /*
- * *******************************************************************
- *                            ds1307Convertdecimal_BCD                               *
- * *******************************************************************
- * @benfit      : convert buffer decimal to bcd or convert buffer bcd to decimal
- * @param buf   : pointer to buffer date to convert contains
- * @param state : state is 0 bcd to decimal and 1 convert decimal to bcd
- * @return void
- * */
-
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Convertdecimal_BCD  >                                             |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Convertdecimal_BCD                                                |
+ | < @Description       : convert buffer decimal to bcd or convert buffer bcd to decimal                |
+ | < @param buf         : pointer to buffer date to convert contains                                    |
+ | < @param state       : state is 0 bcd to decimal and 1 convert decimal to bcd                        |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
 static void ds1307Convertdecimal_BCD(uint8_t *buf, uint8_t state);
-/* *******************************************************************
- *                            ds1307Write                               *
- * *******************************************************************
- * @benfit      : write data from buffer to hardware
- * @return      : 0 write operation in progress
- *              : 1 write operation is done
- * */
-
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Write  >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Write                                                             |
+ | < @Description       : write data from buffer to hardware                                            |
+ | < @return            : 0 write operation in progress                                                 |
+ |                      : 1 write operation is done                                                     |
+ --------------------------------------------------------------------------------------------------------
+ */
 static uint8_t ds1307Write();
-/* *******************************************************************
- *                            ds1307Read                               *
- * *******************************************************************
- * @benfit      : write data from hardware into buffer
- * @return      : 0 write operation in progress
- *              : 1 write operation is done
- * */
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Read>                                                             |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Read                                                              |
+ | < @Description       : write data from hardware into buffer                                          |
+ | < @return            : 0 write operation in progress                                                 |
+ |                      : 1 write operation is done                                                     |
+ --------------------------------------------------------------------------------------------------------
+ */
 static uint8_t ds1307Read();
 
 /*
- * *******************************************************************
- *                            ds1307Convertdecimal_BCD                               *
- * *******************************************************************
- * @benfit      : convert buffer decimal to bcd or convert buffer bcd to decimal
- * @param buf   : pointer to buffer date to convert contains
- * @param state : state is 0 bcd to decimal and 1 convert decimal to bcd
- * @return void
- * */
-
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Convertdecimal_BCD  >                                             |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Convertdecimal_BCD                                                |
+ | < @Description       : convert buffer decimal to bcd or convert buffer bcd to decimal                |
+ | < @param buf         : pointer to buffer date to convert contains                                    |
+ | < @param state       : state is 0 bcd to decimal and 1 convert decimal to bcd                        |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
 static void ds1307Convertdecimal_BCD(uint8_t *buf, uint8_t state) {
     if (state) {
 
@@ -197,17 +213,19 @@ static void ds1307Convertdecimal_BCD(uint8_t *buf, uint8_t state) {
     }
 }
 
-/* *******************************************************************
- *                            ds1307Write                               *
- * *******************************************************************
- * @benfit      : write data from hardware into buffer
- * @return      : 0 write operation in progress
- *              : 1 write operation is done
- * 
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Write  >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Write                                                             |
+ | < @Description       : write data from buffer to hardware                                            |
+ | < @return            : 0 write operation in progress                                                 |
+ |                      : 1 write operation is done                                                     |
+ --------------------------------------------------------------------------------------------------------
  */
 static uint8_t ds1307Write() {
     if (!gu8ds1307States.b2) {
-        rtcConvertDateToTime(gu8ds1307Buffer);
+        /*convert from timestamp to date*/
         ds1307Convertdecimal_BCD(gu8ds1307Buffer, 1);
         gu8ds1307Buffer[rtc_sec] |= 0x80;
         gu8ds1307States.b2 = 1;
@@ -217,6 +235,8 @@ static uint8_t ds1307Write() {
     } else {
         if (twi_master_write(&gstDs1307TwiPag) == TWI_SUCCESS) {
             gu8ds1307States.b2 = 0;
+            /*update now by buffer*/
+            rtcConvertTimeToDate(systemNow(), gu8ds1307Buffer);
             return (1);
         }
         if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
@@ -228,13 +248,16 @@ static uint8_t ds1307Write() {
     return (0);
 }
 
-/* *******************************************************************
- *                            ds1307Read                               *
- * *******************************************************************
- * @benfit      : write data from hardware into buffer
- * @return      : 0 write operation in progress
- *              : 1 write operation is done
- * */
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Read>                                                             |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Read                                                              |
+ | < @Description       : write data from hardware into buffer                                          |
+ | < @return            : 0 write operation in progress                                                 |
+ |                      : 1 write operation is done                                                     |
+ --------------------------------------------------------------------------------------------------------
+ */
 static uint8_t ds1307Read() {
     if (twi_master_read(&gstDs1307TwiPag) == TWI_SUCCESS) {
         /*convert bcd to decimal*/
@@ -251,13 +274,22 @@ static uint8_t ds1307Read() {
     return (0);
 }
 
+
 /*
- * *******************************************************************
- *                            ds1307Init                               *
- * *******************************************************************
- * @benfit  : init data 
- * @return  : void
- * */
+ --------------------------------------------------------------------------------------------------------
+ |                                   <  user operations  >                                              |
+ --------------------------------------------------------------------------------------------------------
+ */
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Init>                                                             |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Init                                                              |
+ | < @Description       : reset all data to default                                                     |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
 void ds1307Init() {
     gu8ds1307States.byte = 0x00;
     /* DS1307 Chip defined */
@@ -274,12 +306,14 @@ void ds1307Init() {
 }
 
 /*
- * *******************************************************************
- *                            rtcDriver                               *
- * *******************************************************************
- * @benfit  : run a in background
- * @return  : void
- * */
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307Driver>                                                           |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307Driver                                                            |
+ | < @Description       : run in background to read or write operation                                  |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
 void ds1307Driver() {
     if (gu8ds1307States.b0) {
         if (ds1307Write()) {
@@ -307,17 +341,41 @@ void ds1307Driver() {
     }
 }
 
-/* *******************************************************************
- *                            ds1307IsSetDone                               *
- * *******************************************************************
- * @benfit      : check write operation is done or not
- * @return      : 0  write operation is done
- *              : 1  write operation in progress
- * 
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307IsSetDone>                                                        |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307IsSetDone                                                         |
+ | < @Description       : check write operation is done or not                                          |
+ | < @return            : 0  write operation is done                                                    |
+ |                      : 1  write operation is progress                                                |
+ --------------------------------------------------------------------------------------------------------
  */
 uint8_t ds1307IsSetDone() {
     return gu8ds1307States.b0;
 }
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < ds1307SetDate>                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  ds1307IsSetDone                                                         |
+ | < @Description       : hardware start from speceific date                                            |
+ | < @Param tm          : pointer of the date start                                                     |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+void ds1307SetDate(stm_t *tm) {
+    gu8ds1307Buffer[rtc_sec] = tm->sec;
+    gu8ds1307Buffer[rtc_min] = tm->min;
+    gu8ds1307Buffer[rtc_hour] = tm->hour;
+    gu8ds1307Buffer[rtc_dayw] = tm->dayw;
+    gu8ds1307Buffer[rtc_daym] = tm->daym;
+    gu8ds1307Buffer[rtc_month] = tm->month;
+    gu8ds1307Buffer[rtc_year] = tm->year;
+    gu8ds1307States.b0 = 1;
+}
+
 
 #endif
 #endif

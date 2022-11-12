@@ -56,8 +56,8 @@
  * **************************************************
  */
 
-static const uint8_t gu8RtcMonthLeapYear[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-static const uint8_t gu8RtcMonthYear[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+static const PROGMEM uint8_t gu8RtcMonthLeapYear[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+static const PROGMEM uint8_t gu8RtcMonthYear[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 /*
  ****************************************************
@@ -92,9 +92,9 @@ time_t rtcConvertDateToTime(uint8_t *ptm) {
         u8temp = 0;
         while (u8temp < ptm[rtc_month]) {
             if (RTC_LEAP_YEAR(ptm[rtc_year] + RTC_BASE_TIME)) {
-                time += gu8RtcMonthLeapYear[u8temp];
+                time += pgm_read_byte(gu8RtcMonthLeapYear + u8temp);
             } else {
-                time += gu8RtcMonthYear[u8temp];
+                time += pgm_read_byte(gu8RtcMonthYear + u8temp);
             }
             u8temp++;
         }
@@ -148,13 +148,13 @@ void rtcConvertTimeToDate(time_t Time, uint8_t *ptm) {
         /*month*/
         u8Temp = 0;
         if (RTC_LEAP_YEAR(ptm[rtc_year] + RTC_BASE_TIME)) {
-            while (Days >= gu8RtcMonthLeapYear[u8Temp]) {
-                Days = Days - gu8RtcMonthLeapYear[u8Temp];
+            while (Days >= pgm_read_byte(gu8RtcMonthLeapYear + u8Temp)) {
+                Days = Days - pgm_read_byte(gu8RtcMonthLeapYear + u8Temp);
                 u8Temp++;
             }
         } else {
-            while (Days >= gu8RtcMonthYear[u8Temp]) {
-                Days = Days - gu8RtcMonthYear[u8Temp];
+            while (Days >= pgm_read_byte(gu8RtcMonthYear + u8Temp)) {
+                Days = Days - pgm_read_byte(gu8RtcMonthYear + u8Temp);
                 u8Temp++;
             }
         }
