@@ -25,11 +25,11 @@ void appSync(void) {
 
 void appMain(void) {
     if (!state) {
-        
+
         state = 1;
     }
     if (index < 100) {
-        lcdwrite(0 , 0 , "Test..");
+        lcdwrite(0, 0, "Test..");
         updateProgressBar(index, 100, 1);
         index++;
         _delay_ms(10);
@@ -41,7 +41,7 @@ void updateProgressBar(uint8_t count, uint8_t totalCount, uint8_t lineToPrintOn)
     uint8_t percent;
     uint8_t number;
     uint8_t remainder;
-    factor = totalCount / 80.0; //See note above!
+    factor = totalCount / (float) (LCD_NUMBER_OF_BYTE * 5); //See note above!
     percent = (count + 1) / factor;
     number = percent / 5;
     remainder = percent % 5;

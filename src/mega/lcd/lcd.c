@@ -805,7 +805,7 @@ void lcdCreateChar(uint8_t u8location, const uint8_t *pu8Data) {
     /*set cgram address*/
     lcdSendCommand(LCD_CGRRAM_MODE + u8location);
     for (int i = 0; i < 8; i++) {
-        lcdSendByte(pu8Data[i]);
+        lcdSendByte(pgm_read_byte(pu8Data + i));
     }
     lcdSendCommand(LCD_DDRAM_MODE);
 }
