@@ -45,7 +45,7 @@
 //add  include the res.h in application 
 
 
-#include "../../NurseMaster.X/inc/res.h"
+#include "../../mega2.X/src/mega/lcd/exambles/lcd.X/inc/res.h"
 
 #endif
 

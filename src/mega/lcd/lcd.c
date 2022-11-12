@@ -7,14 +7,13 @@
 | < Author                   : Hassan Elsaied                                                    |
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : https://www.sparkfun.com/datasheets/LCD/HD44780.pdf               |
-| < SRAM USAGE               : 40-Byte  (32 Byte buffer , 4 byte time out , 4 byte internal used |
-| < PROGRAM USAGE            : 1938 Byte (1908 byte (969 Instruction)) + 30 Byte custom char     |                                    
+| < SRAM USAGE               : 36-Byte  (32 Byte buffer , 4 byte internal used                   |
+| < PROGRAM USAGE            : 1082 Byte (1052 byte (526 Instruction)) + 30 Byte custom char     |                                    
 | < Hardware Usage           : GPIO                                                              |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
  */
 
-#include <stdint-gcc.h>
 
 #include "../../../inc/mega.h"
 #if defined (LCD_MODULE)
@@ -25,15 +24,7 @@
  |                               < Macro  Definition >                                                 |
  -------------------------------------------------------------------------------------------------------
  */
-/*
- -------------------------------------------------------------------------------------------------------
- |                               <LCD  Text Alignment>                                                 |
- -------------------------------------------------------------------------------------------------------
- | < discuss :  this micro is call in pos write buffer the data centered in lcd                        |
- -------------------------------------------------------------------------------------------------------
- */
 
-#define  LCD_TEXT_CENTER         (0xFF)
 /*
  -------------------------------------------------------------------------------------------------------
  |                               <LCD  Buffer Size>                                                    |
@@ -571,9 +562,7 @@ static void lcdSendCommdHigh(uint8_t u8Data) {
  | < @return            : LCD_SUCCSS when lcd is write buffer done                                      |                                                             
  --------------------------------------------------------------------------------------------------------
  */
-
 static uint8_t lcdUpdate() {
-
     if (!gu8LCDFlags.b1) {
         lcdSendCommand(LCD_CGRRAM_MODE | LCD_CGRAM_ADDRESS_CHECK);
         if (lcdReadByte() != (LCD_CGRRAM_MODE | LCD_CGRAM_ADDRESS_CHECK)) {
@@ -620,9 +609,6 @@ static uint8_t lcdUpdate() {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdInit() {
-
-    for (uint8_t i = 0; i < LCD_SIZE; i++)
-        gu8LCDBuffer[i] = ' ';
     gu8LcdOPtion = LCD_DISPLAY_ON_COMMAND; /*the display on*/
     gu8LCDPosition = 0;
     gu8LcdBufferIndex = 0;
@@ -643,8 +629,13 @@ static uint8_t lcdInit() {
         gu8LCDFlags.b7 = 0;
         return LCD_ERORR;
     }
+    lcdCreateChar(0, CGRAM_ZERO);
+    lcdCreateChar(1, CGRAM_ONE);
+    lcdCreateChar(2, CGRAM_TWO);
+    lcdCreateChar(3, CGRAM_THREE);
+    lcdCreateChar(4, CGRAM_FOUR);
+    lcdCreateChar(5, CGRAM_FIVE);
     return LCD_SUCCSS;
-
 }
 
 
@@ -728,6 +719,8 @@ inline void lcdCursor(uint8_t u8line, uint8_t u8pos) {
 void lcdHwInit() {
     /*4 bit mode*/
     gu8LCDFlags.byte = 0x00;
+    for (uint8_t i = 0; i < LCD_SIZE; i++)
+        gu8LCDBuffer[i] = ' ';
     if ((LCD_RS == NOT_A_PIN) ||
             (LCD_EN == NOT_A_PIN) ||
             (LCD_RW == NOT_A_PIN) ||

@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/system/time.o.d \
  src/mega/system/../../../inc/mega/../resource.h \
  src/mega/system/../../../inc/mega/../mega.h \
  src/mega/system/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h \
- d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/system/../../../inc/mega/buffers.h \
  src/mega/system/../../../inc/mega/../mega.h \
@@ -78,9 +78,9 @@ src/mega/system/../../../inc/mega/../mega.h:
 
 src/mega/system/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

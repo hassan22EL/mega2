@@ -6,8 +6,8 @@
 | < Author                   : Hassan Elsaied                                                    |
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : https://www.sparkfun.com/datasheets/LCD/HD44780.pdf               |
-| < SRAM USAGE               : 40-Byte  (32 Byte buffer , 4 byte time out , 4 byte internal used |
-| < PROGRAM USAGE            : 1938 Byte (1908 byte (969 Instruction)) + 30 Byte custom char     |                                    
+| < SRAM USAGE               : 36-Byte  (32 Byte buffer , 4 byte internal used                   |
+| < PROGRAM USAGE            : 1082 Byte (1052 byte (526 Instruction)) + 30 Byte custom char     |                                      
 | < Hardware Usage           : GPIO                                                              |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
@@ -31,6 +31,14 @@
 #ifndef  LCD_NUMBER_OF_BYTE
 #define  LCD_NUMBER_OF_BYTE      16
 #endif
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               <LCD  Text Alignment>                                                 |
+ -------------------------------------------------------------------------------------------------------
+ | < discuss :  this micro is call in pos write buffer the data centered in lcd                        |
+ -------------------------------------------------------------------------------------------------------
+ */
+#define  LCD_TEXT_CENTER         (0xFF)
 /*
  --------------------------------------------------------------------------------------------------
  |                           < LCD Address of Lines  >                                            | 

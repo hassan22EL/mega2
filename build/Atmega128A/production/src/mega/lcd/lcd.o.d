@@ -1,6 +1,5 @@
 build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  build/Atmega128A/production/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  src/mega/lcd/../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
@@ -17,8 +16,8 @@ build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  src/mega/lcd/../../../inc/mega/../resource.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
  src/mega/lcd/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h \
- d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/lcd/../../../inc/mega/buffers.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
@@ -46,8 +45,6 @@ build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  src/mega/lcd/../../../inc/mega/ds1307.h \
  src/mega/lcd/../../../inc/mega/keypad.h \
  src/mega/lcd/../../../inc/mega/csma.h
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/mega/lcd/../../../inc/mega.h:
 
@@ -81,9 +78,9 @@ src/mega/lcd/../../../inc/mega/../mega.h:
 
 src/mega/lcd/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\nursemaster.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\nursemaster.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcd\exambles\lcd.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
