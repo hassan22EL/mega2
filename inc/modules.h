@@ -182,7 +182,7 @@
  |                                : DS1307_MODE_24H  DS1307 work witch normal clock              |
  | < DS1307_PERDIOC_READ_PER_MIN  : DS1307 Read clock every a min clock                          |
  | < SRAM USAGE                   : 21-Byte                                                      |  
- | < PROGRAM USAGE                : 1378 Byte (689 Instruction)                                  |
+ | < PROGRAM USAGE                : 1244 Byte (689 Instruction)                                  |
  | < @note                        : in this version not support a 12 hour clock operation        |                                                                                                              
  -------------------------------------------------------------------------------------------------
  */

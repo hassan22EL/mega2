@@ -11,7 +11,7 @@
 | < SRAM_USAGE             : 13 Byte                                                     |
 | < PROGRAM_USAGE          : 678 byte (339 Instruction)                                  |
 | < Hardware Usage         : Timer 0                                                     |
-| < File Created          : 24-10-2022                                                   |
+| < File Created           : 24-10-2022                                                  |
 -------------------------------------------------------------------------------------------
  */
 
