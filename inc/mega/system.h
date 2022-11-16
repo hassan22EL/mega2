@@ -448,6 +448,5 @@ static inline void sysSetPeriodMS(stTimer_TimeOut_t* psTimer, millis_t Period) {
 static inline void sysSetPeriodS(stTimer_TimeOut_t* psTimer, time_t Period) {
     psTimer->EndTime = systemNow() + Period;
 }
-
 #endif	/* XC_SYS_H */
 

@@ -1,6 +1,7 @@
 build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o: \
  src/mega/ds1307/example/ds1307.X/src/app.c \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  src/mega/ds1307/example/ds1307.X/src/../inc/app.h \
  src/mega/ds1307/example/ds1307.X/src/../inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
@@ -46,6 +47,8 @@ build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/ds1307.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/mega/ds1307/example/ds1307.X/src/../inc/app.h:
 

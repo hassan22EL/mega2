@@ -20,6 +20,7 @@
           <itemPath>inc/mega/keypad.h</itemPath>
           <itemPath>inc/mega/usart.h</itemPath>
           <itemPath>inc/mega/csma.h</itemPath>
+          <itemPath>inc/mega/lcdmenu.h</itemPath>
         </logicalFolder>
         <itemPath>inc/mega.h</itemPath>
         <itemPath>inc/resource.h</itemPath>
@@ -94,6 +95,11 @@
           </logicalFolder>
           <logicalFolder name="lcd" displayName="lcd" projectFiles="true">
             <itemPath>src/mega/lcd/lcd.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="lcdmnue" displayName="lcdmnue" projectFiles="true">
+            <logicalFolder name="example" displayName="example" projectFiles="true">
+            </logicalFolder>
+            <itemPath>src/mega/lcdmnue/lcdmnue.c</itemPath>
           </logicalFolder>
           <logicalFolder name="system" displayName="system" projectFiles="true">
             <logicalFolder name="examples" displayName="examples" projectFiles="true">

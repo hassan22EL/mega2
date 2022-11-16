@@ -294,7 +294,7 @@ void ds1307Driver() {
     if (gu8ds1307States.b1) {
         if (ds1307Read()) {
             /*re- init timer period last read*/
-            sysSetPeriodS(&gsDs1307TimeOut, 60);
+            sysSetPeriodS(&gsDs1307TimeOut, DS1307_PERDIOC_READ);
             gu8ds1307States.b1 = 0;
             gu8ds1307States.b2 = 0; /*write operation with verification is done*/
         }
