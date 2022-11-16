@@ -73,17 +73,6 @@ uint8_t _digitalPinRead(gpio_t pin) {
         return GPIO_LOW;
 }
 
-/* 
- * ******************************************************************************
- *                        internal_digitalWrite2                                        *
- * ******************************************************************************
- * benfit : write out of the pin (low or high or toggle) low write is GPIO_LOW and 
- *        : write GPIO_HIGH is pin high and write GPIO_TGL pin is toggle
- * @param pin   : pin address of gpio
- * @param value : type of out number (GPIO_LOW,GPIO_HIGH,GPIO_TGL)
- * @return      : void
- */
-
 /*
  --------------------------------------------------------------------------------------------------
  |                                 < _digitalPinWrite >                                           |
