@@ -29,10 +29,10 @@ build/Atmega128A/production/src/mega.o.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
- src/../inc/mega/gpio.h src/../inc/mega/system.h src/../inc/mega/usart.h \
- src/../inc/mega/lcd.h src/../inc/mega/twi.h src/../inc/mega/exEprom.h \
- src/../inc/mega/time.h src/../inc/mega/ds1307.h src/../inc/mega/keypad.h \
- src/../inc/mega/csma.h
+ src/../inc/mega/gpio.h src/../inc/mega/system.h src/../inc/mega/time.h \
+ src/../inc/mega/usart.h src/../inc/mega/lcd.h src/../inc/mega/twi.h \
+ src/../inc/mega/exEprom.h src/../inc/mega/ds1307.h \
+ src/../inc/mega/keypad.h src/../inc/mega/csma.h
 
 src/../inc/mega.h:
 
@@ -108,6 +108,8 @@ src/../inc/mega/gpio.h:
 
 src/../inc/mega/system.h:
 
+src/../inc/mega/time.h:
+
 src/../inc/mega/usart.h:
 
 src/../inc/mega/lcd.h:
@@ -115,8 +117,6 @@ src/../inc/mega/lcd.h:
 src/../inc/mega/twi.h:
 
 src/../inc/mega/exEprom.h:
-
-src/../inc/mega/time.h:
 
 src/../inc/mega/ds1307.h:
 

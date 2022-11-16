@@ -3,325 +3,360 @@
 |                          < Module  Definition >                                        | 
 ------------------------------------------------------------------------------------------
 | < FILE                   : system.c                                                    |                                  
-| < Author                 : overflow problem solutions created by eng-Ahmed Saied       |
+| < Author                 : overflow problem solutions created by eng /Ahmed Saied      |
 |                          : and most implementations by Hassan Elsaied                  | 
 | < Version                : Mega2v241022                                                |
 | < References             : no-used references in this documents                        |
-| < SRAM_USAGE             : 14 Byte                                                     |
-| < PROGRAM_USAGE          : 634 byte (317 Instruction)                                  |
+| < SRAM_USAGE             : 13 Byte                                                     |
+| < PROGRAM_USAGE          : 678 byte (339 Instruction)                                  |
 | < Hardware Usage         : Timer 0                                                     |
-| < File Created           : 24-10-2022                                                  |
+| < File Created          : 24-10-2022                                                   |
 -------------------------------------------------------------------------------------------
  */
+
 
 #ifndef XC_SYS_H
 #define	XC_SYS_H
 
 
 #include "../mega.h"
-/*work timer as */
-/* 
- * ******************************************************************************
- *                        Macro  Definition                                     *
- * ******************************************************************************
+
+
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < Macro Definition>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
+
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                <  timer Access   >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < Description          : perodic timer struct                                                                            |
+ | < Uasge                : 8 Byte                                                                                          |
+ | < param Chip           : is a store current Time                                                                         |
+ | < param address        : store difference time between current time and  time to be arriver                              |             
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 
 
-
-/* 
- * ******************************************************************************
- *                          I/O Clock                                           *
- * ******************************************************************************
- */
-#ifndef F_CPU 
-#warning Please define F_CPU 
-#endif 
-
-/* 
- * ******************************************************************************
- *                      setupHwTimer0                                 *
- * ******************************************************************************
- * @param  Timer  :is a store current Time 
- * @param  Period : store difference time between current time and  time to be arriver
- * 
- */
 typedef struct {
     uint32_t Timer;
     uint32_t Period;
 } stTimer_t;
 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                <  timer out   >                                                                          |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < Description          : time out struct                                                                                 |
+ | < Uasge                : 4 Byte                                                                                          |
+ | < param EndTime        : save a next time to generate event when arriver                                                 |             
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
+
+
 typedef struct {
     uint32_t EndTime;
 } stTimer_TimeOut_t;
 /*
- * ******************************************************************************
- *                      Functions Declarations                                  *
- * ******************************************************************************
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                <  Functions Declarations    >                                                            |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 
-/* 
- * ******************************************************************************
- *                      startHwTimer0                                 *
- * ******************************************************************************
- * enable the CTC mode interrupt 
- * enable  general interrupt
- * and set timer value
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < startHwTimer0 >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void startHwTimer0                                                                                | 
+ | < @Description       : enable timer interrupt and general interrupt                                                      |                                                                 |                    
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 static inline void startHwTimer0();
-/* 
- * ******************************************************************************
- *                       stopHwTimer0                                  *
- * ******************************************************************************
- * disable the CTC mode interrupt 
- * clear value from CTC register
- * clear perscaller 
- * @return void 
- * @note : is call this function the any driver  based general interrupt 
- *       : is not working after execution this function.
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < stopHwTimer0 >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void stopHwTimer0                                                                                 | 
+ | < @Description       : disable timer interrupt and general interrupt is call this function the any driver  based general |
+ |                      : interrupt  is not working after execution this function.                                          |                                                                                   
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 static inline void stopHwTimer0();
-/* 
- * ******************************************************************************
- *                       sysSetPeriodUs                                  *
- * ******************************************************************************
- * @benfit       : set period micro in the software timer 
- * @param psTimer: pointer of software Timer 
- * @param Period : period required y microsecond
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysSetPeriodUs >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysSetPeriodUs                                                                               | 
+ | < @Description       : set period micro in the software timer                                                            |
+ | < @Param psTimer     : pointer of time out Timer                    :                                                    |
+ | < @Param Period      : period required y microsecond                                                                     |                                                                              
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 static inline void sysSetPeriodUs(stTimer_TimeOut_t *psTimer, micros_t Period);
-/* 
- * ******************************************************************************
- *                       sysSetPeriodMS                                          *
- * ******************************************************************************
- * @benfit       : set period by ms in the software timer 
- *@param psTimer: pointer of software Timer 
- * @param Period : period required y ms
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysSetPeriodMs >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysSetPeriodMs                                                                               | 
+ | < @Description       : set period ms in the software timer                                                            |
+ | < @Param psTimer     : pointer of time out Timer                    :                                                    |
+ | < @Param Period      : period required y ms                                                                              |                                                                              
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
-
 static inline void sysSetPeriodMS(stTimer_TimeOut_t * psTimer, millis_t Period);
-/* 
- * ******************************************************************************
- *                       sysSetPeriodS                                          *
- * ******************************************************************************
- * @benfit       : set period by second in the software timer 
- * @param psTimer: pointer of software Timer 
- * @param Period : period required by second
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysSetPeriodS >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysSetPeriodS                                                                                | 
+ | < @Description       : set period seconds in the software timer                                                          |
+ | < @Param psTimer     : pointer of time out Timer                    :                                                    |
+ | < @Param Period      : period required y seconds                                                                         |                                                                              
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 static inline void sysSetPeriodS(stTimer_TimeOut_t * psTimer, time_t Period);
-/* 
- * ******************************************************************************
- *                       systemInit                                          *
- * ******************************************************************************
- * @benfit     :reset all data of the system driver
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemInit >                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitUS                                                                               | 
+ | < @Description       : initialization all variables in this modules with default value                                   |                                
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 
 void systemInit();
-/* 
- * ******************************************************************************
- *                       sysTimerInitMS                                          *
- * ******************************************************************************
- * @benfit          : assignment period and data delay of periodic software timer by micro system
- * @param psTimer   : pointer of software Timer 
- * @param Period    : period required by mirco    
- * @param Delay     : delay required before start periodic timer by micro count
- * @return  void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerInitUS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitUS                                                                               | 
+ | < @Description       : Periodic timer initialization by period and current time and delay before start period            |
+ |                      : when generate an event every 10us the the inti current micro second assignment into software time |
+ |                      : in time value and assignment period (10us ) into period value after delay can be start task       |
+ | < @Param psTimer     : pointer of software Timer                                                                         | 
+ | < @Param Delay       : value of delay (task can be start after this dealy in first run by micro seconds                  |  
+ | < @Param Period      : task run every this value  by micro seconds                                                       |                                     
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerInitUs(stTimer_t *psTimer, micros_t Delay, micros_t Period);
-/* 
- * ******************************************************************************
- *                       sysTimerInitMS                                          *
- * ******************************************************************************
- * @benfit       :assignment period and data delay of periodic software timer by ms
- * @param psTimer: pointer of software Timer 
- * @param Period : period required by ms
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerInitMS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitMS                                                                               | 
+ | < @Description       : Periodic timer initialization by period and current time and delay before start period            |
+ |                      : when generate an event every 1ms the the inti current milli seconds assignment into software time |
+ |                      : in time value and assignment period (1 ms ) into period value after delay can be start task       |
+ | < @Param psTimer     : pointer of software Timer                                                                         | 
+ | < @Param Delay       : value of delay (task can be start after this dealy in first run by milli seconds                  |  
+ | < @Param Period      : task run every this value  by milli seconds                                                       |                                     
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 void sysTimerInitMS(stTimer_t *psTimer, millis_t Delay, millis_t Period);
-/* 
- * ******************************************************************************
- *                        sysTimerInitS                                          *
- * ******************************************************************************
- * @benfit       :assignment period and data delay of periodic software timer by seconds
- * @param psTimer: pointer of software Timer 
- * @param Period : period required by seconds
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerInitS >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitS                                                                                | 
+ | < @Description       : Periodic timer initialization by period and current time and delay before start period            |
+ |                      : when generate an event every 1sec the the inti current seconds assignment into software time      |
+ |                      : in time value and assignment period (1 second ) into period value after delay can be start task   |
+ | < @Param psTimer     : pointer of software Timer                                                                         | 
+ | < @Param Delay       : value of delay (task can be start after this dealy in first run   run by  seconds                 |  
+ | < @Param Period      : task run every this value by seconds                                                              |                                     
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 void sysTimerInitS(stTimer_t *psTimer, time_t Delay, time_t Period);
-/* 
- * ******************************************************************************
- *                       sysIsTimeoutUs                                          *
- * ******************************************************************************
- * @benfit        : get current value from timer 0 counter and return micros and 
- *                : check of the period is expired or not by compared millis system and timer stored value
- *                : the time out is return  after expired ms period
- * @param psTimer : pointer of software timer 
- * @return        : 1  when timer doesn't  expired period
- *                : 0  when timer does expired period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysIsTimeoutUS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysIsTimeoutUS                                                                            | 
+ | < @Description       : check of the period is expired or not by compared micro secomds system and timer stored value     |
+ |                      : the time out is return  after expired micro second period                                         |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
+ | < @return            : 0 when timer does expired period                                                                  |
+ |                      : 1 when timer does expired period                                                                  |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutUs(stTimer_TimeOut_t *psTimer);
-/* 
- * ******************************************************************************
- *                       sysIsTimeoutMs                                          *
- * ******************************************************************************
- * @benfit        : check of the period is expired or not by compared micro system and timer stored value
- *                : the time out is return  after expired ms period
- * @param psTimer : pointer of software timer 
- * @return        : 1  when timer doesn't  expired period
- *                : 0  when timer does expired period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysIsTimeoutMS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysIsTimeoutMS                                                                            | 
+ | < @Description       : check of the period is expired or not by compared milli secomds system and timer stored value     |
+ |                      : the time out is return  after expired milli second period                                         |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
+ | < @return            : 0 when timer does expired period                                                                  |
+ |                      : 1 when timer does expired period                                                                  |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutMs(stTimer_TimeOut_t *psTimer);
-/* 
- * ******************************************************************************
- *                       sysIsTimeoutS                                          *
- * ******************************************************************************
- * @benfit        : check of the period is expired or not by compared second system  system and timer stored value
- *                : the time out is return  after expired second period
- * @param psTimer : pointer of software timer 
- * @return        : 1  when timer doesn't  expired period
- *                : 0  when timer does expired period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysIsTimeoutS >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysIsTimeoutS                                                                             | 
+ | < @Description       : check of the period is expired or not by compared second system and timer stored value            |
+ |                      : the time out is return  after expired second period                                               |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
+ | < @return            : 0 when timer does expired period                                                                  |
+ |                      : 1 when timer does expired period                                                                  |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
+
 uint8_t sysIsTimeoutS(stTimer_TimeOut_t *psTimer);
 
-/* 
- * ******************************************************************************
- *                      setupHwTimer0                                 *
- * ******************************************************************************
- * set perscaller 
- * set timer in CTC 
- * and set timer value 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < setupHwTimer0 >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void setupHwTimer0                                                                                | 
+ | < @Description       : configuration of timer 0                                                                          |                                                                 |                    
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void setupHwTimer0();
-/* 
- * ******************************************************************************
- *                       sysTimerResetUS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart Us
- * @param psTimer : pointer of software timer 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerResetUS>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerResetUS                                                                              | 
+ | < @Description       : periodic timer is restart micro seconds                                                           |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerResetUS(stTimer_t *psTimer);
-
-/* 
- * ******************************************************************************
- *                       sysTimerResetMS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart ms
- * @param psTimer : pointer of software timer 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerResetMS>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerResetMS                                                                              | 
+ | < @Description       : periodic timer is restart milli seconds                                                           |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerResetMS(stTimer_t *psTimer);
 
-/* 
- * ******************************************************************************
- *                       sysTimerReseS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart seconds
- * @param psTimer : pointer of software timer 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerResetS>                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerResetS                                                                               | 
+ | < @Description       : periodic timer is restart seconds                                                                 |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerResetS(stTimer_t *psTimer);
-/* 
- * ******************************************************************************
- *                       sysTimerCheckUs                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart with us
- * @param psTimer : pointer of software timer 
- * @return        :0 when the periodic period is done and restart the next period by same value 
- *                :1 when timer doesn't  expired current period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerCheckUs>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysTimerCheckUs                                                                           | 
+ | < @Description       : periodic timer is restart with us                                                                 |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : 0 when the periodic period is done and restart the next period by same value                      |
+ |                      : 1 when timer doesn't  expired current period                                                      |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysTimerCheckUs(stTimer_t *psTimer);
-/* 
- * ******************************************************************************
- *                       sysTimerCheckMs                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart with ms 
- * @param psTimer : pointer of software timer 
- * @return        :0 when the periodic period is done and restart the next period by same value 
- *                :1 when timer doesn't  expired current period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerCheckMS>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysTimerCheckMs                                                                           | 
+ | < @Description       : periodic timer is restart with ms                                                                 |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : 0 when the periodic period is done and restart the next period by same value                      |
+ |                      : 1 when timer doesn't  expired current period                                                      |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysTimerCheckMs(stTimer_t *psTimer);
-/* 
- * ******************************************************************************
- *                       sysTimerCheckS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart with second
- * @param psTimer : pointer of software timer 
- * @return        :0 when the periodic period is done and restart the next period by same value 
- *                :1 when timer doesn't  expired current period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerCheckS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysTimerCheckS                                                                            | 
+ | < @Description       : periodic timer is restart with second                                                             |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : 0 when the periodic period is done and restart the next period by same value                      |
+ |                      : 1 when timer doesn't  expired current period                                                      |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysTimerCheckS(stTimer_t *psTimer);
-/* 
- * ******************************************************************************
- *                       getSystemTick                                          *
- * ******************************************************************************
- * @benfit     : set current timestamp from external sources for example 
- *             : up date no from computer or RTC module or network 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysUpdateNow >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysUpdateNow                                                                                 |  
+ | < @Description       : set current timestamp from external sources for example                                           |  
+ | < @Param now         : up date no from computer or RTC module or network                                                 |                    
+ | < @return            : number of milli seconds                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysUpdateNow(time_t now);
-/* 
- * ******************************************************************************
- *                       getSystemMillis                                          *
- * ******************************************************************************
- * @benfit     : get current millis data of the system 
- * @return     : get current millis 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemMillis >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : millis_t systemMillis                                                                             |  
+ | < @Description       : current time by milli seconds                                                                     |                                                                 |                    
+ | < @return            : number of milli seconds                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 
 millis_t systemMillis();
-/* 
- * ******************************************************************************
- *                       sysMicros                                          *
- * ******************************************************************************
- * @benfit        : get current micros form hardware timer 
- * @return        : time per microsecond
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemMicros >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : micros_t systemMicros                                                                             |  
+ | < @Description       : current time by micro seconds                                                                     |                                                                 |                    
+ | < @return            : number of micro seconds                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 micros_t systemMicros();
-
-/* 
- * ******************************************************************************
- *                       sysGetCurrent Time                                          *
- * ******************************************************************************
- * @benfit       : get time stamp value
- * @return       : current time stamp step is one seconde
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemNow >                                                                            |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : time_t systemNow                                                                                  |  
+ | < @Description       : current time by seconds                                                                           |                                                                 |                    
+ | < @return            : number of seconds                                                                                 |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 time_t systemNow();
-/* 
- * ******************************************************************************
- *                       systemRTC Time                                          *
- * ******************************************************************************
- * @benfit       : update the rtc function
- *               : this function run in back ground please don't call the function
- * @return       : current time stamp step is one second
- */
-void systemRTC();
+
 
 /*
- * ******************************************************************************
- *                   in lineFunctions Implementations                           *
- * ******************************************************************************
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                <   inlineFunctions Implementations    >                                                  |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 
-
-/* 
- * ******************************************************************************
- *                      startHwTimer0                                 *
- * ******************************************************************************
- * enable the CTC mode interrupt 
- * enable  general interrupt
- * and set timer value
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < startHwTimer0 >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void startHwTimer0                                                                                | 
+ | < @Description       : enable timer interrupt and general interrupt                                                      |                                                                 |                    
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 static inline void startHwTimer0() __attribute__((always_inline, unused));
 
@@ -339,16 +374,15 @@ static inline void startHwTimer0() {
     sei();
 }
 
-/* 
- * ******************************************************************************
- *                       stopHwTimer0                                  *
- * ******************************************************************************
- * disable the CTC mode interrupt 
- * clear value from CTC register
- * clear perscaller 
- * @return void 
- * @note : is call this function the any driver  based on general interrupt 
- *       : is not working after execution this function.
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < stopHwTimer0 >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void stopHwTimer0                                                                                 | 
+ | < @Description       : disable timer interrupt and general interrupt is call this function the any driver  based general |
+ |                      : interrupt  is not working after execution this function.                                          |                                                                                   
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 static inline void stopHwTimer0() __attribute__((always_inline, unused));
 
@@ -366,15 +400,16 @@ static inline void stopHwTimer0() {
 #endif
 }
 
-
-/* 
- * ******************************************************************************
- *                       sysSetPeriod                                  *
- * ******************************************************************************
- * @benfit       : set period tick in the software timer 
- * @param psTimer: pointer of software Timer 
- * @param Period : period required y microsecond
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysSetPeriodUs >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysSetPeriodUs                                                                               | 
+ | < @Description       : set period micro in the time out timer                                                            |
+ | < @Param psTimer     : pointer of software Timer                    :                                                    |
+ | < @Param Period      : period required y microsecond                                                                     |                                                                              
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 static inline void sysSetPeriodUs(stTimer_TimeOut_t *psTimer, micros_t Period) __attribute__((always_inline, unused));
 
@@ -384,14 +419,16 @@ static inline void sysSetPeriodUs(stTimer_TimeOut_t *psTimer, micros_t Period) {
 
 }
 
-/* 
- * ******************************************************************************
- *                       sysSetPeriodMS                                          *
- * ******************************************************************************
- * @benfit       : set period by ms in the software timer 
- *@param psTimer: pointer of software Timer 
- * @param Period : period required by ms
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysSetPeriodMs >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysSetPeriodMs                                                                               | 
+ | < @Description       : set period ms in the time out timer                                                               |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |
+ | < @Param Period      : period required y ms                                                                              |                                                                              
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 static inline void sysSetPeriodMS(stTimer_TimeOut_t *psTimer, millis_t Period) __attribute__((always_inline, unused));
 
@@ -399,16 +436,17 @@ static inline void sysSetPeriodMS(stTimer_TimeOut_t* psTimer, millis_t Period) {
     psTimer->EndTime = systemMillis() + Period;
 }
 
-/* 
- * ******************************************************************************
- *                       sysSetPeriodS                                          *
- * ******************************************************************************
- * @benfit       : set period by second in the software timer 
- * @param psTimer: pointer of software Timer 
- * @param Period : period required by second
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysSetPeriodS >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysSetPeriodS                                                                                | 
+ | < @Description       : set period seconds in the software timer                                                          |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |
+ | < @Param Period      : period required y seconds                                                                         |                                                                              
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 static inline void sysSetPeriodS(stTimer_TimeOut_t* psTimer, time_t Period) {
     psTimer->EndTime = systemNow() + Period;
 }

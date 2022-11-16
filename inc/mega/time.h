@@ -1,74 +1,90 @@
 
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   time.h
- * Author       :   Hassan Elsaied
- * Data Memory  :   total byte used 0 Byte  
- * Program Space:   under upgrade
- * Version      :   Mega2v241022
- * Start Data   :   24-10-2022  20:00:00
- * End Data     :   24-10-2022  23:48:00
- * Work Time    :   5-hour
- * Comments     :   no comment
- *  
+/*
+ -----------------------------------------------------------------------------------------------------------------
+ |                          <Module  Definition >                                                                |  
+ -----------------------------------------------------------------------------------------------------------------
+ | < FILE                   : time.h                                                                             |                                  
+ | < Author                 : Hassan Elsaied                                                                     |
+ | < Version                : Mega2v241022                                                                       |
+ | < References             : https://www.sizes.com/time/year.htm#anomalistic                                    |
+ |                          : http://www.astropixels.com/ephemeris/perap/perap1901.html                          |                                
+ |                          : https://en.wikipedia.org/wiki/Apsis                                                |
+ |                          : https://study.com/learn/lesson/orbital-eccentricity-planets-earth.html             |
+ |                          : https://www.glib.com/season_dates.html                                             |
+ | < SRAM_USAGE             : at create tm object is 7 byte used                                                 |
+ | < PROGRAM_USAGE          :                                                                                    |
+ | < Hardware Usage         : no-hardware uused                                                                  |
+ | < File Created           : 24-10-2022                                                                         |
+  -----------------------------------------------------------------------------------------------------------------
  */
 
-
+#include "../mega.h"
 
 #ifndef TIME_H
 #define	TIME_H
-/* ***************************************************************************************************************
- *                                 Micros                                                                   *
- * ***************************************************************************************************************
- */
 
 /*
- * *******************************************************************
- *                             index buffer                          *
- * *******************************************************************
- * */
-
-typedef enum {
-    rtc_sec = 0,
-    rtc_min = 1,
-    rtc_hour = 2,
-    rtc_dayw = 3,
-    rtc_daym = 4,
-    rtc_month = 5,
-    rtc_year = 6
-} rtc_buffer_index;
-
-typedef struct _tm {
-    uint8_t sec ;
-    uint8_t min;
-    uint8_t hour;
-    uint8_t dayw;
-    uint8_t daym;
-    uint8_t month;
-    uint8_t year;
-}stm_t;
-
-
+ ---------------------------------------------------------------------------------------------------------
+ |                                <  tm struct   >                                                       |
+ ---------------------------------------------------------------------------------------------------------
+ | < Description           : tm struct                                                                   |
+ | < Uasge                 : 9 Byte                                                                      |
+ | < @param tm_sec         : seconds after the minute - [ 0 to 59 ]                                      |
+ | < @param tm_min         : minutes after the hour - [ 0 to 59 ]                                        |
+ | < @param tm_hour        : hours since midnight - [ 0 to 23 ]                                          |
+ | < @param tm_mday        : day of the month - [ 1 to 31 ]                                              |
+ | < @param tm_wday        : days since Sunday - [ 0 to 6 ]                                              |
+ | < @param tm_mon         : months since January - [ 0 to 11 ]                                          |     
+ | < @param tm_year        : years since 2000 [ 0 to 99 ]                                                |                       
+ | < @param tm_yday        : days since January 1 - [ 0 to 365 ]                                         |
+ --------------------------------------------------------------------------------------------------------
+ */
+typedef struct {
+    uint8_t tm_sec;
+    uint8_t tm_min;
+    uint8_t tm_hour;
+    uint8_t tm_mday;
+    uint8_t tm_wday;
+    uint8_t tm_mon;
+    uint8_t tm_year;
+    int16_t tm_yday;
+}tm_t;
 
 /*
- ****************************************************
- *                    Convert data to timestamp                     *
- * **************************************************
- * @param ptm : pointer to buffer of date data 
- * @return    : timestamp value based 2000
+ -----------------------------------------------------------------------------------------------------------------
+ |                                 < getTime >                                                                   |
+ -----------------------------------------------------------------------------------------------------------------
+ | < @Function          : time_t getTime                                                                         |
+ | < @Description       : convert current time form date to timestamp                                            |
+ | < @Param timeptr     : ponter of the date time struct                                                         | 
+ | < @return            : timestamp                                                                              |
+ -----------------------------------------------------------------------------------------------------------------
  */
-
-time_t rtcConvertDateToTime(uint8_t *ptm);
+time_t getTime(tm_t *timeptr);
 /*
- ************************************************************
- *            Convert timestamp to data                     *
- * **********************************************************
- * @param time    : timestamp value since 2000
- * @return ptm    : pointer to buffer to store date 
+ -----------------------------------------------------------------------------------------------------------------
+ |                                 < getDate >                                                                   |
+ -----------------------------------------------------------------------------------------------------------------
+ | < @Function          : void getDate                                                                           |
+ | < @Description       : convert current time form date to timestamp                                            |
+ | < @Param timeptr     : ponter of the date time struct                                                         | 
+ | < @Param timer       : pointer of the timestamp                                                               |
+ | < @return            : void                                                                                   |
+ -----------------------------------------------------------------------------------------------------------------
  */
-void rtcConvertTimeToDate(time_t Time, uint8_t *ptm);
+void getDate(time_t *timer, tm_t *timeptr);
 
+/*
+ -----------------------------------------------------------------------------------------------------------------
+ |                                 < PrintDate >                                                                 |
+ -----------------------------------------------------------------------------------------------------------------
+ | < @Function          : void PrintDate                                                                         |
+ | < @Description       : convert the date to assii  format sat jan 1  00:00:00                                                            |
+ | < @Param timeptr     : ponter of the date time struct                                                         | 
+ | < @Param buffer      : pinter to store date                                                                   |
+ | < @return            : void                                                                                   |
+ -----------------------------------------------------------------------------------------------------------------
+ */
+void PrintDate(tm_t * timeptr, char *buffer);
 #endif	/* TIME_H */
 

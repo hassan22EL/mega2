@@ -38,11 +38,11 @@ build/Atmega128A/production/src/mega/cmsa/csma.o.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  src/mega/cmsa/../../../inc/mega/gpio.h \
  src/mega/cmsa/../../../inc/mega/system.h \
+ src/mega/cmsa/../../../inc/mega/time.h \
  src/mega/cmsa/../../../inc/mega/usart.h \
  src/mega/cmsa/../../../inc/mega/lcd.h \
  src/mega/cmsa/../../../inc/mega/twi.h \
  src/mega/cmsa/../../../inc/mega/exEprom.h \
- src/mega/cmsa/../../../inc/mega/time.h \
  src/mega/cmsa/../../../inc/mega/ds1307.h \
  src/mega/cmsa/../../../inc/mega/keypad.h \
  src/mega/cmsa/../../../inc/mega/csma.h
@@ -123,6 +123,8 @@ src/mega/cmsa/../../../inc/mega/gpio.h:
 
 src/mega/cmsa/../../../inc/mega/system.h:
 
+src/mega/cmsa/../../../inc/mega/time.h:
+
 src/mega/cmsa/../../../inc/mega/usart.h:
 
 src/mega/cmsa/../../../inc/mega/lcd.h:
@@ -130,8 +132,6 @@ src/mega/cmsa/../../../inc/mega/lcd.h:
 src/mega/cmsa/../../../inc/mega/twi.h:
 
 src/mega/cmsa/../../../inc/mega/exEprom.h:
-
-src/mega/cmsa/../../../inc/mega/time.h:
 
 src/mega/cmsa/../../../inc/mega/ds1307.h:
 

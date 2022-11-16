@@ -12,10 +12,10 @@
 |                          : 9-Byte TWI-interface                                        |
 |                          : 7-Byte Internal Buffer                                      |
 |                          : 4-Byte Time Out                                             |
-| < PROGRAM USAGE          : 1888 Byte (944 Instruction)                                 |
+| < PROGRAM USAGE          : 1378 Byte (689 Instruction)                                 |
 | < Hardware Usage         : I2C  as a master                                            |
 | < File Created           : 24-10-2022                                                  |
--------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
  */
 
 #include <stdint-gcc.h>
@@ -78,6 +78,21 @@
 #define  DS1307_MONTH_ADDRESS          (0x05)
 #define  DS1307_YEAR_ADDRESS           (0x06)
 #define  DS1307_CONTROL_ADDRESS        (0x07)
+
+/*
+ -------------------------------------------------------------------------------------------------------
+ |                               < Register index  >                                                     |
+ -------------------------------------------------------------------------------------------------------
+ */
+typedef enum {
+    ds1307_sec = 0,
+    ds1307_min = 1,
+    ds1307_hour = 2,
+    ds1307_dayw = 3,
+    ds1307_daym = 4,
+    ds1307_month = 5,
+    ds1307_year = 6
+} rtc_buffer_index;
 
 /*
  -------------------------------------------------------------------------------------------------------
@@ -155,18 +170,6 @@ static twi_package_t gstDs1307TwiPag;
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < ds1307Convertdecimal_BCD  >                                             |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void  ds1307Convertdecimal_BCD                                                |
- | < @Description       : convert buffer decimal to bcd or convert buffer bcd to decimal                |
- | < @param buf         : pointer to buffer date to convert contains                                    |
- | < @param state       : state is 0 bcd to decimal and 1 convert decimal to bcd                        |
- | < @return            : void                                                                          |
- --------------------------------------------------------------------------------------------------------
- */
-static void ds1307Convertdecimal_BCD(uint8_t *buf, uint8_t state);
-/*
- --------------------------------------------------------------------------------------------------------
  |                            < ds1307Write  >                                                          |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void  ds1307Write                                                             |
@@ -190,31 +193,6 @@ static uint8_t ds1307Read();
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < ds1307Convertdecimal_BCD  >                                             |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void  ds1307Convertdecimal_BCD                                                |
- | < @Description       : convert buffer decimal to bcd or convert buffer bcd to decimal                |
- | < @param buf         : pointer to buffer date to convert contains                                    |
- | < @param state       : state is 0 bcd to decimal and 1 convert decimal to bcd                        |
- | < @return            : void                                                                          |
- --------------------------------------------------------------------------------------------------------
- */
-static void ds1307Convertdecimal_BCD(uint8_t *buf, uint8_t state) {
-    if (state) {
-
-        for (uint8_t i = 0; i < DS1307_DATA_LENGTH; i++)
-            buf[i] = decToBcd(buf[i]);
-
-    } else {
-
-        for (uint8_t i = 0; i < DS1307_DATA_LENGTH; i++)
-            buf[i] = BcdToDec(buf[i]);
-
-    }
-}
-
-/*
- --------------------------------------------------------------------------------------------------------
  |                            < ds1307Write  >                                                          |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void  ds1307Write                                                             |
@@ -224,26 +202,13 @@ static void ds1307Convertdecimal_BCD(uint8_t *buf, uint8_t state) {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t ds1307Write() {
-    if (!gu8ds1307States.b2) {
-        /*convert from timestamp to date*/
-        ds1307Convertdecimal_BCD(gu8ds1307Buffer, 1);
-        gu8ds1307Buffer[rtc_sec] |= 0x80;
-        gu8ds1307States.b2 = 1;
-        /*set time out*/
-        sysSetPeriodMS(&gsDs1307TimeOut, 30);
-
-    } else {
-        if (twi_master_write(&gstDs1307TwiPag) == TWI_SUCCESS) {
-            gu8ds1307States.b2 = 0;
-            /*update now by buffer*/
-            rtcConvertTimeToDate(systemNow(), gu8ds1307Buffer);
-            return (1);
-        }
-        if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
-            /*call back memory error*/
-            gu8ds1307States.b2 = 0;
-            return (1);
-        }
+    if (twi_master_write(&gstDs1307TwiPag) == TWI_SUCCESS) {
+        return (1);
+    }
+    if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
+        /*call back memory error*/
+        gu8ds1307States.b2 = 0;/*write operation is done with error*/
+        return (1);
     }
     return (0);
 }
@@ -259,18 +224,25 @@ static uint8_t ds1307Write() {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t ds1307Read() {
+    tm_t tm;
+    time_t time;
     if (twi_master_read(&gstDs1307TwiPag) == TWI_SUCCESS) {
         /*convert bcd to decimal*/
-        ds1307Convertdecimal_BCD(gu8ds1307Buffer, 0);
-        /*set system now*/
-        sysUpdateNow(rtcConvertDateToTime(gu8ds1307Buffer));
+        tm.tm_sec = BcdToDec(gu8ds1307Buffer[ds1307_sec] & 0x7F);
+        tm.tm_min = BcdToDec(gu8ds1307Buffer[ds1307_min] & 0x7F);
+        tm.tm_hour = BcdToDec(gu8ds1307Buffer[ds1307_hour] & 0x3F);
+        tm.tm_wday = BcdToDec(gu8ds1307Buffer[ds1307_dayw] & 0x07);
+        tm.tm_mday = BcdToDec(gu8ds1307Buffer[ds1307_daym] & 0x3F);
+        tm.tm_mon = BcdToDec(gu8ds1307Buffer[ds1307_month] & 0x1F);
+        tm.tm_year = BcdToDec(gu8ds1307Buffer[ds1307_year]);
+        time = getTime(&tm);
+        sysUpdateNow(time);
         return (1);
     }
     if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
         /*call back Ds1307 error*/
         return (1);
     }
-
     return (0);
 }
 
@@ -317,18 +289,20 @@ void ds1307Init() {
 void ds1307Driver() {
     if (gu8ds1307States.b0) {
         if (ds1307Write()) {
-            /*re- init timer period last read*/
-            sysSetPeriodS(&gsDs1307TimeOut, DS1307_PERDIOC_READ);
             gu8ds1307States.b0 = 0;
+            /*active read to update time with new time set*/
+            gu8ds1307States.b1 = 1;
+            /*re- init timer period last read*/
+            sysSetPeriodMS(&gsDs1307TimeOut, 30);
         }
         return;
     }
-
     if (gu8ds1307States.b1) {
         if (ds1307Read()) {
             /*re- init timer period last read*/
-            sysSetPeriodS(&gsDs1307TimeOut, DS1307_PERDIOC_READ);
+            sysSetPeriodS(&gsDs1307TimeOut, 60);
             gu8ds1307States.b1 = 0;
+            gu8ds1307States.b2 = 0; /*write operation with verification is done*/
         }
         return;
     }
@@ -352,7 +326,8 @@ void ds1307Driver() {
  --------------------------------------------------------------------------------------------------------
  */
 uint8_t ds1307IsSetDone() {
-    return gu8ds1307States.b0;
+    /*read and write is done*/
+    return gu8ds1307States.b2;
 }
 
 /*
@@ -365,17 +340,18 @@ uint8_t ds1307IsSetDone() {
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-void ds1307SetDate(stm_t *tm) {
-    gu8ds1307Buffer[rtc_sec] = tm->sec;
-    gu8ds1307Buffer[rtc_min] = tm->min;
-    gu8ds1307Buffer[rtc_hour] = tm->hour;
-    gu8ds1307Buffer[rtc_dayw] = tm->dayw;
-    gu8ds1307Buffer[rtc_daym] = tm->daym;
-    gu8ds1307Buffer[rtc_month] = tm->month;
-    gu8ds1307Buffer[rtc_year] = tm->year;
-    gu8ds1307States.b0 = 1;
+void ds1307SetDate(tm_t *tm) {
+    /*assign tm into internal tm*/
+    gu8ds1307Buffer[ds1307_sec] = decToBcd(tm->tm_sec) & 0x7F; // Clear CH bit in seconds register
+    gu8ds1307Buffer[ds1307_min] = decToBcd(tm->tm_min) & 0x7F;
+    gu8ds1307Buffer[ds1307_hour] = decToBcd(tm->tm_hour) & 0x3F;
+    gu8ds1307Buffer[ds1307_dayw] = decToBcd(tm->tm_wday + 1) & 0x07; /*start from 0 */
+    gu8ds1307Buffer[ds1307_daym] = decToBcd(tm->tm_mday) & 0x3F; /*start from 0 */
+    gu8ds1307Buffer[ds1307_month] = decToBcd(tm->tm_mon + 1) & 0x1F;
+    gu8ds1307Buffer[ds1307_year] = decToBcd(tm->tm_year);
+    sysSetPeriodMS(&gsDs1307TimeOut, 30);
+    gu8ds1307States.b0 = 1; /*active write operation */
+    gu8ds1307States.b2 = 1; /*reset after read operation*/
 }
-
-
 #endif
 #endif

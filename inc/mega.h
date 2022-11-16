@@ -53,11 +53,11 @@
 /*Modules*/
 #include "mega/gpio.h"
 #include "mega/system.h"
+#include "mega/time.h"
 #include "mega/usart.h"
 #include "mega/lcd.h"
 #include "mega/twi.h"
 #include "mega/exEprom.h"
-#include "mega/time.h"
 #include "mega/ds1307.h"
 #include "mega/keypad.h"
 #include "mega/csma.h"

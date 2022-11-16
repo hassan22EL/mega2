@@ -8,31 +8,55 @@
 |                          : and most implementations by Hassan Elsaied                  | 
 | < Version                : Mega2v241022                                                |
 | < References             : no-used references in this documents                        |
-| < SRAM_USAGE             : 14 Byte                                                     |
-| < PROGRAM_USAGE          : 634 byte (317 Instruction)                                  |
+| < SRAM_USAGE             : 13 Byte                                                     |
+| < PROGRAM_USAGE          : 678 byte (339 Instruction)                                  |
 | < Hardware Usage         : Timer 0                                                     |
 | < File Created          : 24-10-2022                                                   |
 -------------------------------------------------------------------------------------------
  */
 
+
 #include "../../../inc/mega.h"
-/* 
- * ******************************************************************************
- *                          max value of the timer                                              *
- * ******************************************************************************
- */
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  |                                  <I/O Clock checks>                                                                      |
+  ----------------------------------------------------------------------------------------------------------------------------
+#ifndef F_CPU 
+#warning Please define F_CPU 
+#endif 
+
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  |                                  <timer max value>                                                                       |
+  ----------------------------------------------------------------------------------------------------------------------------
 #define SYSTEM_MAX          (0x7FFFFFFFUL)
 #define SYSTEM_TIME_MAX     (0xFFFFFFFFUL)
-
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  |                                  <number of micro seconds per interrupt>                                                 |
+  ----------------------------------------------------------------------------------------------------------------------------
+ */
 
 
 #ifndef   N_OF_US_REQUIRED
 #error  "Pelase defined N_OF_US_REQUIRED and set value 1 to n look resource.h to have n required"
 #else
-/* 
- * ******************************************************************************
- *                          Timer Value and Prescaller                             *
- * ******************************************************************************
+
+
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  |                                  <timer 0 settings macros>                                                               |
+  ----------------------------------------------------------------------------------------------------------------------------
+  | < macro TIMER_MODE2                : bit 2 in control register to select timer mode (CTC or overflow  or .... )          |
+  | < macro TIMER_MODE1                : bit 1 in control register to select timer mode (CTC or overflow  or .... )          |                                                 
+  | < macro TIMER_MODE0                : bit 0 in control register to select timer mode (CTC or overflow  or .... )          |            
+  | < macro PRESCALLER2                : bit 2 in control register to select prescaller (2,8,64,256,1024)                    |
+  | < macro PRESCALLER1                : bit 1 in control register to select prescaller (2,8,64,256,1024)                    |
+  | < macro PRESCALLER0                : bit 0 in control register to select prescaller (2,8,64,256,1024)                    |
+  | < macro TIME_VALUE                 : compare vlaue or overflow value in hardware timer 0 register  (0 to 255)            |
+  | < macro CLOCK_DIVID                : pre-scaller value   (2,8,64,256,1024)                                               |
+  | < MICROSECONDS_PER_TIMER0_OVERFLOW : number of us per one interrupt                                                      |
+  ----------------------------------------------------------------------------------------------------------------------------
  */
 
 
@@ -198,54 +222,54 @@
 #error  "F_CPU is not suporrted"
 #endif
 #endif
-
-
-
-
-
-
-
-
-
-
-
-/* 
- * ******************************************************************************
- *                          number of milli seconds per interrupt                             *
- * ******************************************************************************
- * ms = 1000 us to convert  number of us /1000
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  |                                  < convert macros>                                                                       |
+  ----------------------------------------------------------------------------------------------------------------------------
+  | < macro MILLIS_INC        : ms = 1000 us to convert  number of us /1000                                                  |
+  | < macro FRACT_INC         : fraction variable 0 to 1000 by divide 2^8 to fit number into one byte this 1000              |
+  | < macro FRACT_MAX         : is max number of fraction mapping to 125                                                     |
+  | < macro TICK_PER_SEC      : number of interrupt  in one second                                                           |
+  ----------------------------------------------------------------------------------------------------------------------------
  */
 #define MILLIS_INC (MICROSECONDS_PER_TIMER0_OVERFLOW / 1000)
-/* 
- * ******************************************************************************
- *                          get number of us per after miils                             *
- * ******************************************************************************
- * fraction variable 0 to 1000 by divide 2^8 to fit number into
- * one byte this 1000 is max number of fraction mapping to 125
- * 
- */
 #define FRACT_INC ((MICROSECONDS_PER_TIMER0_OVERFLOW % 1000) >> 3)
 #define FRACT_MAX (1000 >> 3)
+#define  TICK_PER_SEC ((1000000UL/MICROSECONDS_PER_TIMER0_OVERFLOW))
 
-
-/* 
- * ******************************************************************************
- *                          variable                             *
- * ******************************************************************************
-   @var gu32SystemTick      : system interrupt counter
- * @var g32TimeMs           : number of ms
- * @var gu8NumberOFus       : number of us per ms
- * @var g32SystemTime       : number of second in the system from last update data
- * @var gu8NumberOFusPerMs  : number of ms in second
- * 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < system variable >                                                                     |
+ ----------------------------------------------------------------------------------------------------------------------------
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  | < @var gu32SystemTick      : system interrupt counter                                                                    |
+  ----------------------------------------------------------------------------------------------------------------------------
  */
 static volatile tick_t gu32SystemTick;
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  | < @var g32TimeMs           : number of ms                                                                                |
+  ----------------------------------------------------------------------------------------------------------------------------
+ */
 static volatile millis_t gu32TimeMs;
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  | < @var g32SystemTime       : number of second in the system from last update data                                        |                                                                               |
+  ----------------------------------------------------------------------------------------------------------------------------
+ */
 static volatile time_t gu32SystemTime;
-
+/*
+  ----------------------------------------------------------------------------------------------------------------------------
+  | < @var gu8NumberOFusPerMs       : number of us per ms                                                                    |
+  ----------------------------------------------------------------------------------------------------------------------------
+ */
 static volatile uint8_t gu8NumberOFusPerMs;
-static volatile uint8_t gu8NumberOFMsPerS;
-/*Fractions*/
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < system Interrupt >                                                                     |
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
 #if defined(OCR0) 
 ISR(TIMER0_COMP_vect)
 #elif defined (OCR0A)
@@ -257,28 +281,38 @@ ISR(TIMER0_OVF_vect)
 {
 
     /*store data in local variables can be stored in registers*/
-    millis_t m = gu32TimeMs;
-    time_t s = gu32SystemTime;
-    uint8_t f = gu8NumberOFusPerMs;
-    uint8_t fs = gu8NumberOFMsPerS;
+    millis_t m;
+    time_t s;
+    tick_t t;
+    uint8_t f;
+
+    m = gu32TimeMs;
+    s = gu32SystemTime;
+    f = gu8NumberOFusPerMs;
+    t = gu32SystemTick;
+
 
     /*milli event*/
     m += MILLIS_INC;
     f += FRACT_INC;
+
     if (f >= FRACT_MAX) {
         f -= FRACT_MAX;
         m++;
     }
 
-    /*second event*/
-    s = (m / 1000);
-    fs = ((m % 1000) >> 3);
+    /*
+     ----------------------------------------------------------------------------------------------------------------------------
+     |                                 < second event every 1000 ms >                                                           |
+     ----------------------------------------------------------------------------------------------------------------------------
+     |  if (m % 1000 == 0)  this condition is have error because fraction for example  999m + 2 ms  = 1001 %1000 == 1 error     |
+     ----------------------------------------------------------------------------------------------------------------------------
+     */
 
-    if (fs >= FRACT_INC) {
-        fs -= FRACT_INC;
+    t++;
+    if (t % TICK_PER_SEC == 0) {
         s++;
     }
-
 
     /*task is run per time*/
 #if defined KEYPAD_MODULE       
@@ -292,8 +326,8 @@ ISR(TIMER0_OVF_vect)
     gu32TimeMs = m;
     gu8NumberOFusPerMs = f;
     gu32SystemTime = s;
-    gu8NumberOFMsPerS = fs;
-    /*update second event*/
+    gu32SystemTick = t;
+
 
 
 #if defined(TIMSK) &&  defined (OCIE0)
@@ -310,30 +344,35 @@ ISR(TIMER0_OVF_vect)
 
 }
 
-/* 
- * ******************************************************************************
- *                       systemInit                                          *
- * ******************************************************************************
- * @benfit     :reset all data of the system driver
- * @return void 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemInit >                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitUS                                                                               | 
+ | < @Description       : initialization all variables in this modules with default value                                   |                                
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void systemInit() {
     gu32SystemTick = 0;
     gu32TimeMs = 0;
     gu32SystemTime = 0;
     gu8NumberOFusPerMs = 0;
-    gu8NumberOFMsPerS = 0;
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerInitMS                                          *
- * ******************************************************************************
- * @benfit          : assignment period and data delay of periodic software timer by micro system
- * @param psTimer   : pointer of software Timer 
- * @param Period    : period required by mirco    
- * @param tickDelay : delay required before start periodic timer by micro count
- * @return  void  
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerInitUS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitUS                                                                               | 
+ | < @Description       : Periodic timer initialization by period and current time and delay before start period            |
+ |                      : when generate an event every 10us the the inti current micro second assignment into software time |
+ |                      : in time value and assignment period (10us ) into period value after delay can be start task       |
+ | < @Param psTimer     : pointer of software Timer                                                                         | 
+ | < @Param Delay       : value of delay (task can be start after this dealy in first run by micro seconds                  |  
+ | < @Param Period      : task run every this value  by micro seconds                                                       |                                     
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerInitUs(stTimer_t *psTimer, micros_t Delay, micros_t Period) {
     /*if delay > max set  delay  as max*/
@@ -353,17 +392,20 @@ void sysTimerInitUs(stTimer_t *psTimer, micros_t Delay, micros_t Period) {
     psTimer->Period = Period; /*assignment period*/
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerInitMS                                          *
- * ******************************************************************************
- * @benfit       :assignment period and data delay of periodic software timer by ms
- * @param psTimer: pointer of software Timer 
- * @param Period : period required by ms
- * @return       : void 
- *                
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerInitMS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitMS                                                                               | 
+ | < @Description       : Periodic timer initialization by period and current time and delay before start period            |
+ |                      : when generate an event every 1ms the the inti current milli seconds assignment into software time |
+ |                      : in time value and assignment period (1 ms ) into period value after delay can be start task       |
+ | < @Param psTimer     : pointer of software Timer                                                                         | 
+ | < @Param Delay       : value of delay (task can be start after this dealy in first run by milli seconds                  |  
+ | < @Param Period      : task run every this value  by milli seconds                                                       |                                     
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 void sysTimerInitMS(stTimer_t *psTimer, millis_t Delay, millis_t Period) {
     /*if delay > max set  delay  as max*/
     if (Delay > SYSTEM_MAX) {
@@ -383,16 +425,20 @@ void sysTimerInitMS(stTimer_t *psTimer, millis_t Delay, millis_t Period) {
     psTimer->Period = Period; /*assignment period*/
 }
 
-/* 
- * ******************************************************************************
- *                        sysTimerInitS                                          *
- * ******************************************************************************
- * @benfit       :assignment period and data delay of periodic software timer by seconds
- * @param psTimer: pointer of software Timer 
- * @param Period : period required by seconds
- * @return void    
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerInitS >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerInitS                                                                                | 
+ | < @Description       : Periodic timer initialization by period and current time and delay before start period            |
+ |                      : when generate an event every 1sec the the inti current seconds assignment into software time      |
+ |                      : in time value and assignment period (1 second ) into period value after delay can be start task   |
+ | < @Param psTimer     : pointer of software Timer                                                                         | 
+ | < @Param Delay       : value of delay (task can be start after this dealy in first run by seconds                        |  
+ | < @Param Period      : task run every this value by seconds                                                              |                                     
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 void sysTimerInitS(stTimer_t *psTimer, time_t Delay, time_t Period) {
     /*if delay > max set  delay  as max*/
     if (Delay > SYSTEM_TIME_MAX) {
@@ -411,16 +457,17 @@ void sysTimerInitS(stTimer_t *psTimer, time_t Delay, time_t Period) {
     psTimer->Period = Period; /*assignment period*/
 }
 
-/* 
- * ******************************************************************************
- *                       sysIsTimeoutUs                                          *
- * ******************************************************************************
- * @benfit        : get current value from timer 0 counter and return micros and 
- *                : check of the period is expired or not by compared  system and timer stored value
- *                : the time out is return  after expired ms period
- * @param psTimer : pointer of software timer 
- * @return        : 1  when timer doesn't  expired period
- *                : 0  when timer does expired period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysIsTimeoutUS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysIsTimeoutUS                                                                            | 
+ | < @Description       : check of the period is expired or not by compared micro secomds system and timer stored value     |
+ |                      : the time out is return  after expired micro second period                                         |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
+ | < @return            : 0 when timer does expired period                                                                  |
+ |                      : 1 when timer does expired period                                                                  |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutUs(stTimer_TimeOut_t *psTimer) {
     millis_t End, Current;
@@ -439,15 +486,17 @@ uint8_t sysIsTimeoutUs(stTimer_TimeOut_t *psTimer) {
     return (1);
 }
 
-/* 
- * ******************************************************************************
- *                       sysIsTimeoutMs                                          *
- * ******************************************************************************
- * @benfit        : check of the period is expired or not by compared  system and timer stored value
- *                : the time out is return  after expired ms period
- * @param psTimer : pointer of software timer 
- * @return        : 1  when timer doesn't  expired period
- *                : 0  when timer does expired period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysIsTimeoutMS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysIsTimeoutMS                                                                            | 
+ | < @Description       : check of the period is expired or not by compared milli secomds system and timer stored value     |
+ |                      : the time out is return  after expired milli second period                                         |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
+ | < @return            : 0 when timer does expired period                                                                  |
+ |                      : 1 when timer does expired period                                                                  |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutMs(stTimer_TimeOut_t *psTimer) {
     millis_t End, Current;
@@ -466,15 +515,17 @@ uint8_t sysIsTimeoutMs(stTimer_TimeOut_t *psTimer) {
     return (1);
 }
 
-/* 
- * ******************************************************************************
- *                       sysIsTimeoutS                                          *
- * ******************************************************************************
- * @benfit        : check of the period is expired or not by compared second system  system and timer stored value
- *                : the time out is return  after expired second period
- * @param psTimer : pointer of software timer 
- * @return        : 1  when timer doesn't  expired period
- *                : 0  when timer does expired period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysIsTimeoutS >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysIsTimeoutS                                                                             | 
+ | < @Description       : check of the period is expired or not by compared second system and timer stored value            |
+ |                      : the time out is return  after expired second period                                               |
+ | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
+ | < @return            : 0 when timer does expired period                                                                  |
+ |                      : 1 when timer does expired period                                                                  |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutS(stTimer_TimeOut_t *psTimer) {
     time_t End, Current;
@@ -491,13 +542,15 @@ uint8_t sysIsTimeoutS(stTimer_TimeOut_t *psTimer) {
     return (1);
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerResetUS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart Us
- * @param psTimer : pointer of software timer 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerResetUS>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerResetUS                                                                              | 
+ | < @Description       : periodic timer is restart micro seconds                                                           |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerResetUS(stTimer_t *psTimer) {
     /*reload period and add current time */
@@ -505,13 +558,15 @@ void sysTimerResetUS(stTimer_t *psTimer) {
     psTimer->Timer += systemMicros();
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerResetMS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart ms
- * @param psTimer : pointer of software timer 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerResetMS>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerResetMS                                                                              | 
+ | < @Description       : periodic timer is restart milli seconds                                                           |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerResetMS(stTimer_t *psTimer) {
     /*reload period and add current time */
@@ -519,13 +574,15 @@ void sysTimerResetMS(stTimer_t *psTimer) {
     psTimer->Timer += systemMillis();
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerReseS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart seconds
- * @param psTimer : pointer of software timer 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerResetS>                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysTimerResetS                                                                               | 
+ | < @Description       : periodic timer is restart seconds                                                                 |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysTimerResetS(stTimer_t *psTimer) {
     /*reload period and add current time */
@@ -533,14 +590,16 @@ void sysTimerResetS(stTimer_t *psTimer) {
     psTimer->Timer += systemNow();
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerCheckUs                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart with us
- * @param psTimer : pointer of software timer 
- * @return        :0 when the periodic period is done and restart the next period by same value 
- *                :1 when timer doesn't  expired current period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerCheckUs>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysTimerCheckUs                                                                           | 
+ | < @Description       : periodic timer is restart with us                                                                 |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : 0 when the periodic period is done and restart the next period by same value                      |
+ |                      : 1 when timer doesn't  expired current period                                                      |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysTimerCheckUs(stTimer_t *psTimer) {
     micros_t sysmicros;
@@ -561,14 +620,16 @@ uint8_t sysTimerCheckUs(stTimer_t *psTimer) {
     return (1); /*function in progress*/
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerCheckMs                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart with ms 
- * @param psTimer : pointer of software timer 
- * @return        :0 when the periodic period is done and restart the next period by same value 
- *                :1 when timer doesn't  expired current period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerCheckMS>                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysTimerCheckMs                                                                           | 
+ | < @Description       : periodic timer is restart with ms                                                                 |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : 0 when the periodic period is done and restart the next period by same value                      |
+ |                      : 1 when timer doesn't  expired current period                                                      |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysTimerCheckMs(stTimer_t *psTimer) {
     millis_t sysmillis;
@@ -589,14 +650,16 @@ uint8_t sysTimerCheckMs(stTimer_t *psTimer) {
     return (1); /*function in progress*/
 }
 
-/* 
- * ******************************************************************************
- *                       sysTimerCheckS                                          *
- * ******************************************************************************
- * @benfit        : periodic timer is restart with second
- * @param psTimer : pointer of software timer 
- * @return        :0 when the periodic period is done and restart the next period by same value 
- *                :1 when timer doesn't  expired current period
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysTimerCheckS >                                                                       |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t sysTimerCheckS                                                                            | 
+ | < @Description       : periodic timer is restart with second                                                             |
+ | < @Param psTimer     : pointer of software Timer                                                                         |                                                                             
+ | < @return            : 0 when the periodic period is done and restart the next period by same value                      |
+ |                      : 1 when timer doesn't  expired current period                                                      |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysTimerCheckS(stTimer_t *psTimer) {
     time_t systime;
@@ -615,28 +678,32 @@ uint8_t sysTimerCheckS(stTimer_t *psTimer) {
     return (1); /*function in progress*/
 }
 
-/* 
- * ******************************************************************************
- *                       getSystemTick                                          *
- * ******************************************************************************
- * @benfit     : set current timestamp from external sources for example 
- *             : up date no from computer or RTC module or network 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < sysUpdateNow >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void sysUpdateNow                                                                                 |  
+ | < @Description       : set current timestamp from external sources for example                                           |  
+ | < @Param now         : up date no from computer or RTC module or network                                                 |                    
+ | < @return            : number of milli seconds                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 void sysUpdateNow(time_t now) {
     ATOMIC_BEGIN
+    /*reset system*/
     gu32SystemTime = now;
     ATOMIC_END
 }
 
-/* 
- * ******************************************************************************
- *                       getSystemMillis                                          *
- * ******************************************************************************
- * @benfit     : get current millis data of the system 
- * @return     : get current millis 
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemMillis >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : millis_t systemMillis                                                                             |  
+ | < @Description       : current time by milli seconds                                                                     |                                                                 |                    
+ | < @return            : number of milli seconds                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 millis_t systemMillis() {
     millis_t milli;
     ATOMIC_BEGIN
@@ -645,12 +712,14 @@ millis_t systemMillis() {
     return milli;
 }
 
-/* 
- * ******************************************************************************
- *                       sysMicros                                          *
- * ******************************************************************************
- * @benfit        : get current micros form hardware timer 
- * @return        : time per microsecond
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemMicros >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : micros_t systemMicros                                                                             |  
+ | < @Description       : current time by micro seconds                                                                     |                                                                 |                    
+ | < @return            : number of micro seconds                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 micros_t systemMicros() {
     tick_t currentInterruptTick;
@@ -678,48 +747,49 @@ micros_t systemMicros() {
 #error	Timer 0  interrupt not set correctly
 #endif
 
-    /*
-     *
-     * first method
-     * for example 500 us = (500/1000000) * 11059200 clock cycle/sec = 5529.6 clock cycle 
-     * number of clock cycle per sec / clock  divide = timer count per  500us = 86.4 + (number of interrupt * interrupt period)
-     * the 86.6 is defined this value between 86 and 87 
-     *  first interrupt period and timer required per us is x
-     * (x*F_CPU / 1000000UL) = n clock cycle
-     * time value in first interrupt (TVIFI) is = n clock cycle / clock divide 
-     * TVIFI =  (x*F_CPU / 1000000UL) / clock divide
-     * TVIFI =   x*F_CPU / (10^6 * clock divide)
-     * TVIF  * (10^6 * clock divide) =  x*F_CPU
-     * x = (10^6 * clock divide)*TVIF /F_CPU
-     * at assume the time value 86 
-     * x= 1000000UL *64 * 86  /F_CPU = 497.6 +.5 = 498 error is 2 us ==> error parentage is (2/500)*100 =.4%
-     * at assume the time value 87 
-     * this solution is  large than 2^32 at multi value to that not recommend solution
-     * (CLOCK_DIVID*1000000UL  * (t + (currentInterruptTick * TIME_VALUE))) / F_CPU;
-     * x= 1000000UL *64 * 87  /F_CPU = 503.47 +.5 = 503 error is 3 us ==> error parentage  is (3/500) *100 =.6%
-     * most application is check period by compare large than or equal 500 
-     * most error error parentage  is (3/500) *100  = .6%
-     * second method 
-     * for example 500 us = (500) * (n  clock cycle/us) since clock cycle per us = F_CPU /10^6
-     * 11059200 /  10^6     ==> 11 the .059200 is removed by assign data in integer
-     * (CLOCK_DIVID*  * (t + (currentInterruptTick * TIME_VALUE))) / clockCyclesPerMicrosecond();
-     * TVIFI = n clock cycle per us /clock divide
-     * TVIFI = 500*11   / 64 is 85.9 time value between 86 or 85
-     * TVIFI =   x * clock cycle per us / clock divide)) 
-     *  x = TVIFI *(clock divide/clock cycle per us) = 86*(64/11) = 500 error parentage  is (1/500) *100 =0% 
-     *  */
+    /*<
+     ----------------------------------------------------------------------------------------------------------------------------
+     | first method                                                                                                             |
+     | for example 500 us = (500/1000000) * 11059200 clock cycle/sec = 5529.6 clock cycle                                       |
+     | number of clock cycle per sec / clock  divide = timer count per  500us = 86.4 + (number of interrupt * interrupt period) |
+     | the 86.6 is defined this value between 86 and 87                                                                         |
+     |  first interrupt period and timer required per us is x                                                                   |
+     | (x*F_CPU / 1000000UL) = n clock cycle                                                                                    |
+     | time value in first interrupt (TVIFI) is = n clock cycle / clock divide                                                  |
+     | TVIFI =  (x*F_CPU / 1000000UL) / clock divide                                                                            |
+     | TVIFI =   x*F_CPU / (10^6 * clock divide)                                                                                |
+     | TVIF  * (10^6 * clock divide) =  x*F_CPU                                                                                 |
+     | x = (10^6 * clock divide)*TVIF /F_CPU                                                                                    |
+     | at assume the time value 86                                                                                              |
+     | x= 1000000UL *64 * 86  /F_CPU = 497.6 +.5 = 498 error is 2 us == error parentage is (2/500)*100 =.4%                    |
+     | at assume the time value 87                                                                                              |
+     | this solution is  large than 2^32 at multi value to that not recommend solution                                          |
+     | (CLOCK_DIVID*1000000UL  * (t + (currentInterruptTick * TIME_VALUE))) / F_CPU;                                            |
+     | x= 1000000UL *64 * 87  /F_CPU = 503.47 +.5 = 503 error is 3 us == error parentage  is (3/500) *100 =.6%                 |
+     | most application is check period by compare large than or equal 500                                                      |
+     | most error error parentage  is (3/500) *100  = .6%                                                                       |
+     | second method                                                                                                            |
+     | for example 500 us = (500) * (n  clock cycle/us) since clock cycle per us = F_CPU /10^6                                  |
+     | 11059200 /  10^6     == 11 the .059200 is removed by assign data in integer                                             |
+     | (CLOCK_DIVID*  * (t + (currentInterruptTick * TIME_VALUE))) / clockCyclesPerMicrosecond();                               |
+     | TVIFI = n clock cycle per us /clock divide                                                                               |
+     | TVIFI = 500*11   / 64 is 85.9 time value between 86 or 85                                                                |
+     | TVIFI =   x * clock cycle per us / clock divide))                                                                        |
+     |  x = TVIFI *(clock divide/clock cycle per us) = 86*(64/11) = 500 error parentage  is (1/500) *100 =0%                    |
+     ----------------------------------------------------------------------------------------------------------------------------
+     */
     ATOMIC_END
     return ((currentInterruptTick * TIME_VALUE) + t) * (CLOCK_DIVID / clockCyclesPerMicrosecond());
-
-
 }
 
-/* 
- * ******************************************************************************
- *                       sysGetCurrent Time                                          *
- * ******************************************************************************
- * @benfit       : get time stamp value
- * @return       : current time stamp step is one seconde
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemNow >                                                                            |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : time_t systemNow                                                                                  |  
+ | < @Description       : current time by seconds                                                                           |                                                                 |                    
+ | < @return            : number of seconds                                                                                 |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
 time_t systemNow() {
     time_t time;
@@ -729,16 +799,15 @@ time_t systemNow() {
     return time;
 }
 
-/* 
- * ******************************************************************************
- *                      setupHwTimer0                                 *
- * ******************************************************************************
- * set perscaller 
- * set timer in CTC 
- * and set timer value 
- * @return void
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < setupHwTimer0 >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void setupHwTimer0                                                                                | 
+ | < @Description       : configuration of timer 0                                                                          |                                                                 |                    
+ | < @return            : void                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
  */
-
 void setupHwTimer0() {
 
 #if defined(TCCR0A) && defined(WGM01) 

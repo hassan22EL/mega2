@@ -44,7 +44,7 @@
 |                           : under test in slave mode                                 |   
 ----------------------------------------------------------------------------------------
  */
-#define  TWI_MODULE                                              (1)
+#define  TWI_MODULE                                              (0)
 #if    TWI_MODULE
 #define             TWI_TYPE                                      TWI_MASTER
 #define            TWI_INTERNAL_PULL_UP                           TWI_PULL_ENABLE
@@ -183,11 +183,11 @@
  |                                : DS1307_MODE_24H  DS1307 work witch normal clock              |
  | < DS1307_PERDIOC_READ_PER_MIN  : DS1307 Read clock every a min clock                          |
  | < SRAM USAGE                   : 21-Byte                                                      |  
- | < PROGRAM USAGE                : 1888 Byte (944 Instruction)                                  |
+ | < PROGRAM USAGE                : 1378 Byte (689 Instruction)                                  |
  | < @note                        : in this version not support a 12 hour clock operation        |                                                                                                              
  -------------------------------------------------------------------------------------------------
  */
-#define  DS1307_MODULE                                           (1)
+#define  DS1307_MODULE                                           (0)
 #if DS1307_MODULE
 #define          DS1307_MODE                                     DS1307_MODE_24H    
 #define          DS1307_PERDIOC_READ_PER_MIN                     5UL

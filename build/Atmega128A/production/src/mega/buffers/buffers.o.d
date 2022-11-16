@@ -38,11 +38,11 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/gpio.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/buffers/../../../inc/mega/../mega/system.h \
+ src/mega/buffers/../../../inc/mega/../mega/time.h \
  src/mega/buffers/../../../inc/mega/../mega/usart.h \
  src/mega/buffers/../../../inc/mega/../mega/lcd.h \
  src/mega/buffers/../../../inc/mega/../mega/twi.h \
  src/mega/buffers/../../../inc/mega/../mega/exEprom.h \
- src/mega/buffers/../../../inc/mega/../mega/time.h \
  src/mega/buffers/../../../inc/mega/../mega/ds1307.h \
  src/mega/buffers/../../../inc/mega/../mega/keypad.h \
  src/mega/buffers/../../../inc/mega/../mega/csma.h
@@ -123,6 +123,8 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/buffers/../../../inc/mega/../mega/system.h:
 
+src/mega/buffers/../../../inc/mega/../mega/time.h:
+
 src/mega/buffers/../../../inc/mega/../mega/usart.h:
 
 src/mega/buffers/../../../inc/mega/../mega/lcd.h:
@@ -130,8 +132,6 @@ src/mega/buffers/../../../inc/mega/../mega/lcd.h:
 src/mega/buffers/../../../inc/mega/../mega/twi.h:
 
 src/mega/buffers/../../../inc/mega/../mega/exEprom.h:
-
-src/mega/buffers/../../../inc/mega/../mega/time.h:
 
 src/mega/buffers/../../../inc/mega/../mega/ds1307.h:
 
