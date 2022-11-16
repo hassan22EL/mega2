@@ -1,17 +1,16 @@
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   modules.h
- * Author       :   Hassan Elsaied
- * Data Memory  :   no-used
- * Program Space:   no-used
- * Version      :   Mega2v241022
- * Start Data   :   25-10-2022  20:30:00
- * End Data     :   25-10-2022  20:40:00
- * Work Time    :   10-min
- * Comments     :   no comment
- *  
+/*
+--------------------------------------------------------------------------------------------------
+|                           < Module  Definition >                                               | 
+--------------------------------------------------------------------------------------------------
+| < FILE                     : modules.h                                                         |                                  
+| < Author                   : Hassan Elsaied                                                    |
+| < Version                  : Mega2v241022                                                      |
+| < Refences                 : no refence                                                        |
+| < SRAM USAGE               : header file                                                       |
+| < PROGRAM USAGE            : header file                                                       |                                      
+| < Hardware Usage           : header file                                                       |
+| < File Created             : 24-10-2022                                                        |
+--------------------------------------------------------------------------------------------------
  */
 
 #ifndef XC_MODULES_H
