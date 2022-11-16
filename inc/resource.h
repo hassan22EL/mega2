@@ -1,17 +1,16 @@
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   resource.h
- * Author       :   Hassan Elsaied
- * Data Memory  :   no-used
- * Program Space:   no-used
- * Version      :   Mega2v241022
- * Start Data   :   25-10-2022  20:15:00
- * End Data     :   25-10-2022  20:30:00
- * Work Time    :   15-min
- * Comments     :   no comment
- *  
+/*
+--------------------------------------------------------------------------------------------------
+|                           < Module  Definition >                                               | 
+--------------------------------------------------------------------------------------------------
+| < FILE                     : resource.h                                                       |                                  
+| < Author                   : Hassan Elsaied                                                    |
+| < Version                  : Mega2v241022                                                      |
+| < Refences                 : no refence                                                        |
+| < SRAM USAGE               : header file                                                       |
+| < PROGRAM USAGE            : header file                                                       |                                      
+| < Hardware Usage           : header file                                                       |
+| < File Created             : 24-10-2022                                                        |
+--------------------------------------------------------------------------------------------------
  */
 #ifndef XC_RESOURCE_H
 #define	XC_RESOURCE_H
@@ -23,14 +22,14 @@
 
 /*
 ---------------------------------------------------------------------------------------
-|                                System MODULE                                        | 
+|                                <System MODULE>                                      | 
 ---------------------------------------------------------------------------------------
-| < F_CPU                  : F_CPU CLOCK  >look clock.h                               |                                        |
-| < N_OF_US_REQUIRED       : each F_CPU has base number of micro                      |
-|                          : select one of number of micro seconds                    |
-|                          : _number+us  > is defined and supported time              |  
-| < SRAM_USAGE             : 14 Byte                                                  |
-| < PROGRAM_USAGE          : 634 byte (317 Instruction)                               |
+| <macro F_CPU                  : F_CPU CLOCK  >look clock.h                          |                                        |
+| <macro @N_OF_US_REQUIRED      : each F_CPU has base number of micro                 |
+|                               : select one of number of micro seconds               |
+|                               : _number+us  > is defined and supported time         |  
+| <macro SRAM_USAGE             : 13 Byte                                             |
+| <macro PROGRAM_USAGE          : 678 byte (339 Instruction)                          |
 ---------------------------------------------------------------------------------------
  */
 #define     F_CPU                       XTAL_11059200
@@ -38,13 +37,13 @@
 
 
 /*
- ****************************************************
- *                    Modules                       *
- * **************************************************
+ ---------------------------------------------------------------------------------------
+ |                    Modules                                                          |
+ ---------------------------------------------------------------------------------------
+ | < @ note  :include the res.h from  application                                      |
+ ---------------------------------------------------------------------------------------
  */
-//add  include the res.h in application 
-
-
+ 
 #include "../../NurseMaster.X/inc/res.h"
 
 #endif

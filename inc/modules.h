@@ -16,20 +16,22 @@
 #ifndef XC_MODULES_H
 #define	XC_MODULES_H
 
-#include "mega/twi.h"
 
 
-/*copy this file with created module in res.h in app and include this file in resource.h
- each res.h different in application 
- * application a using lcd and system and keypad
- * application b using memory , comm module 
- * in application a in copy active modules from module.h to res.h in application and include this resource.h
- * all Module has disabled with default option
- */
 
 /*
- @note : to Enable Module set as 1 
- *     : to Disable module set a 0
+ ----------------------------------------------------------------------------------------------------------------------
+ |                                   <Use this file >                                                                 |
+ ----------------------------------------------------------------------------------------------------------------------
+ | < @Description      : copy this file with created module in res.h in app and include this file in resource.h       |
+ |                     : each res.h different in application application a using lcd and system and keypad            |
+ |                     : application b using memory,comm module in application and  copy active modules from module.h |
+ |                     : to res.h in application and include this resource.h                                          |
+ | < @note             : to Enable Module set as 1                                                                    |
+ |                     : to Disable module set a 0                                                                    |
+ |                     : default all module as disabled in this file                                                  |
+ | < @notice of danger : Please don't remove and edit this file this file has a refence to how add module             |
+ ---------------------------------------------------------------------------------------------------------------------- 
  */
 
 
