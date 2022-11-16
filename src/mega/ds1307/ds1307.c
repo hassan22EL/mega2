@@ -12,7 +12,7 @@
 |                          : 9-Byte TWI-interface                                        |
 |                          : 7-Byte Internal Buffer                                      |
 |                          : 4-Byte Time Out                                             |
-| < PROGRAM USAGE          : 1244 Byte (622 Instruction)                                 |
+| < PROGRAM USAGE          : 1248 Byte (624 Instruction)                                 |
 | < Hardware Usage         : I2C  as a master                                            |
 | < File Created           : 24-10-2022                                                  |
 ------------------------------------------------------------------------------------------
@@ -157,11 +157,6 @@ static stTimer_TimeOut_t gsDs1307TimeOut;
  --------------------------------------------------------------------------------------------------------
  */
 static twi_package_t gstDs1307TwiPag;
-
-
-
-
-
 /*
  --------------------------------------------------------------------------------------------------------
  |                                   <  Basic operations  >                                             |
@@ -207,7 +202,7 @@ static uint8_t ds1307Write() {
     }
     if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
         /*call back memory error*/
-        gu8ds1307States.b2 = 0;/*write operation is done with error*/
+        gu8ds1307States.b2 = 0; /*write operation is done with error*/
         return (1);
     }
     return (0);
@@ -295,7 +290,6 @@ void ds1307Driver() {
             /*re- init timer period last read*/
             sysSetPeriodMS(&gsDs1307TimeOut, 30);
         }
-        return;
     }
     if (gu8ds1307States.b1) {
         if (ds1307Read()) {

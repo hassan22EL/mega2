@@ -12,7 +12,7 @@
 |                          : 9-Byte TWI-interface                                        |
 |                          : 7-Byte Internal Buffer                                      |
 |                          : 4-Byte Time Out                                             |
-| < PROGRAM USAGE          : 1244 Byte (622 Instruction)                                 |
+| < PROGRAM USAGE          : 1248 Byte (624 Instruction)                                 |
 | < Hardware Usage         : I2C  as a master                                            |
 | < File Created           : 24-10-2022                                                  |
 -------------------------------------------------------------------------------------------

@@ -387,7 +387,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xad4
+.text           0x00000000      0xad8
  *(.vectors)
  .vectors       0x00000000       0x8c C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/ATmega_DFP/2.4.131/gcc/dev/atmega128a/avr51/crtatmega128a.o
                 0x00000000                __vector_default
@@ -494,65 +494,65 @@ END GROUP
                 0x00000196       0x2c ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(ds1307.o)
                 0x00000196                ds1307Init
  .text.ds1307Driver
-                0x000001c2      0x190 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(ds1307.o)
+                0x000001c2      0x194 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(ds1307.o)
                 0x000001c2                ds1307Driver
  .text.__vector_15
-                0x00000352      0x138 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x00000352                __vector_15
+                0x00000356      0x138 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x00000356                __vector_15
  .text.systemInit
-                0x0000048a       0x36 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x0000048a                systemInit
+                0x0000048e       0x36 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x0000048e                systemInit
  .text.sysIsTimeoutMs
-                0x000004c0       0x52 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x000004c0                sysIsTimeoutMs
+                0x000004c4       0x52 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x000004c4                sysIsTimeoutMs
  .text.sysIsTimeoutS
-                0x00000512       0x42 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x00000512                sysIsTimeoutS
+                0x00000516       0x42 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x00000516                sysIsTimeoutS
  .text.sysUpdateNow
-                0x00000554       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x00000554                sysUpdateNow
+                0x00000558       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x00000558                sysUpdateNow
  .text.systemMillis
-                0x0000056c       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x0000056c                systemMillis
+                0x00000570       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x00000570                systemMillis
  .text.systemNow
-                0x00000584       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x00000584                systemNow
+                0x00000588       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x00000588                systemNow
  .text.setupHwTimer0
-                0x0000059c       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
-                0x0000059c                setupHwTimer0
- .text.getTime  0x000005b4      0x11e ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(time.o)
-                0x000005b4                getTime
+                0x000005a0       0x18 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(system.o)
+                0x000005a0                setupHwTimer0
+ .text.getTime  0x000005b8      0x11e ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(time.o)
+                0x000005b8                getTime
  .text.__vector_33
-                0x000006d2      0x25e ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
-                0x000006d2                __vector_33
+                0x000006d6      0x25e ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
+                0x000006d6                __vector_33
  .text.twi_master_write
-                0x00000930       0x62 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
-                0x00000930                twi_master_write
+                0x00000934       0x62 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
+                0x00000934                twi_master_write
  .text.twi_master_read
-                0x00000992       0x68 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
-                0x00000992                twi_master_read
+                0x00000996       0x68 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
+                0x00000996                twi_master_read
  .text.twi_master_init
-                0x000009fa       0x2c ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
-                0x000009fa                twi_master_init
+                0x000009fe       0x2c ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
+                0x000009fe                twi_master_init
  .text.libgcc.mul
-                0x00000a26       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_mulsi3.o)
-                0x00000a26                __mulsi3
+                0x00000a2a       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_mulsi3.o)
+                0x00000a2a                __mulsi3
  .text.libgcc.div
-                0x00000a46       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
-                0x00000a46                __udivmodsi4
- .text.libgcc   0x00000a8a       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
-                0x00000a8a                __tablejump2__
+                0x00000a4a       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
+                0x00000a4a                __udivmodsi4
+ .text.libgcc   0x00000a8e       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+                0x00000a8e                __tablejump2__
  .text.libgcc.mul
-                0x00000a9c       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_umulhisi3.o)
-                0x00000a9c                __umulhisi3
+                0x00000aa0       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_umulhisi3.o)
+                0x00000aa0                __umulhisi3
  .text.libgcc.mul
-                0x00000aba       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_muluhisi3.o)
-                0x00000aba                __muluhisi3
-                0x00000ad0                . = ALIGN (0x2)
+                0x00000abe       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_muluhisi3.o)
+                0x00000abe                __muluhisi3
+                0x00000ad4                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000ad0        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
-                0x00000ad0                _exit
-                0x00000ad0                exit
+ .fini9         0x00000ad4        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+                0x00000ad4                _exit
+                0x00000ad4                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -571,11 +571,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000ad0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000ad4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000ad4                _etext = .
+                0x00000ad8                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000ad4
+.data           0x00800100        0x0 load address 0x00000ad8
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -614,8 +614,8 @@ END GROUP
                 0x00800129        0x1 ..\..\..\..\..\dist\Atmega128A\production\mega2.X.a(twi.o)
  *(COMMON)
                 0x0080012a                PROVIDE (__bss_end, .)
-                0x00000ad4                __data_load_start = LOADADDR (.data)
-                0x00000ad4                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000ad8                __data_load_start = LOADADDR (.data)
+                0x00000ad8                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080012a        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
