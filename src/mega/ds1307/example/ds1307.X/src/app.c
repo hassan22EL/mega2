@@ -13,6 +13,7 @@
 #include "../inc/app.h"
 
 volatile uint8_t state;
+volatile uint8_t state1;
 
 void appBoot(void) {
 
@@ -20,7 +21,8 @@ void appBoot(void) {
 
 void appInit(void) {
     state = 0;
-    digitalpinMode(GPIO_E0 , MODE_OUTPUT);
+    state1 = 0;
+    digitalpinMode(GPIO_E0, MODE_OUTPUT);
 }
 
 void appSync(void) {
@@ -44,10 +46,14 @@ void appMain(void) {
         case 1:
             if (!ds1307IsSetDone()) {
                 state = 2;
+                state1++;
             }
             break;
         case 2:
-            digitalPinWrite(GPIO_E0, GPIO_TGL);
+            if (state1 < 2) {
+                digitalPinWrite(GPIO_E0, GPIO_TGL);
+                state = 0;
+            }
             break;
         default:
             break;
