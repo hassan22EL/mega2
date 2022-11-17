@@ -169,7 +169,7 @@
  | < Description          : Twi slave struct                                                                      |
  | < Uasge                : 4 Byte                                                                                |                                     |
  | < param rx_buffer      : pointer to receive buffer assignment from appplication used twi-slave                 |
- | < param tx_buffer      :  pointer to transmission buffer assignment from appplication used twi-slave           |                                          |              
+ | < param tx_buffer      : pointer to transmission buffer assignment from appplication used twi-slave            |                                          |              
  ------------------------------------------------------------------------------------------------------------------
  */
 typedef struct {

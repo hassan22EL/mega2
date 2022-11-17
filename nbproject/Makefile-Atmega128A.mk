@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/mega/buffers/buffers.c src/mega/cmsa/csma.c src/mega/ds1307/example/ds1307.X/src/app.c src/mega/ds1307/ds1307.c src/mega/exeeprom/exEprom.c src/mega/gpio/gpio.c src/mega/keypad/keypad.c src/mega/lcd/lcd.c src/mega/system/system.c src/mega/system/time.c src/mega/twi/twi.c src/mega/usart/usart.c src/mega.c src/mega/lcdmnue/lcdmnue.c
+SOURCEFILES_QUOTED_IF_SPACED=src/mega/buffers/buffers.c src/mega/cmsa/csma.c src/mega/ds1307/example/ds1307.X/src/app.c src/mega/ds1307/ds1307.c src/mega/exeeprom/exEprom.c src/mega/gpio/gpio.c src/mega/keypad/keypad.c src/mega/lcd/lcd.c src/mega/lcdmnue/lcdmnue.c src/mega/system/system.c src/mega/system/time.c src/mega/twi/twi.c src/mega/usart/usart.c src/mega.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/mega/buffers/buffers.o ${OBJECTDIR}/src/mega/cmsa/csma.o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o ${OBJECTDIR}/src/mega/ds1307/ds1307.o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o ${OBJECTDIR}/src/mega/gpio/gpio.o ${OBJECTDIR}/src/mega/keypad/keypad.o ${OBJECTDIR}/src/mega/lcd/lcd.o ${OBJECTDIR}/src/mega/system/system.o ${OBJECTDIR}/src/mega/system/time.o ${OBJECTDIR}/src/mega/twi/twi.o ${OBJECTDIR}/src/mega/usart/usart.o ${OBJECTDIR}/src/mega.o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/mega/buffers/buffers.o.d ${OBJECTDIR}/src/mega/cmsa/csma.o.d ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d ${OBJECTDIR}/src/mega/ds1307/ds1307.o.d ${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d ${OBJECTDIR}/src/mega/gpio/gpio.o.d ${OBJECTDIR}/src/mega/keypad/keypad.o.d ${OBJECTDIR}/src/mega/lcd/lcd.o.d ${OBJECTDIR}/src/mega/system/system.o.d ${OBJECTDIR}/src/mega/system/time.o.d ${OBJECTDIR}/src/mega/twi/twi.o.d ${OBJECTDIR}/src/mega/usart/usart.o.d ${OBJECTDIR}/src/mega.o.d ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/mega/buffers/buffers.o ${OBJECTDIR}/src/mega/cmsa/csma.o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o ${OBJECTDIR}/src/mega/ds1307/ds1307.o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o ${OBJECTDIR}/src/mega/gpio/gpio.o ${OBJECTDIR}/src/mega/keypad/keypad.o ${OBJECTDIR}/src/mega/lcd/lcd.o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o ${OBJECTDIR}/src/mega/system/system.o ${OBJECTDIR}/src/mega/system/time.o ${OBJECTDIR}/src/mega/twi/twi.o ${OBJECTDIR}/src/mega/usart/usart.o ${OBJECTDIR}/src/mega.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/mega/buffers/buffers.o.d ${OBJECTDIR}/src/mega/cmsa/csma.o.d ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d ${OBJECTDIR}/src/mega/ds1307/ds1307.o.d ${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d ${OBJECTDIR}/src/mega/gpio/gpio.o.d ${OBJECTDIR}/src/mega/keypad/keypad.o.d ${OBJECTDIR}/src/mega/lcd/lcd.o.d ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d ${OBJECTDIR}/src/mega/system/system.o.d ${OBJECTDIR}/src/mega/system/time.o.d ${OBJECTDIR}/src/mega/twi/twi.o.d ${OBJECTDIR}/src/mega/usart/usart.o.d ${OBJECTDIR}/src/mega.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/mega/buffers/buffers.o ${OBJECTDIR}/src/mega/cmsa/csma.o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o ${OBJECTDIR}/src/mega/ds1307/ds1307.o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o ${OBJECTDIR}/src/mega/gpio/gpio.o ${OBJECTDIR}/src/mega/keypad/keypad.o ${OBJECTDIR}/src/mega/lcd/lcd.o ${OBJECTDIR}/src/mega/system/system.o ${OBJECTDIR}/src/mega/system/time.o ${OBJECTDIR}/src/mega/twi/twi.o ${OBJECTDIR}/src/mega/usart/usart.o ${OBJECTDIR}/src/mega.o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o
+OBJECTFILES=${OBJECTDIR}/src/mega/buffers/buffers.o ${OBJECTDIR}/src/mega/cmsa/csma.o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o ${OBJECTDIR}/src/mega/ds1307/ds1307.o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o ${OBJECTDIR}/src/mega/gpio/gpio.o ${OBJECTDIR}/src/mega/keypad/keypad.o ${OBJECTDIR}/src/mega/lcd/lcd.o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o ${OBJECTDIR}/src/mega/system/system.o ${OBJECTDIR}/src/mega/system/time.o ${OBJECTDIR}/src/mega/twi/twi.o ${OBJECTDIR}/src/mega/usart/usart.o ${OBJECTDIR}/src/mega.o
 
 # Source Files
-SOURCEFILES=src/mega/buffers/buffers.c src/mega/cmsa/csma.c src/mega/ds1307/example/ds1307.X/src/app.c src/mega/ds1307/ds1307.c src/mega/exeeprom/exEprom.c src/mega/gpio/gpio.c src/mega/keypad/keypad.c src/mega/lcd/lcd.c src/mega/system/system.c src/mega/system/time.c src/mega/twi/twi.c src/mega/usart/usart.c src/mega.c src/mega/lcdmnue/lcdmnue.c
+SOURCEFILES=src/mega/buffers/buffers.c src/mega/cmsa/csma.c src/mega/ds1307/example/ds1307.X/src/app.c src/mega/ds1307/ds1307.c src/mega/exeeprom/exEprom.c src/mega/gpio/gpio.c src/mega/keypad/keypad.c src/mega/lcd/lcd.c src/mega/lcdmnue/lcdmnue.c src/mega/system/system.c src/mega/system/time.c src/mega/twi/twi.c src/mega/usart/usart.c src/mega.c
 
 # Pack Options 
 PACK_COMPILER_OPTIONS=-I "${DFP_DIR}/include"
@@ -158,6 +158,12 @@ ${OBJECTDIR}/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c  .generated_files/flags/Atme
 	@${RM} ${OBJECTDIR}/src/mega/lcd/lcd.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT ${OBJECTDIR}/src/mega/lcd/lcd.o  -o ${OBJECTDIR}/src/mega/lcd/lcd.o src/mega/lcd/lcd.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/415e0665a3c5de180f2c9906ded5908a193ae9d0 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+	@${MKDIR} "${OBJECTDIR}/src/mega/lcdmnue" 
+	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d 
+	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/src/mega/system/system.o: src/mega/system/system.c  .generated_files/flags/Atmega128A/c1f92418f18af4574651e2835e6bb0f4e5e67f2e .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/system" 
 	@${RM} ${OBJECTDIR}/src/mega/system/system.o.d 
@@ -187,12 +193,6 @@ ${OBJECTDIR}/src/mega.o: src/mega.c  .generated_files/flags/Atmega128A/7c1ffd7be
 	@${RM} ${OBJECTDIR}/src/mega.o.d 
 	@${RM} ${OBJECTDIR}/src/mega.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega.o.d" -MT "${OBJECTDIR}/src/mega.o.d" -MT ${OBJECTDIR}/src/mega.o  -o ${OBJECTDIR}/src/mega.o src/mega.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/415e0665a3c5de180f2c9906ded5908a193ae9d0 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
-	@${MKDIR} "${OBJECTDIR}/src/mega/lcdmnue" 
-	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d 
-	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 else
 ${OBJECTDIR}/src/mega/buffers/buffers.o: src/mega/buffers/buffers.c  .generated_files/flags/Atmega128A/780c99dd898d33ec7eb4a679fcdaed25c0cf88fe .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
@@ -243,6 +243,12 @@ ${OBJECTDIR}/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c  .generated_files/flags/Atme
 	@${RM} ${OBJECTDIR}/src/mega/lcd/lcd.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT ${OBJECTDIR}/src/mega/lcd/lcd.o  -o ${OBJECTDIR}/src/mega/lcd/lcd.o src/mega/lcd/lcd.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/36a163535357b866296f9f06aa90e56f68a5953c .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+	@${MKDIR} "${OBJECTDIR}/src/mega/lcdmnue" 
+	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d 
+	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/src/mega/system/system.o: src/mega/system/system.c  .generated_files/flags/Atmega128A/5b5c1fc1ce2fb2f8eff309000eb4133554ead45c .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/system" 
 	@${RM} ${OBJECTDIR}/src/mega/system/system.o.d 
@@ -272,12 +278,6 @@ ${OBJECTDIR}/src/mega.o: src/mega.c  .generated_files/flags/Atmega128A/c9f0cf1fb
 	@${RM} ${OBJECTDIR}/src/mega.o.d 
 	@${RM} ${OBJECTDIR}/src/mega.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega.o.d" -MT "${OBJECTDIR}/src/mega.o.d" -MT ${OBJECTDIR}/src/mega.o  -o ${OBJECTDIR}/src/mega.o src/mega.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/36a163535357b866296f9f06aa90e56f68a5953c .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
-	@${MKDIR} "${OBJECTDIR}/src/mega/lcdmnue" 
-	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d 
-	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 endif
 

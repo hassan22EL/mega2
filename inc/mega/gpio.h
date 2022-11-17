@@ -1083,11 +1083,4 @@ static inline void digitalPinWrite(gpio_t pin, uint8_t value) {
 #endif
     }
 }
-
-
-
-
-
-
-
 #endif	/* XC_GPIO_V2_H */
