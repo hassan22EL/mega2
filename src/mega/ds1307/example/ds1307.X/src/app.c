@@ -11,7 +11,7 @@
 #include <stdint-gcc.h>
 
 #include "../inc/app.h"
-
+#if DS1307_MODULE 
 volatile uint8_t state;
 volatile uint8_t state1;
 
@@ -60,3 +60,4 @@ void appMain(void) {
 
     }
 }
+#endif

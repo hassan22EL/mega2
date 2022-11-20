@@ -187,6 +187,8 @@ static void __print_2Digit(int i, char *buffer, char s);
  | < @return            : signed interger of the Time                                                            |                                                            
  -----------------------------------------------------------------------------------------------------------------
  */
+static int timeEquation(time_t *time) __attribute__((unused));
+
 static int timeEquation(time_t *time) {
     int32_t u32Perihlion;
     int32_t u32Solstice;
@@ -245,6 +247,8 @@ static void __print_2Digit(int i, char *buffer, char s) {
  | < @return            : number of days per month                                                               |
  -----------------------------------------------------------------------------------------------------------------
  */
+static uint8_t month_length(uint8_t year, uint8_t month) __attribute__((unused));
+
 static uint8_t month_length(uint8_t year, uint8_t month) {
     if (month == 2)
         return 28 + RTC_LEAP_YEAR(year);
@@ -454,7 +458,7 @@ void PrintDate(tm_t * timeptr, char *buffer) {
     __print_2Digit(timeptr->tm_sec, buffer, ' ');
     buffer += 3;
     result = div(timeptr->tm_year + RTC_BASE_TIME, 100);
-    __print_2Digit(result.quot , buffer, ' ');
+    __print_2Digit(result.quot, buffer, ' ');
     buffer += 2;
-    __print_2Digit(result.rem , buffer, 0);
+    __print_2Digit(result.rem, buffer, 0);
 }

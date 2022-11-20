@@ -28,8 +28,8 @@
  | <macro @N_OF_US_REQUIRED      : each F_CPU has base number of micro                 |
  |                               : select one of number of micro seconds               |
  |                               : _number+us  > is defined and supported time         |  
- | <macro SRAM_USAGE             : 13 Byte                                             |
- | <macro PROGRAM_USAGE          : 678 byte (339 Instruction)                          |
+ | <macro SRAM_USAGE             : 14 Byte                                             |
+ | <macro PROGRAM_USAGE          : 694 byte (347 Instruction)                          |
  ---------------------------------------------------------------------------------------
  */
 #define     F_CPU                          XTAL_11059200
@@ -59,8 +59,22 @@
  | < @ note  :include the res.h from  application                                      |
  ---------------------------------------------------------------------------------------
  */
+#include "../../mega2.X/src/mega/lcdmnue/example/lcdmenuexampl.X/inc/res.h"
 
-#include "../../NurseMaster.X/inc/res.h"
+
+/*
+ ---------------------------------------------------------------------------------------
+ |                     < Periodically tasks >                                          |
+ ---------------------------------------------------------------------------------------
+ | < @PERIODICALLY_TASKS_MAX_TIME: @assume1 task 1 = 5ms , task 2 = 20 ms              |
+ |                               : the max time is 20ms becouse 20/5 = Interger value  |
+ |                               : and 20ms is Lagrest number                          |
+ |                               : @assume2 task 1 = 5ms , task 2 = 7ms the max time   |
+ |                               : is 7ms *5ms = 35ms becouse the 35ms can divid by 5,7|
+ ---------------------------------------------------------------------------------------
+ */
+#define      PERIODICALLY_TASKS_MAX_TIME        (10)
+
 
 #endif
 

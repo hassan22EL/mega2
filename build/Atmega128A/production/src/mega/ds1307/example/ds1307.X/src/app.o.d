@@ -20,8 +20,8 @@ build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/buffers.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/macros.h \
@@ -46,7 +46,8 @@ build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/exEprom.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/ds1307.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/lcdmenu.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
@@ -86,9 +87,9 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/buffers.h:
 
@@ -139,3 +140,5 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/ds1307.h:
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h:
+
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/lcdmenu.h:

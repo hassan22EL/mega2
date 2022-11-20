@@ -8,7 +8,7 @@
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : https://www.sparkfun.com/datasheets/LCD/HD44780.pdf               |
 | < SRAM USAGE               : 36-Byte  (32 Byte buffer , 4 byte internal used                   |
-| < PROGRAM USAGE            : 1082 Byte (1052 byte (526 Instruction)) + 30 Byte custom char     |                                    
+| < PROGRAM USAGE            : 980 Byte (950 byte (475 Instruction)) + 30 Byte custom char       |                                    
 | < Hardware Usage           : GPIO                                                              |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@
  ------------------------------------------------------------------------------------------------------- 
  */
 
-#define  LCD_CGRAM_ADDRESS_CHECK   (0x3F) /*last char in cgram*/
+#define  LCD_CGRAM_ADDRESS_CHECK   (0x7F) /*last char in cgram*/
 #define  LCD_CGRRAM_MODE           (0x40)
 #define  LCD_DDRAM_MODE            (0x80)
 
@@ -564,16 +564,18 @@ static void lcdSendCommdHigh(uint8_t u8Data) {
  */
 static uint8_t lcdUpdate() {
     if (!gu8LCDFlags.b1) {
-        lcdSendCommand(LCD_CGRRAM_MODE | LCD_CGRAM_ADDRESS_CHECK);
-        if (lcdReadByte() != (LCD_CGRRAM_MODE | LCD_CGRAM_ADDRESS_CHECK)) {
+        lcdSendCommand(LCD_CGRAM_ADDRESS_CHECK);
+        if (lcdReadByte() != (LCD_CGRAM_ADDRESS_CHECK)) {
             if (lcdInit() == LCD_ERORR) {
                 /*call back error*/
+                gu8LCDFlags.b1 = 0;
                 return LCD_ERORR;
+            } else {
+                gu8LCDFlags.b1 = 1;
             }
+        } else {
             gu8LCDFlags.b1 = 1;
-            return LCD_IN_PROGRESS;
         }
-        gu8LCDFlags.b1 = 1;
     }
 
     if (gu8LcdBufferIndex < LCD_SIZE) {
@@ -583,16 +585,16 @@ static uint8_t lcdUpdate() {
         lcdSendByte(gu8LCDBuffer[gu8LcdBufferIndex]);
         if (gu8LCDFlags.b7) {
             /*generate error */
+            gu8LCDFlags.b1 = 0;
             gu8LCDFlags.b7 = 0;
             return LCD_ERORR;
         }
         gu8LcdBufferIndex++;
     } else {
-
+        gu8LCDFlags.b1 = 0;
         gu8LcdBufferIndex = 0;
         lcdSendCommand(gu8LCDPosition);
         lcdSendCommand(LCD_DISPLAY_ON_COMMAND | gu8LcdOPtion);
-
         return (LCD_SUCCSS);
     }
     return LCD_IN_PROGRESS;
@@ -757,13 +759,12 @@ void lcdHwInit() {
 void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
     uint8_t newPos;
     if (pos != LCD_TEXT_CENTER) {
-        newPos = line * LCD_NUMBER_OF_BYTE + pos;
+        newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
     } else {
-        newPos = line * LCD_NUMBER_OF_BYTE + ((LCD_NUMBER_OF_BYTE - strlen(string)) / 2);
+        newPos = (line * LCD_NUMBER_OF_BYTE) + ((LCD_NUMBER_OF_BYTE - strlen(string)) / 2) + 1;
     }
     for (uint8_t i = 0; i < strlen(string); i++)
         gu8LCDBuffer[newPos + i] = string[i];
-    gu8LCDFlags.b0 = 1;
 }
 
 /*
@@ -812,9 +813,9 @@ void lcdCreateChar(uint8_t u8location, const uint8_t *pu8Data) {
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                                 < lcdwrite >                                                         |
+ |                                 < lcdwriteCGRAM >                                                    |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void lcdwrite                                                                 |
+ | < @Function          : void lcdwriteCGRAM                                                            |
  | < @Description       :  write address of the custom char  into buffer                                |
  | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
  | < @Param  pos        : write in specific char (y) in line and                                        |
@@ -827,7 +828,6 @@ void lcdwriteCGRAM(uint8_t line, uint8_t pos, uint8_t index) {
     uint8_t newPos;
     newPos = line * LCD_NUMBER_OF_BYTE + pos;
     gu8LCDBuffer[newPos] = index;
-    gu8LCDFlags.b0 = 1;
 }
 
 /*
@@ -874,7 +874,6 @@ void lcdClearlines(uint8_t from) {
     for (uint8_t i = from * LCD_NUMBER_OF_BYTE; i < LCD_SIZE; i++) {
         gu8LCDBuffer[i] = 0x20;
     }
-    gu8LCDFlags.b0 = 1;
 }
 
 /*
@@ -891,7 +890,7 @@ void lcdClear() {
     for (uint8_t j = 0; j < LCD_SIZE; j++) {
         gu8LCDBuffer[j] = 0x20;
     }
-    gu8LCDFlags.b0 = 1;
+
 }
 
 /*
@@ -906,16 +905,17 @@ void lcdClear() {
 
 void lcdDriver() {
     uint8_t state;
-    if (gu8LCDFlags.b0) {
-        state = lcdUpdate();
-        if (state == LCD_SUCCSS) {
-            gu8LCDFlags.b0 = 0;
-        } else if (state == LCD_ERORR) {
-            gu8LCDFlags.b0 = 0;
-        }
-
-
+    if (!gu8LCDFlags.b0)
+        return;
+    state = lcdUpdate();
+    if (state == LCD_SUCCSS) {
+        gu8LCDFlags.b0 = 0;
+    } else if (state == LCD_ERORR) {
+        gu8LCDFlags.b0 = 0;
     }
+
+
+
 }
 
 /*
@@ -928,11 +928,20 @@ void lcdDriver() {
  --------------------------------------------------------------------------------------------------------
  */
 uint8_t lcdIsBusy() {
-    if (gu8LCDFlags.b0) {
-        return (1);
-    }
-    return (0);
+    return (gu8LCDFlags.b0);
 }
 
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdUpdateNow >                                                     |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdUpdateNow                                                             |
+ | < @Description       : after write all into buffer from lcd call this function to start update       |                                    
+ | < @return            : void                         |                                                |
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdUpdateNow() {
+    gu8LCDFlags.b0 = 1;
+}
 #endif
 #endif

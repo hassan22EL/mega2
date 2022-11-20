@@ -90,7 +90,16 @@ int main(void) {
     lcdHwInit();
 #endif
 #endif
-
+    /*
+     *****************************************************************
+     *                    lcd menu init                               *
+     * ***************************************************************
+     */
+#if defined LCDMNUE_MODULE
+#if LCDMNUE_MODULE
+    MenuInit();
+#endif
+#endif
     /*
      *****************************************************************
      *                    app init                                *
@@ -127,7 +136,16 @@ int main(void) {
 #endif
 #endif
 
-
+        /*
+         *****************************************************************
+         *                    lcd menu init                               *
+         * ***************************************************************
+         */
+#if defined LCDMNUE_MODULE
+#if LCDMNUE_MODULE
+        menueDriver();
+#endif
+#endif
 
 
         /*
@@ -140,6 +158,8 @@ int main(void) {
         lcdDriver();
 #endif
 #endif
+
+
         /*
          *****************************************************************
          *                    app main                                *

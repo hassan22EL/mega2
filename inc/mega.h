@@ -11,10 +11,10 @@
 | < Hardware Usage           : header file                                                       |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
- */ 
+ */
 #ifndef XC_MEGA_H
 #define	XC_MEGA_H
-
+//#include <xc.h> /*xc compiler*/
 #include <avr/io.h>
 
 #include "mega/clock.h"
@@ -45,7 +45,7 @@
 #include "mega/ds1307.h"
 #include "mega/keypad.h"
 #include "mega/csma.h"
-
+#include "mega/lcdmenu.h"
 
 
 

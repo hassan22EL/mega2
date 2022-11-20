@@ -110,174 +110,174 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/src/mega/buffers/buffers.o: src/mega/buffers/buffers.c  .generated_files/flags/Atmega128A/f22ed3e29c7ffdb928638f864abf64fccac14121 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/buffers/buffers.o: src/mega/buffers/buffers.c  .generated_files/flags/Atmega128A/e371ac5c6a1f60617b2f151bfd4e382895b8c1ea .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/buffers" 
 	@${RM} ${OBJECTDIR}/src/mega/buffers/buffers.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/buffers/buffers.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT ${OBJECTDIR}/src/mega/buffers/buffers.o  -o ${OBJECTDIR}/src/mega/buffers/buffers.o src/mega/buffers/buffers.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT ${OBJECTDIR}/src/mega/buffers/buffers.o  -o ${OBJECTDIR}/src/mega/buffers/buffers.o src/mega/buffers/buffers.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/cmsa/csma.o: src/mega/cmsa/csma.c  .generated_files/flags/Atmega128A/f84768495d41ebb3caabba5417e435c9f6037b43 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/cmsa/csma.o: src/mega/cmsa/csma.c  .generated_files/flags/Atmega128A/8e98f1c98310877a454a17ad8be08dc12179c8a7 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/cmsa" 
 	@${RM} ${OBJECTDIR}/src/mega/cmsa/csma.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/cmsa/csma.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT ${OBJECTDIR}/src/mega/cmsa/csma.o  -o ${OBJECTDIR}/src/mega/cmsa/csma.o src/mega/cmsa/csma.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT ${OBJECTDIR}/src/mega/cmsa/csma.o  -o ${OBJECTDIR}/src/mega/cmsa/csma.o src/mega/cmsa/csma.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o: src/mega/ds1307/example/ds1307.X/src/app.c  .generated_files/flags/Atmega128A/d2bccd1f0a87d40a7634bbfefa94968ce925ef1a .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o: src/mega/ds1307/example/ds1307.X/src/app.c  .generated_files/flags/Atmega128A/852fecf9564c8e6f8efc4e14a2add62db9c59233 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src" 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o  -o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o src/mega/ds1307/example/ds1307.X/src/app.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o  -o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o src/mega/ds1307/example/ds1307.X/src/app.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/ds1307/ds1307.o: src/mega/ds1307/ds1307.c  .generated_files/flags/Atmega128A/b8b39945faf88b0f889db75077b49a100db8bb94 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/ds1307/ds1307.o: src/mega/ds1307/ds1307.c  .generated_files/flags/Atmega128A/24ba438c78ed49c8e56eed0ec72bc6e87636566b .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/ds1307" 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/ds1307.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/ds1307.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/ds1307.o  -o ${OBJECTDIR}/src/mega/ds1307/ds1307.o src/mega/ds1307/ds1307.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/ds1307.o  -o ${OBJECTDIR}/src/mega/ds1307/ds1307.o src/mega/ds1307/ds1307.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/exeeprom/exEprom.o: src/mega/exeeprom/exEprom.c  .generated_files/flags/Atmega128A/d715ed1d4db100f4f868351ba047a9803d10cd17 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/exeeprom/exEprom.o: src/mega/exeeprom/exEprom.c  .generated_files/flags/Atmega128A/a5035fcb49d8ffe9bef3b5a2ad1fbed604ca80f .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/exeeprom" 
 	@${RM} ${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/exeeprom/exEprom.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT ${OBJECTDIR}/src/mega/exeeprom/exEprom.o  -o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o src/mega/exeeprom/exEprom.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT ${OBJECTDIR}/src/mega/exeeprom/exEprom.o  -o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o src/mega/exeeprom/exEprom.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/gpio/gpio.o: src/mega/gpio/gpio.c  .generated_files/flags/Atmega128A/f2c2afd32b98644e3e3a81da98b7cae5327c8682 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/gpio/gpio.o: src/mega/gpio/gpio.c  .generated_files/flags/Atmega128A/109c897802212acb2482918b6a25a5d3beb005ba .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/gpio" 
 	@${RM} ${OBJECTDIR}/src/mega/gpio/gpio.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/gpio/gpio.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT ${OBJECTDIR}/src/mega/gpio/gpio.o  -o ${OBJECTDIR}/src/mega/gpio/gpio.o src/mega/gpio/gpio.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT ${OBJECTDIR}/src/mega/gpio/gpio.o  -o ${OBJECTDIR}/src/mega/gpio/gpio.o src/mega/gpio/gpio.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/keypad/keypad.o: src/mega/keypad/keypad.c  .generated_files/flags/Atmega128A/3e418e87d6a05e935cef8356b8d7d801d1602554 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/keypad/keypad.o: src/mega/keypad/keypad.c  .generated_files/flags/Atmega128A/13d080210c510916f36a559e322b932d180a6b11 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/keypad" 
 	@${RM} ${OBJECTDIR}/src/mega/keypad/keypad.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/keypad/keypad.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT ${OBJECTDIR}/src/mega/keypad/keypad.o  -o ${OBJECTDIR}/src/mega/keypad/keypad.o src/mega/keypad/keypad.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT ${OBJECTDIR}/src/mega/keypad/keypad.o  -o ${OBJECTDIR}/src/mega/keypad/keypad.o src/mega/keypad/keypad.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c  .generated_files/flags/Atmega128A/52070ad1d4d41039d0c2d25c71168ca298cf3bd4 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c  .generated_files/flags/Atmega128A/447b66fd58fb52fed831e2c4564a23f2239bf2cc .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/lcd" 
 	@${RM} ${OBJECTDIR}/src/mega/lcd/lcd.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/lcd/lcd.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT ${OBJECTDIR}/src/mega/lcd/lcd.o  -o ${OBJECTDIR}/src/mega/lcd/lcd.o src/mega/lcd/lcd.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT ${OBJECTDIR}/src/mega/lcd/lcd.o  -o ${OBJECTDIR}/src/mega/lcd/lcd.o src/mega/lcd/lcd.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/415e0665a3c5de180f2c9906ded5908a193ae9d0 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/31bc806a45379000f77c12375acb9fa8f8abad73 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/lcdmnue" 
 	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/system/system.o: src/mega/system/system.c  .generated_files/flags/Atmega128A/c1f92418f18af4574651e2835e6bb0f4e5e67f2e .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/system/system.o: src/mega/system/system.c  .generated_files/flags/Atmega128A/8e87c35306e540fde4ded80185c7473b1fea92b5 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/system" 
 	@${RM} ${OBJECTDIR}/src/mega/system/system.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/system/system.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/system.o.d" -MT "${OBJECTDIR}/src/mega/system/system.o.d" -MT ${OBJECTDIR}/src/mega/system/system.o  -o ${OBJECTDIR}/src/mega/system/system.o src/mega/system/system.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/system.o.d" -MT "${OBJECTDIR}/src/mega/system/system.o.d" -MT ${OBJECTDIR}/src/mega/system/system.o  -o ${OBJECTDIR}/src/mega/system/system.o src/mega/system/system.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/system/time.o: src/mega/system/time.c  .generated_files/flags/Atmega128A/3285bae42585c4f1a2e1ff28c746704fa5e54101 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/system/time.o: src/mega/system/time.c  .generated_files/flags/Atmega128A/5948c940f7d711a381acd5244187a8614b2654aa .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/system" 
 	@${RM} ${OBJECTDIR}/src/mega/system/time.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/system/time.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/time.o.d" -MT "${OBJECTDIR}/src/mega/system/time.o.d" -MT ${OBJECTDIR}/src/mega/system/time.o  -o ${OBJECTDIR}/src/mega/system/time.o src/mega/system/time.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/time.o.d" -MT "${OBJECTDIR}/src/mega/system/time.o.d" -MT ${OBJECTDIR}/src/mega/system/time.o  -o ${OBJECTDIR}/src/mega/system/time.o src/mega/system/time.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/twi/twi.o: src/mega/twi/twi.c  .generated_files/flags/Atmega128A/6ed42e0c9c794c9fb6bdbe718eb1f7d8979fef01 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/twi/twi.o: src/mega/twi/twi.c  .generated_files/flags/Atmega128A/958b0de2ee2b8e52e652d733b6282ab755ed760e .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/twi" 
 	@${RM} ${OBJECTDIR}/src/mega/twi/twi.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/twi/twi.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT ${OBJECTDIR}/src/mega/twi/twi.o  -o ${OBJECTDIR}/src/mega/twi/twi.o src/mega/twi/twi.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT ${OBJECTDIR}/src/mega/twi/twi.o  -o ${OBJECTDIR}/src/mega/twi/twi.o src/mega/twi/twi.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/usart/usart.o: src/mega/usart/usart.c  .generated_files/flags/Atmega128A/86b2bba3942563eca9ae827b8309a84bcc50c101 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/usart/usart.o: src/mega/usart/usart.c  .generated_files/flags/Atmega128A/48b9f8323e0722641c2a1115aff07330ba2cd7c3 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/usart" 
 	@${RM} ${OBJECTDIR}/src/mega/usart/usart.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/usart/usart.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT ${OBJECTDIR}/src/mega/usart/usart.o  -o ${OBJECTDIR}/src/mega/usart/usart.o src/mega/usart/usart.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT ${OBJECTDIR}/src/mega/usart/usart.o  -o ${OBJECTDIR}/src/mega/usart/usart.o src/mega/usart/usart.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega.o: src/mega.c  .generated_files/flags/Atmega128A/7c1ffd7be29d109a351df4c30a2eaadd3813ab3e .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega.o: src/mega.c  .generated_files/flags/Atmega128A/2c875547ef1aae42d326e83fce8d501d8fd5eda9 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/mega.o.d 
 	@${RM} ${OBJECTDIR}/src/mega.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega.o.d" -MT "${OBJECTDIR}/src/mega.o.d" -MT ${OBJECTDIR}/src/mega.o  -o ${OBJECTDIR}/src/mega.o src/mega.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a   -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega.o.d" -MT "${OBJECTDIR}/src/mega.o.d" -MT ${OBJECTDIR}/src/mega.o  -o ${OBJECTDIR}/src/mega.o src/mega.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 else
-${OBJECTDIR}/src/mega/buffers/buffers.o: src/mega/buffers/buffers.c  .generated_files/flags/Atmega128A/780c99dd898d33ec7eb4a679fcdaed25c0cf88fe .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/buffers/buffers.o: src/mega/buffers/buffers.c  .generated_files/flags/Atmega128A/b09af67dec655b9047e8c338f025fca4b74e4757 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/buffers" 
 	@${RM} ${OBJECTDIR}/src/mega/buffers/buffers.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/buffers/buffers.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT ${OBJECTDIR}/src/mega/buffers/buffers.o  -o ${OBJECTDIR}/src/mega/buffers/buffers.o src/mega/buffers/buffers.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT "${OBJECTDIR}/src/mega/buffers/buffers.o.d" -MT ${OBJECTDIR}/src/mega/buffers/buffers.o  -o ${OBJECTDIR}/src/mega/buffers/buffers.o src/mega/buffers/buffers.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/cmsa/csma.o: src/mega/cmsa/csma.c  .generated_files/flags/Atmega128A/1807ee2b6bc805daccbedf2abad9cfe3adcc72c6 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/cmsa/csma.o: src/mega/cmsa/csma.c  .generated_files/flags/Atmega128A/31f32472df5dd52f9d6edbb18258d88a326543e1 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/cmsa" 
 	@${RM} ${OBJECTDIR}/src/mega/cmsa/csma.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/cmsa/csma.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT ${OBJECTDIR}/src/mega/cmsa/csma.o  -o ${OBJECTDIR}/src/mega/cmsa/csma.o src/mega/cmsa/csma.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT "${OBJECTDIR}/src/mega/cmsa/csma.o.d" -MT ${OBJECTDIR}/src/mega/cmsa/csma.o  -o ${OBJECTDIR}/src/mega/cmsa/csma.o src/mega/cmsa/csma.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o: src/mega/ds1307/example/ds1307.X/src/app.c  .generated_files/flags/Atmega128A/643d8d38fc521295e64a5ee1801035c598be4841 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o: src/mega/ds1307/example/ds1307.X/src/app.c  .generated_files/flags/Atmega128A/61c4dbf2a3236fd370cb7ace9d8cf413b54075bb .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src" 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o  -o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o src/mega/ds1307/example/ds1307.X/src/app.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o  -o ${OBJECTDIR}/src/mega/ds1307/example/ds1307.X/src/app.o src/mega/ds1307/example/ds1307.X/src/app.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/ds1307/ds1307.o: src/mega/ds1307/ds1307.c  .generated_files/flags/Atmega128A/b2cc97000371439e3023ba016ecbb63c9ccd9d18 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/ds1307/ds1307.o: src/mega/ds1307/ds1307.c  .generated_files/flags/Atmega128A/e90c1829abe9388d6378cc37ab0b2244be04a6fc .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/ds1307" 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/ds1307.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/ds1307/ds1307.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/ds1307.o  -o ${OBJECTDIR}/src/mega/ds1307/ds1307.o src/mega/ds1307/ds1307.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT "${OBJECTDIR}/src/mega/ds1307/ds1307.o.d" -MT ${OBJECTDIR}/src/mega/ds1307/ds1307.o  -o ${OBJECTDIR}/src/mega/ds1307/ds1307.o src/mega/ds1307/ds1307.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/exeeprom/exEprom.o: src/mega/exeeprom/exEprom.c  .generated_files/flags/Atmega128A/e803982ca328cfac3b7030f01da93b272158c0f4 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/exeeprom/exEprom.o: src/mega/exeeprom/exEprom.c  .generated_files/flags/Atmega128A/a22cd979d5984e25180beba628a62228e5d22248 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/exeeprom" 
 	@${RM} ${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/exeeprom/exEprom.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT ${OBJECTDIR}/src/mega/exeeprom/exEprom.o  -o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o src/mega/exeeprom/exEprom.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT "${OBJECTDIR}/src/mega/exeeprom/exEprom.o.d" -MT ${OBJECTDIR}/src/mega/exeeprom/exEprom.o  -o ${OBJECTDIR}/src/mega/exeeprom/exEprom.o src/mega/exeeprom/exEprom.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/gpio/gpio.o: src/mega/gpio/gpio.c  .generated_files/flags/Atmega128A/dd259d158f3d2eb198eb140f9039a185f9ab4a72 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/gpio/gpio.o: src/mega/gpio/gpio.c  .generated_files/flags/Atmega128A/1b6bada83811676cd5d66696acb0f3c6d239aa21 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/gpio" 
 	@${RM} ${OBJECTDIR}/src/mega/gpio/gpio.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/gpio/gpio.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT ${OBJECTDIR}/src/mega/gpio/gpio.o  -o ${OBJECTDIR}/src/mega/gpio/gpio.o src/mega/gpio/gpio.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT "${OBJECTDIR}/src/mega/gpio/gpio.o.d" -MT ${OBJECTDIR}/src/mega/gpio/gpio.o  -o ${OBJECTDIR}/src/mega/gpio/gpio.o src/mega/gpio/gpio.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/keypad/keypad.o: src/mega/keypad/keypad.c  .generated_files/flags/Atmega128A/70b9b1903f55089d7bc6d4ca762974eba22841d .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/keypad/keypad.o: src/mega/keypad/keypad.c  .generated_files/flags/Atmega128A/fab66615921c9a96a04769886f94059a00c37fdd .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/keypad" 
 	@${RM} ${OBJECTDIR}/src/mega/keypad/keypad.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/keypad/keypad.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT ${OBJECTDIR}/src/mega/keypad/keypad.o  -o ${OBJECTDIR}/src/mega/keypad/keypad.o src/mega/keypad/keypad.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT "${OBJECTDIR}/src/mega/keypad/keypad.o.d" -MT ${OBJECTDIR}/src/mega/keypad/keypad.o  -o ${OBJECTDIR}/src/mega/keypad/keypad.o src/mega/keypad/keypad.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c  .generated_files/flags/Atmega128A/9f95cc83d2e3552179157da8c3ed6d69fefea255 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/lcd/lcd.o: src/mega/lcd/lcd.c  .generated_files/flags/Atmega128A/ba9aa9f14e95a21943f1c126b3d22ead5f2cb049 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/lcd" 
 	@${RM} ${OBJECTDIR}/src/mega/lcd/lcd.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/lcd/lcd.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT ${OBJECTDIR}/src/mega/lcd/lcd.o  -o ${OBJECTDIR}/src/mega/lcd/lcd.o src/mega/lcd/lcd.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT "${OBJECTDIR}/src/mega/lcd/lcd.o.d" -MT ${OBJECTDIR}/src/mega/lcd/lcd.o  -o ${OBJECTDIR}/src/mega/lcd/lcd.o src/mega/lcd/lcd.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/36a163535357b866296f9f06aa90e56f68a5953c .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o: src/mega/lcdmnue/lcdmnue.c  .generated_files/flags/Atmega128A/9368b76732efa1d15c066aef3a517a7ae23fb007 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/lcdmnue" 
 	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT "${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o.d" -MT ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o  -o ${OBJECTDIR}/src/mega/lcdmnue/lcdmnue.o src/mega/lcdmnue/lcdmnue.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/system/system.o: src/mega/system/system.c  .generated_files/flags/Atmega128A/5b5c1fc1ce2fb2f8eff309000eb4133554ead45c .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/system/system.o: src/mega/system/system.c  .generated_files/flags/Atmega128A/7d3979a245dbcac3485a40da7596f1fc9bcea4b0 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/system" 
 	@${RM} ${OBJECTDIR}/src/mega/system/system.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/system/system.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/system.o.d" -MT "${OBJECTDIR}/src/mega/system/system.o.d" -MT ${OBJECTDIR}/src/mega/system/system.o  -o ${OBJECTDIR}/src/mega/system/system.o src/mega/system/system.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/system.o.d" -MT "${OBJECTDIR}/src/mega/system/system.o.d" -MT ${OBJECTDIR}/src/mega/system/system.o  -o ${OBJECTDIR}/src/mega/system/system.o src/mega/system/system.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/system/time.o: src/mega/system/time.c  .generated_files/flags/Atmega128A/cc20a7c85f52f03f89f2c750c416f9d8976ba789 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/system/time.o: src/mega/system/time.c  .generated_files/flags/Atmega128A/d74743b120fa0b0bc1680cefcfd826b7993df3a7 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/system" 
 	@${RM} ${OBJECTDIR}/src/mega/system/time.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/system/time.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/time.o.d" -MT "${OBJECTDIR}/src/mega/system/time.o.d" -MT ${OBJECTDIR}/src/mega/system/time.o  -o ${OBJECTDIR}/src/mega/system/time.o src/mega/system/time.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/system/time.o.d" -MT "${OBJECTDIR}/src/mega/system/time.o.d" -MT ${OBJECTDIR}/src/mega/system/time.o  -o ${OBJECTDIR}/src/mega/system/time.o src/mega/system/time.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/twi/twi.o: src/mega/twi/twi.c  .generated_files/flags/Atmega128A/bbb036936f2cb9dc3c19d4ecb8b3b4623f951053 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/twi/twi.o: src/mega/twi/twi.c  .generated_files/flags/Atmega128A/55e9cf1c3259602c81bcd46b0f45415b76eb6e38 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/twi" 
 	@${RM} ${OBJECTDIR}/src/mega/twi/twi.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/twi/twi.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT ${OBJECTDIR}/src/mega/twi/twi.o  -o ${OBJECTDIR}/src/mega/twi/twi.o src/mega/twi/twi.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT "${OBJECTDIR}/src/mega/twi/twi.o.d" -MT ${OBJECTDIR}/src/mega/twi/twi.o  -o ${OBJECTDIR}/src/mega/twi/twi.o src/mega/twi/twi.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega/usart/usart.o: src/mega/usart/usart.c  .generated_files/flags/Atmega128A/90ffd921d99fdfed01bcefbf00854fa211994f5 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega/usart/usart.o: src/mega/usart/usart.c  .generated_files/flags/Atmega128A/e226cda21e0a52c92bb41072bca3cd73f6a4fdbc .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src/mega/usart" 
 	@${RM} ${OBJECTDIR}/src/mega/usart/usart.o.d 
 	@${RM} ${OBJECTDIR}/src/mega/usart/usart.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT ${OBJECTDIR}/src/mega/usart/usart.o  -o ${OBJECTDIR}/src/mega/usart/usart.o src/mega/usart/usart.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT "${OBJECTDIR}/src/mega/usart/usart.o.d" -MT ${OBJECTDIR}/src/mega/usart/usart.o  -o ${OBJECTDIR}/src/mega/usart/usart.o src/mega/usart/usart.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/src/mega.o: src/mega.c  .generated_files/flags/Atmega128A/c9f0cf1fb9d781d08390d04c3fde02c4daba7ba9 .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/mega.o: src/mega.c  .generated_files/flags/Atmega128A/5e12870034eb2dda782214d4d5c92ae40e3810ff .generated_files/flags/Atmega128A/bdfd0a36b03f2f21722392deadb227e06256b271
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/mega.o.d 
 	@${RM} ${OBJECTDIR}/src/mega.o 
-	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O3 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/src/mega.o.d" -MT "${OBJECTDIR}/src/mega.o.d" -MT ${OBJECTDIR}/src/mega.o  -o ${OBJECTDIR}/src/mega.o src/mega.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
+	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/mega.o.d" -MT "${OBJECTDIR}/src/mega.o.d" -MT ${OBJECTDIR}/src/mega.o  -o ${OBJECTDIR}/src/mega.o src/mega.c  -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 endif
 

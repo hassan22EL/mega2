@@ -1,42 +1,35 @@
-
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   keypad.c
- * Author       :   Hassan Elsaied
- * Data Memory  :   
- * Program Space:   under upgrade
- * Version      :   Mega2v241022
- * Start Data   :   24-10-2022  20:00:00
- * End Data     :   24-10-2022  23:48:00
- * Work Time    :   5-hour
- * Comments     :   no comment
+/*
+---------------------------------------------------------------------------------------------------------
+|                           < Module  Definition >                                                      | 
+---------------------------------------------------------------------------------------------------------
+| < FILE                     : keypad.c                                                                 |                                  
+| < Author                   : Hassan Elsaied                                                           |
+| < Version                  : Mega2v241022                                                             |
+| < Refences                 : no- ref                                                                  |  
+| < SRAM USAGE               : 28-Byte  (4 Byte buffer , 6 buffer dis , 16 byte internal conter , 2byte |                    |
+| < PROGRAM USAGE            : 822 Byte  (411 Instruction)                                              |                                    
+| < Hardware Usage           : GPIO                                                                     |
+| < File Created             : 24-10-2022                                                               |
+---------------------------------------------------------------------------------------------------------
  */
 
 
-
+#include "../../../inc/mega.h"
 #if defined (KEYPAD_MODULE)
 #if  KEYPAD_MODULE 
-#include "../../../inc/mega.h"
-
-
-
-
-
 /*
- * ************************************************************************************
- *                               Keypad Definition                                    *
- * ************************************************************************************
- * @KEYPAD_MAX_ROW             : max row in keypad and this value less than 8         *
- * @KEYPAD_MAX_COL             : max clomun in keypad and this value less than 8      *
- * @KEYPAD_MAX_BUFFER          : max key stored                                       *
- * @KEYPAD_DEDEBOUND_TIME      : time required to press or released switch            *
- * @KEYPAD_LONG_TIME           : time required to long press                          *
- * @KEYPAD_REPEAT_TIME         : time required to repeat key                          *
- * @KEYPAD_REPEAT_RATE         : time required between repeat key                     *
- * @note : keypad state is fixed active low                                           *                 
- **************************************************************************************
+ ---------------------------------------------------------------------------------------------------------
+ |                               <Keypad Definition>                                                     |
+ ---------------------------------------------------------------------------------------------------------
+ |< @KEYPAD_MAX_ROW             : max row in keypad and this value less than 8                           |
+ |< @KEYPAD_MAX_COL             : max clomun in keypad and this value less than 8                        |
+ |< @KEYPAD_MAX_BUFFER          : max key stored                                                         |
+ |< @KEYPAD_DEDEBOUND_TIME      : time required to press or released switch                              |
+ |< @KEYPAD_LONG_TIME           : time required to long press                                            |
+ |< @KEYPAD_REPEAT_TIME         : time required to repeat key                                            |
+ |< @KEYPAD_REPEAT_RATE         : time required between repeat key                                       |
+ |< @note                       : keypad state is fixed active low                                       |                 
+ ---------------------------------------------------------------------------------------------------------
  */
 
 #ifndef      KEYPAD_MAX_ROW 
@@ -112,9 +105,9 @@
 
 
 /*
- ********************************************************************************************
- *                             KEYPAD_COMMONS_PINS                                       *
- * ******************************************************************************************
+ ---------------------------------------------------------------------------------------------------------
+ |                            < KEYPAD_COMMONS_PINS  >                                                   |
+ ---------------------------------------------------------------------------------------------------------
  */
 
 /***********************KEYPAD01 C01********************/
@@ -150,12 +143,10 @@
 #define KEYPAD_C08_PIN          NOT_A_PIN
 #endif
 
-
-
 /*
- ********************************************************************************************
- *                             KEYPAD_SWITCH_PINS                                       *
- * ******************************************************************************************
+ ---------------------------------------------------------------------------------------------------------
+ |                            < KEYPAD_SWITCH_PINS  >                                                   |
+ ---------------------------------------------------------------------------------------------------------
  */
 /***********************KEYPAD01 SW01********************/
 #ifndef KEYPAD_SW01_PIN
@@ -193,113 +184,126 @@
 
 
 
-
-
 /*
- * ************************************************************************************
- *                          Create keyCloumn Keypad Definition                                    *
- * ************************************************************************************
+ ---------------------------------------------------------------------------------------------------------
+ |                            < Create keyCloumn Keypad Definition  >                                     |
+ ---------------------------------------------------------------------------------------------------------
  */
 #if KEYPAD_MAX_COL == 8
-static const gpio_t keyCloumn[8] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN, KEYPAD_SW06_PIN, KEYPAD_SW07_PIN, KEYPAD_SW08_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN, KEYPAD_SW06_PIN, KEYPAD_SW07_PIN, KEYPAD_SW08_PIN};
 #elif KEYPAD_MAX_COL == 7
-static const gpio_t keyCloumn[7] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN, KEYPAD_SW06_PIN, KEYPAD_SW07_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN, KEYPAD_SW06_PIN, KEYPAD_SW07_PIN};
 #elif KEYPAD_MAX_COL == 6
-static const gpio_t keyCloumn[6] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN, KEYPAD_SW06_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN, KEYPAD_SW06_PIN};
 #elif KEYPAD_MAX_COL == 5
-static const gpio_t keyCloumn[5] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN};
 #elif KEYPAD_MAX_COL == 4
-static const gpio_t PROGMEM keyCloumn[4] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] PROGMEM = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN};
 #elif KEYPAD_MAX_COL == 3
-static const gpio_t keyCloumn[3] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN};
 #elif KEYPAD_MAX_COL == 2
-static const gpio_t keyCloumn[2] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN};
 #elif KEYPAD_MAX_COL == 1
-static const gpio_t keyCloumn[1] = {KEYPAD_SW01_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] = {KEYPAD_SW01_PIN};
 #else
 #error    "please define number of column used in keypad"
 #endif
 
 /*
- * ************************************************************************************
- *                          Create keyRows Keypad Definition                                    *
- * ************************************************************************************
+ ---------------------------------------------------------------------------------------------------------
+ |                            < Create keyRows Keypad Definition  >                                      |
+ ---------------------------------------------------------------------------------------------------------
  */
 #if KEYPAD_MAX_ROW == 8
-static const gpio_t keyRows[8] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN, KEYPAD_C06_PIN, KEYPAD_C07_PIN, KEYPAD_C08_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN, KEYPAD_C06_PIN, KEYPAD_C07_PIN, KEYPAD_C08_PIN};
 #elif KEYPAD_MAX_ROW == 7
-static const gpio_t keyRows[7] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN, KEYPAD_C06_PIN, KEYPAD_C07_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN, KEYPAD_C06_PIN, KEYPAD_C07_PIN};
 #elif KEYPAD_MAX_ROW == 6
-static const gpio_t keyRows[6] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN, KEYPAD_C06_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN, KEYPAD_C06_PIN};
 #elif KEYPAD_MAX_ROW == 5
-static const gpio_t keyRows[5] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN, KEYPAD_C05_PIN};
 #elif KEYPAD_MAX_ROW == 4
-static const gpio_t PROGMEM keyRows[4] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] PROGMEM = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN, KEYPAD_C04_PIN};
 #elif KEYPAD_MAX_ROW == 3
-static const gpio_t keyRows[3] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN, KEYPAD_C03_PIN};
 #elif KEYPAD_MAX_ROW == 2
-static const gpio_t keyRows[2] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] = {KEYPAD_C01_PIN, KEYPAD_C02_PIN};
 #elif KEYPAD_MAX_ROW == 1
-static const gpio_t keyRows[1] = {KEYPAD_C01_PIN};
+static const gpio_t keyRows[KEYPAD_MAX_ROW] = {KEYPAD_C01_PIN};
 #else
 #error    "please define number of rows used in keypad"
 #endif
 
 
-/************************************************************************************** 
- * @note : keypad run every system tick (number of micro seconds) and scan            *
- *       : the de-bounce is every fixed 20ms the counter                              *
- *       : Increment 20000/ number of micro seconds for example the system micro
- *       : seconds is 1250 us each interrupt and depounds is 20ms 
- *       : counter reach the (20000/1250)  = 16 
- *       : long time counter 2*10^6 / 1250 = 1600 to reduce this the scan run 
- *       : every 10ms       20/10 =  2 
- *       : long time        2000/10 = 200
- *       : long time max    2560/10  =256  
- *       : to reduce scan every 20ms 
- *       : this is limit of the time required                                           *
- **************************************************************************************
- */
-
 /*
- * ************************************************************************************
- *                               Keypad Key Buffer                                    *
- * ************************************************************************************
- * 
+ --------------------------------------------------------------------------------------------------------- 
+ |                                            < Notes >                                                  | 
+ --------------------------------------------------------------------------------------------------------- 
+ | <@note : keypad run every system tick (number of micro seconds) and scan                              |
+ |        : the de-bounce is every fixed 20ms the counter                                                |
+ |        : Increment 20000/ number of micro seconds for example the system micro                        |
+ |        : seconds is 1250 us each interrupt and depounds is 20ms                                       |
+ |        : counter reach the (20000/1250)  = 16                                                         |
+ |        : long time counter 2*10^6 / 1250 = 1600 to reduce this the scan run                           |
+ |        : every 10ms       20/10 =  2                                                                  |
+ |        : long time        2000/10 = 200                                                               |
+ |        : long time max    2560/10  =256                                                               |
+ |        : to reduce scan every 20ms                                                                    |
+ |        : this is limit of the time required                                                           |
+  --------------------------------------------------------------------------------------------------------
  */
-
+#define MAX_COUNTER            (KEYPAD_MAX_ROW*KEYPAD_MAX_COL)
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                               Keypad scan Variables                                                   |
+ --------------------------------------------------------------------------------------------------------- 
+ */
+/*
+ * @var gu8KeypadBufferEvents  : keypad buffer to store events
+ */
 static uint8_t gu8KeypadBufferEvents[KEYPAD_MAX_BUFFER];
+/*
+ * @var gstKeypadDescriptor  : create buffer as a ring buffer operations
+ */
 static stByteBufDescriptor_t gstKeypadDescriptor;
+/*
+ * @var gu8keypadCounters  : keypad counter de-bounds buffer
+ */
+static uint8_t gu8keypadCounters[MAX_COUNTER];
+/*
+ * @var gu8KeypadLastKey  : last repeated key
+ */
+static volatile uint8_t gu8KeypadLastKey;
+/*
+ * @var gu8KeypadRepeatCounter  : repeat time to create new char
+ */
+static volatile uint8_t gu8KeypadRepeatCounter;
 
 /*
- * ************************************************************************************
- *                               Keypad scan Variables                                    *
- * ************************************************************************************
- * 
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < keypadstoreKey >                                                    |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void keypadstoreKey                                                            |  
+ | < @Description       : check state of the key and state of the current counter depounds               | 
+ | < @Param index       : this index of  current counter in keypad buffer                                |
+ | < @param PinC        : this pin column to check state is press or release                             |
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
  */
-volatile uint8_t gu8keypadCounters[KEYPAD_MAX_ROW*KEYPAD_MAX_COL];
-volatile uint8_t gu8KeypadLastKey;
-volatile uint8_t gu8KeypadRepeatCounter;
+static void keypadstoreKey(volatile uint8_t index, volatile gpio_t pinC);
 
 /*
- * ************************************************************************************
- *                              keypadstoreKey                                   *
- * ************************************************************************************
- * @param index : this index of  current counter in keypad buffer
- * @param PinC  : this pin column to check state is press or release
- * @return      : void
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < keypadstoreKey >                                                    |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void keypadstoreKey                                                            |  
+ | < @Description       : check state of the key and state of the current counter depounds               | 
+ | < @Param index       : this index of  current counter in keypad buffer                                |
+ | < @param PinC        : this pin column to check state is press or release                             |
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
  */
-static void keypadstoreKey(volatile uint8_t index, volatile uint8_t pinC);
-
-/*
- * ************************************************************************************
- *                              keypadstoreKey                                   *
- * ************************************************************************************
- * @param index : this index of  current counter in keypad buffer
- * @param PinC  : this pin column to check state is press or release
- * @return      : void
- */
-static void keypadstoreKey(volatile uint8_t index, volatile uint8_t pinC) {
+static void keypadstoreKey(volatile uint8_t index, volatile gpio_t pinC) {
     uint8_t u8Event;
     u8Event = KEYPAD_NOT_AN_EVENT;
     if (!digitalPinRead(pinC)) {
@@ -343,50 +347,59 @@ static void keypadstoreKey(volatile uint8_t index, volatile uint8_t pinC) {
     }
 }
 
-/* *******************************************************************
- *                               Keypad Pins Init                           *
- * *******************************************************************
- * @benfit                 : Init rows as out
- * @return                 : void
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < keyInit >                                                           |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void keyInit                                                                   |  
+ | < @Description       : initialization variables and I/O assignment with default (user not used)       | 
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
  */
 void keyInit() {
-    /*set rows as input pull up*/
+    /*set columns as input pull up*/
+    gpio_t pin;
     for (uint8_t i = 0; i < KEYPAD_MAX_COL; i++) {
-        digitalpinMode(keyCloumn[i], MODE_INPUT_PULLUP);
+        digitalpinMode(pgm_read_word(keyCloumn + i), MODE_INPUT_PULLUP); /*initialization as Input*/
     }
-    /*set column out log */
+    /*set rows out  */
     for (uint8_t i = 0; i < KEYPAD_MAX_ROW; i++) {
-        digitalpinMode(keyRows[i], MODE_OUTPUT);
-        digitalPinWrite(keyRows[i], GPIO_HIGH); /*default case*/
-
+        pin = pgm_read_word(keyRows + i);
+        digitalpinMode(pin, MODE_OUTPUT); /*initialization as output*/
+        digitalPinWrite(pin, GPIO_HIGH); /*default value*/
     }
-    for (uint8_t i = 0; i < KEYPAD_MAX_COL * KEYPAD_MAX_ROW; i++) {
+    /*initialization as time counters of each key*/
+    for (uint8_t i = 0; i < (MAX_COUNTER); i++) {
         gu8keypadCounters[i] = 0x00;
     }
-    /*scan row every 1m */
+    /*initialization as keypad buffer as a ring buffer*/
     byteBufferInit(&gstKeypadDescriptor, gu8KeypadBufferEvents, KEYPAD_MAX_BUFFER);
+    /*initialization as time of repeat counters of each key*/
     gu8KeypadRepeatCounter = 0;
     gu8KeypadLastKey = 0;
 }
 
-/* ************************************************************************
- *                               Keypad scan                              *
- * ************************************************************************
- * @benfit                 : primitive function run every time (ex. 10ms) *
- * @return                 : void                                         *
- * ************************************************************************
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < keyscan >                                                           |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void keyscan                                                                   |  
+ | < @Description       : primitive function run every time (ex. 10ms) (user not used)                   | 
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
  */
 void keyscan() {
     /*this function*/
-
     volatile uint8_t i;
     volatile uint8_t j;
+    gpio_t pin;
     for (i = 0; i < KEYPAD_MAX_ROW; i++) {
-        digitalPinWrite(keyRows[i], GPIO_TGL);
+        pin = pgm_read_word(keyRows + i);
+        digitalPinWrite(pin, GPIO_TGL); // from default case to active case
         for (j = 0; j < KEYPAD_MAX_COL; j++) {
-            keypadstoreKey(((i * KEYPAD_MAX_COL) + j), j);
+            keypadstoreKey(((i * KEYPAD_MAX_COL) + j), pgm_read_word(keyCloumn + j));
         }
-        digitalPinWrite(keyCloumn[i], GPIO_TGL);
+        digitalPinWrite(pin, GPIO_TGL); // return to default case
     }
     //Repeat State
     if (gu8KeypadLastKey != KEYPAD_NOT_A_BUTTON) {
@@ -397,12 +410,14 @@ void keyscan() {
     }
 }
 
-/* ************************************************************************
- *                            keypadGetEvent                              *
- * ************************************************************************
- * @benfit                 : get key code from buffer                     *
- * @return                 : void                                         *
- * ************************************************************************
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < keypadGetEvent >                                                    |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t keypadGetEvent                                                         |  
+ | < @Description       : read key event from buffer  (user  used)                                       | 
+ | < @return            : key event code                                                                 |
+ ---------------------------------------------------------------------------------------------------------
  */
 uint8_t keypadGetEvent() {
     uint8_t u8keypadevent;

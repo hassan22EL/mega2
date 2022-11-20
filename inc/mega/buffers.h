@@ -198,7 +198,7 @@ uint8_t putStruct(stBufferStructDescriptor_t * structBuf, void* Struct_Ptr);
  |                      : 1  when buffer is ready data to be read                                 |
  --------------------------------------------------------------------------------------------------
  */
-uint8_t getStruct(stBufferStructDescriptor_t* structBuf, void* structBuf);
+uint8_t getStruct(stBufferStructDescriptor_t* structBuf, void* Struct_Ptr);
 /*
  --------------------------------------------------------------------------------------------------
  |                                 < putTLV >                                                     |

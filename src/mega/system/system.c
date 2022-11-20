@@ -7,8 +7,8 @@
 | < Author                 : overflow problem solutions created by eng /Ahmed Saied and implementation by Hassan Elsaied    | 
 | < Version                : Mega2v241022                                                                                   |
 | < References             : no-used references in this documents                                                           |
-| < SRAM_USAGE             : 13 Byte                                                                                        |
-| < PROGRAM_USAGE          : 678 byte (339 Instruction)                                                                     |
+| < SRAM_USAGE             : 14 Byte                                                                                        |
+| < PROGRAM_USAGE          : 694 byte (347 Instruction)                                                                     |
 | < Hardware Usage         : Timer 0                                                                                        |
 | < File Created           : 24-10-2022                                                                                     |
 -----------------------------------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   ----------------------------------------------------------------------------------------------------------------------------
   |                                  <I/O Clock checks>                                                                      |
   ----------------------------------------------------------------------------------------------------------------------------
-*/
+ */
 #ifndef F_CPU 
 #warning Please define F_CPU 
 #endif 
@@ -29,7 +29,7 @@
   ----------------------------------------------------------------------------------------------------------------------------
   |                                  <timer max value>                                                                       |
   ----------------------------------------------------------------------------------------------------------------------------
-*/
+ */
 #define SYSTEM_MAX          (0x7FFFFFFFUL)
 #define SYSTEM_TIME_MAX     (0xFFFFFFFFUL)
 /*
@@ -242,31 +242,28 @@
  ----------------------------------------------------------------------------------------------------------------------------
  |                                 < system variable >                                                                     |
  ----------------------------------------------------------------------------------------------------------------------------
-*/
- /*
-  ----------------------------------------------------------------------------------------------------------------------------
-  | < @var gu32SystemTick      : system interrupt counter                                                                    |
-  ----------------------------------------------------------------------------------------------------------------------------
+ */
+
+/*
+ * < @var gu32SystemTick : number of the interrupt from system started
  */
 static volatile tick_t gu32SystemTick;
 /*
-  ----------------------------------------------------------------------------------------------------------------------------
-  | < @var g32TimeMs           : number of ms                                                                                |
-  ----------------------------------------------------------------------------------------------------------------------------
+ * < @var gu32TimeMs : number of the milli seconds from system started
  */
 static volatile millis_t gu32TimeMs;
 /*
-  ----------------------------------------------------------------------------------------------------------------------------
-  | < @var g32SystemTime       : number of second in the system from last update data                                        |                                                                               |
-  ----------------------------------------------------------------------------------------------------------------------------
+ * < @var g32SystemTime  : number of second in the system from last update data
  */
 static volatile time_t gu32SystemTime;
 /*
-  ----------------------------------------------------------------------------------------------------------------------------
-  | < @var gu8NumberOFusPerMs       : number of us per ms                                                                    |
-  ----------------------------------------------------------------------------------------------------------------------------
+ * < @var gu8NumberOFusPerMs : number of us per ms
  */
 static volatile uint8_t gu8NumberOFusPerMs;
+/*
+ * < @var gu8PerdiocTasks : run tasks as a Periodically from isr such as scan seven segment and scan keypad or keys
+ */
+static volatile uint8_t gu8PerdiocTasks;
 /*
  ----------------------------------------------------------------------------------------------------------------------------
  |                                 < system Interrupt >                                                                     |
@@ -315,20 +312,25 @@ ISR(TIMER0_OVF_vect)
     if (t % TICK_PER_SEC == 0) {
         s++;
     }
-
-    /*task is run per time*/
+    /*periodically task Operation*/
 #if defined KEYPAD_MODULE       
 #if   KEYPAD_MODULE == MODULE_ENABLE
-    if (m % KEY_PERIDIC_TASK == 0) {
+    if (gu8PerdiocTasks % KEY_PERIDIC_TASK == 0) {
         keyscan();
     }
 #endif
 #endif
+
+    if (++gu8PerdiocTasks == MAX_PERODIC_TASKS_TIME) {
+        gu8PerdiocTasks = 0;
+    }
     /*stored registers into memory */
     gu32TimeMs = m;
     gu8NumberOFusPerMs = f;
     gu32SystemTime = s;
     gu32SystemTick = t;
+
+
 
 
 

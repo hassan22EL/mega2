@@ -16,6 +16,9 @@
 #ifndef XC_MODULES_H
 #define	XC_MODULES_H
 
+#include "mega/keypad.h"
+
+
 
 
 
@@ -91,7 +94,7 @@
 | < TWI_SDA_PIN             : data gpio pin if has enable interanl pull up             |
 |                           : at disaple pull up don't care                            |
 | < SRAM USAGE              : 8-Byte in Master Mode  && Slave mode 7 Byte              |  
-| < PROGRAM USAGE          : 826 Byte (413 Instruction)   in Master mode               |
+| < PROGRAM USAGE           : 826 Byte (413 Instruction)   in Master mode              |
 |                          : under test in slave mode                                  |   
 ----------------------------------------------------------------------------------------
  */
@@ -152,7 +155,7 @@
  | < LCD_D6                  : Data  bit 4 in gpio pin such as GPIO_A5                           |
  | < LCD_D7                  : Data  bit 4 in gpio pin such as GPIO_A6                           |
  | < SRAM USAGE              : 36-Byte in default ==> 32 buffer , 4 byte data                    |  
- | < PROGRAM USAGE           : 1082 Byte (1052 byte (526 Instruction)) + 30 Byte custom char     |                             
+ | < PROGRAM USAGE           : 980 Byte (950 byte (475 Instruction)) + 30 Byte custom char       |                             
  -------------------------------------------------------------------------------------------------
  */
 #define  LCD_MODULE               (0)
@@ -167,55 +170,26 @@
 #define  LCD_D6                   (GPIO_A2)
 #define  LCD_D7                   (GPIO_A2)
 #endif
-
-
-
-
-
-
 /* 
  -------------------------------------------------------------------------------------------------
- |                          < DS1307 MODULE >                                                    |                                             
+ |                          < KEYPAD MODULE  >                                                   |                                             
  -------------------------------------------------------------------------------------------------
- | < DS1307_MODULE                : 0 module is not active                                       |
+ | < KEYPAD_MODULE                : 0 module is not active                                       |
  |                                : 1 module is active                                           |
- | < DS1307_MODE                  : DS1307_MODE_12H  DS1307 work with AM and PM                  |
- |                                : DS1307_MODE_24H  DS1307 work witch normal clock              |
- | < DS1307_PERDIOC_READ_PER_MIN  : DS1307 Read clock every a min clock                          |
- | < SRAM USAGE                   : 21-Byte                                                      |  
- | < PROGRAM USAGE                : 1248 Byte (624 Instruction)                                  |
- | < @note                        : in this version not support a 12 hour clock operation        |                                                                                                              
+ | < KEY_PREDIOC_TASK_TIME        : run evey x time                                              |
+ | < KEYPAD_MAX_ROW               : max row in keypad and this value less than 8                 |
+ | < KEYPAD_MAX_COL               : max column in keypad and this value less than 8              |
+ | < KEYPAD_MAX_BUFFER            : max key stored                                               |
+ | < KEYPAD_DEDEBOUND_TIME        : time required to press or released switch                    |
+ | < KEYPAD_LONG_TIME             : time required to long press                                  |
+ | < KEYPAD_REPEAT_TIME           : time required to repeat key                                  |
+ | < KEYPAD_REPEAT_RATE           : time required between repeat key                             |
+ | < note                         : keypad state is fixed active low                             |
+ | < pin                          : replace NOT_A_PIN by digital pin with max rows and column    |                    
+ | < SRAM USAGE                   : 28-Byte used  (4 buffer + 6buffer dis , 16 counter +2byte    |  
+ | < PROGRAM USAGE                : 822 Byte (411 Instruction)                                   |               
  -------------------------------------------------------------------------------------------------
  */
-#define  DS1307_MODULE             (0)
-#if DS1307_MODULE
-#define          DS1307_MODE                                     DS1307_MODE_24H    
-#define          DS1307_PERDIOC_READ_PER_MIN                     5UL
-#endif
-
-
-
-
-/*
- * ************************************************************************************
- *                               Keypad Definition                                    *
- * ************************************************************************************
- *@DS1307_MODULE               : 0 module is not active                   *
- *                             : 1 module is active 
- * @KEY_PREDIOC_TASK_TIME      : run evey x time
- * @KEYPAD_MAX_ROW             : max row in keypad and this value less than 8         *
- * @KEYPAD_MAX_COL             : max column in keypad and this value less than 8      *
- * @KEYPAD_MAX_BUFFER          : max key stored                                       *
- * @KEYPAD_DEDEBOUND_TIME      : time required to press or released switch            *
- * @KEYPAD_LONG_TIME           : time required to long press                          *
- * @KEYPAD_REPEAT_TIME         : time required to repeat key                          *
- * @KEYPAD_REPEAT_RATE         : time required between repeat key                     *
- * @note                       : keypad state is fixed active low                     *
- * @pin                        : replace NOT_A_PIN by digital pin                     *
- *                             : with max rows and column                             *       
- **************************************************************************************
- */
-
 #define   KEYPAD_MODULE                   0
 #if KEYPAD_MODULE
 #define   KEYPAD_MAX_ROW                 (4)
@@ -244,6 +218,52 @@
 #define KEYPAD_SW08_PIN          NOT_A_PIN
 #endif
 
+
+
+
+
+/* 
+ -------------------------------------------------------------------------------------------------
+ |                          < DS1307 MODULE >                                                    |                                             
+ -------------------------------------------------------------------------------------------------
+ | < DS1307_MODULE                : 0 module is not active                                       |
+ |                                : 1 module is active                                           |
+ | < DS1307_MODE                  : DS1307_MODE_12H  DS1307 work with AM and PM                  |
+ |                                : DS1307_MODE_24H  DS1307 work witch normal clock              |
+ | < DS1307_PERDIOC_READ_PER_MIN  : DS1307 Read clock every a min clock                          |
+ | < SRAM USAGE                   : 21-Byte                                                      |  
+ | < PROGRAM USAGE                : 1248 Byte (624 Instruction)                                  |
+ | < @note                        : in this version not support a 12 hour clock operation        |                                                                                                              
+ -------------------------------------------------------------------------------------------------
+ */
+#define  DS1307_MODULE             (0)
+#if DS1307_MODULE
+#define          DS1307_MODE                                     DS1307_MODE_24H    
+#define          DS1307_PERDIOC_READ_PER_MIN                     5UL
+#endif
+
+/* 
+ -------------------------------------------------------------------------------------------------
+ |                          < LCD MNUE MODULE >                                                  |                                             
+ -------------------------------------------------------------------------------------------------
+ | < LCDMNUE_MODULE               : 0 module is not active                                       |
+ |                                : 1 module is active                                           |
+ | < MENU_DOWN_SW                 : down switch (-) code set form keypad                         |
+ | < MENU_UP_SW                   : up switch (+) code set form keypad                           |
+ | < MENU_ENTER_SW                : enter switch  code set form keypad                           |
+ | < MENU_CANSEL_SW               : cancel switch  code set form keypad                          |
+ | < SRAM USAGE                   : 3-Byte                                                       |  
+ | < PROGRAM USAGE                : 908 Byte (454 -Instruction)                                  |
+ | < @note                        :  no option used                                              |                                                                                                              
+ -------------------------------------------------------------------------------------------------
+ */
+#define        LCDMNUE_MODULE               (0)
+#if  LCDMNUE_MODULE
+#define        MENU_DOWN_SW                  KEYPAD_SW01
+#define        MENU_UP_SW                    KEYPAD_SW02
+#define        MENU_ENTER_SW                 KEYPAD_SW02
+#define        MENU_CANSEL_SW                KEYPAD_SW02
+#endif
 /*
  --------------------------------------------------------------------------------------
  |                                CSMA_MODULE                                         |                                       
@@ -262,6 +282,8 @@
 #if        CSMA_MODULE
 #define    CSMA_DEVICE_TYPE                                (CSMA_MASTER)
 #endif
+
+
 
 #endif	/* XC_MODULES_H */
 

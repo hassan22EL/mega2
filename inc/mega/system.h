@@ -6,8 +6,8 @@
 | < Author                 : overflow problem solutions created by eng /Ahmed Saied and implementation by Hassan Elsaied    | 
 | < Version                : Mega2v241022                                                                                   |
 | < References             : no-used references in this documents                                                           |
-| < SRAM_USAGE             : 13 Byte                                                                                        |
-| < PROGRAM_USAGE          : 678 byte (339 Instruction)                                                                     |
+| < SRAM_USAGE             : 14 Byte                                                                                        |
+| < PROGRAM_USAGE          : 694 byte (347 Instruction)                                                                     |
 | < Hardware Usage         : Timer 0                                                                                        |
 | < File Created           : 24-10-2022                                                                                     |
 -----------------------------------------------------------------------------------------------------------------------------

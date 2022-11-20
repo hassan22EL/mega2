@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/usart/usart.o.d \
  src/mega/usart/../../../inc/mega/../resource.h \
  src/mega/usart/../../../inc/mega/../mega.h \
  src/mega/usart/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/usart/../../../inc/mega/buffers.h \
  src/mega/usart/../../../inc/mega/../mega.h \
@@ -44,7 +44,8 @@ build/Atmega128A/production/src/mega/usart/usart.o.d \
  src/mega/usart/../../../inc/mega/exEprom.h \
  src/mega/usart/../../../inc/mega/ds1307.h \
  src/mega/usart/../../../inc/mega/keypad.h \
- src/mega/usart/../../../inc/mega/csma.h
+ src/mega/usart/../../../inc/mega/csma.h \
+ src/mega/usart/../../../inc/mega/lcdmenu.h
 
 src/mega/usart/../../../inc/mega.h:
 
@@ -78,9 +79,9 @@ src/mega/usart/../../../inc/mega/../mega.h:
 
 src/mega/usart/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\ds1307\example\ds1307.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -135,3 +136,5 @@ src/mega/usart/../../../inc/mega/ds1307.h:
 src/mega/usart/../../../inc/mega/keypad.h:
 
 src/mega/usart/../../../inc/mega/csma.h:
+
+src/mega/usart/../../../inc/mega/lcdmenu.h:

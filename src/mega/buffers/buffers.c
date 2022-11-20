@@ -309,7 +309,6 @@ uint8_t putTLV(stBufferTLVDescriptor_t * TLVBuf, void* TLV_Ptr) {
 
     return 1;
 }
-
 /*
  --------------------------------------------------------------------------------------------------
  |                                 < getTLV >                                                     |
@@ -334,4 +333,3 @@ uint8_t getTLV(stBufferTLVDescriptor_t* TLVBuf, void* TLV_Ptr) {
 
     return 1;
 }
-

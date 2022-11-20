@@ -7,7 +7,7 @@
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : https://www.sparkfun.com/datasheets/LCD/HD44780.pdf               |
 | < SRAM USAGE               : 36-Byte  (32 Byte buffer , 4 byte internal used                   |
-| < PROGRAM USAGE            : 1082 Byte (1052 byte (526 Instruction)) + 30 Byte custom char     |                                      
+| < PROGRAM USAGE            : 980 Byte (950 byte (475 Instruction)) + 30 Byte custom char       |                                      
 | < Hardware Usage           : GPIO                                                              |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
@@ -311,9 +311,18 @@ uint8_t lcdIsBusy();
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-
-
 void lcdDriver();
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdUpdateNow >                                                     |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdUpdateNow                                                             |
+ | < @Description       : after write all into buffer from lcd call this function to start update       |                                    
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdUpdateNow();
+
 #endif
 #endif
 

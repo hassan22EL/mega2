@@ -210,6 +210,8 @@
 #endif
 
 
+#define   MAX_PERODIC_TASKS_TIME     KEY_PERIDIC_TIME(PERIODICALLY_TASKS_MAX_TIME)
+
 
 
 #endif	/* XC_CLOCK_H */
