@@ -250,7 +250,7 @@
  | < MENU_ENTER_SW                : enter switch  code set form keypad                           |
  | < MENU_CANSEL_SW               : cancel switch  code set form keypad                          |
  | < SRAM USAGE                   : 3-Byte                                                       |  
- | < PROGRAM USAGE                :  680 Byte (340 -Instruction)                                 |
+ | < PROGRAM USAGE                : 908 Byte (454 -Instruction)                                  |
  | < @note                        :  no option used                                              |                                                                                                              
  -------------------------------------------------------------------------------------------------
  */
