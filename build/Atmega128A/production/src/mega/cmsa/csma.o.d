@@ -17,8 +17,8 @@ build/Atmega128A/production/src/mega/cmsa/csma.o.d \
  src/mega/cmsa/../../../inc/mega/../resource.h \
  src/mega/cmsa/../../../inc/mega/../mega.h \
  src/mega/cmsa/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h \
+ src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h \
+ src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/cmsa/../../../inc/mega/buffers.h \
  src/mega/cmsa/../../../inc/mega/../mega.h \
@@ -46,7 +46,8 @@ build/Atmega128A/production/src/mega/cmsa/csma.o.d \
  src/mega/cmsa/../../../inc/mega/ds1307.h \
  src/mega/cmsa/../../../inc/mega/keypad.h \
  src/mega/cmsa/../../../inc/mega/csma.h \
- src/mega/cmsa/../../../inc/mega/lcdmenu.h
+ src/mega/cmsa/../../../inc/mega/lcdmenu.h \
+ src/mega/cmsa/../../../inc/mega/eeprom.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
@@ -82,9 +83,9 @@ src/mega/cmsa/../../../inc/mega/../mega.h:
 
 src/mega/cmsa/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h:
+src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h:
+src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -141,3 +142,5 @@ src/mega/cmsa/../../../inc/mega/keypad.h:
 src/mega/cmsa/../../../inc/mega/csma.h:
 
 src/mega/cmsa/../../../inc/mega/lcdmenu.h:
+
+src/mega/cmsa/../../../inc/mega/eeprom.h:

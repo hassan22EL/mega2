@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  src/mega/lcd/../../../inc/mega/../resource.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
  src/mega/lcd/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h \
+ src/mega/lcd/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h \
+ src/mega/lcd/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/lcd/../../../inc/mega/buffers.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
@@ -45,7 +45,8 @@ build/Atmega128A/production/src/mega/lcd/lcd.o.d \
  src/mega/lcd/../../../inc/mega/ds1307.h \
  src/mega/lcd/../../../inc/mega/keypad.h \
  src/mega/lcd/../../../inc/mega/csma.h \
- src/mega/lcd/../../../inc/mega/lcdmenu.h
+ src/mega/lcd/../../../inc/mega/lcdmenu.h \
+ src/mega/lcd/../../../inc/mega/eeprom.h
 
 src/mega/lcd/../../../inc/mega.h:
 
@@ -79,9 +80,9 @@ src/mega/lcd/../../../inc/mega/../mega.h:
 
 src/mega/lcd/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h:
+src/mega/lcd/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h:
+src/mega/lcd/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -138,3 +139,5 @@ src/mega/lcd/../../../inc/mega/keypad.h:
 src/mega/lcd/../../../inc/mega/csma.h:
 
 src/mega/lcd/../../../inc/mega/lcdmenu.h:
+
+src/mega/lcd/../../../inc/mega/eeprom.h:

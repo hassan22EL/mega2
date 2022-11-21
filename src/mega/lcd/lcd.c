@@ -141,29 +141,36 @@
  --------------------------------------------------------------------------------------------------------
  |                                 < LCD Variables >                                                    |
  --------------------------------------------------------------------------------------------------------
- | < @var  gu8LcdOPtion         : enable or disable cursor ,enable or disable blink, display on or off  |
- | < @var  gu8LcdBufferIndex    : LCD buffer index at write data into lcd                               |
- | < @var  gu8LCDFlags          : LCD State                                                             |
- | < @var  gu8LCDPosition       : indicator cursor position and blank position when update lcd          |
- --------------------------------------------------------------------------------------------------------
+ */
+/*
+ * < @var  gu8LcdOPtion         : enable or disable cursor ,enable or disable blink, display on or off  
  */
 static volatile uint8_t gu8LcdOPtion;
+/* 
+ * < @var  gu8LcdBufferIndex    : LCD buffer index at write data into lcd                               
+ */
 static volatile uint8_t gu8LcdBufferIndex;
+/*
+ * < @var  gu8LCDFlags          : LCD State 
+ */
 static volatile byte_Flags_t gu8LCDFlags;
+/*
+ * < @var gu8LCDPosition : indicator cursor position and blank position when update lcd |
+ */
 static volatile uint8_t gu8LCDPosition;
 /*
  --------------------------------------------------------------------------------------------------------
  |                              < LCD Buffer >                                                          |
  --------------------------------------------------------------------------------------------------------
- | < @LCD Size   : LCD number of line * lcd number of char per line                                     |
- --------------------------------------------------------------------------------------------------------
  */
-
+/*
+ *  < @LCD Size   : LCD number of line * lcd number of char per line
+ */
 static volatile uint8_t gu8LCDBuffer[LCD_SIZE];
 /*
- --------------------------------------------------------------------------------------------------------
- |                                 <  custome char tables >                                             |
- --------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+|                                 <  custome char tables >                                             |
+--------------------------------------------------------------------------------------------------------
  */
 
 

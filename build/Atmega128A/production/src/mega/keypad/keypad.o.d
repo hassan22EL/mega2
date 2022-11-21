@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/keypad/keypad.o.d \
  src/mega/keypad/../../../inc/mega/../resource.h \
  src/mega/keypad/../../../inc/mega/../mega.h \
  src/mega/keypad/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/keypad/../../../inc/mega/buffers.h \
  src/mega/keypad/../../../inc/mega/../mega.h \
@@ -45,7 +45,8 @@ build/Atmega128A/production/src/mega/keypad/keypad.o.d \
  src/mega/keypad/../../../inc/mega/ds1307.h \
  src/mega/keypad/../../../inc/mega/keypad.h \
  src/mega/keypad/../../../inc/mega/csma.h \
- src/mega/keypad/../../../inc/mega/lcdmenu.h
+ src/mega/keypad/../../../inc/mega/lcdmenu.h \
+ src/mega/keypad/../../../inc/mega/eeprom.h
 
 src/mega/keypad/../../../inc/mega.h:
 
@@ -79,9 +80,9 @@ src/mega/keypad/../../../inc/mega/../mega.h:
 
 src/mega/keypad/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\lcdmnue\example\lcdmenuexampl.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -138,3 +139,5 @@ src/mega/keypad/../../../inc/mega/keypad.h:
 src/mega/keypad/../../../inc/mega/csma.h:
 
 src/mega/keypad/../../../inc/mega/lcdmenu.h:
+
+src/mega/keypad/../../../inc/mega/eeprom.h:

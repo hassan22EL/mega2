@@ -46,7 +46,7 @@
 #include "mega/keypad.h"
 #include "mega/csma.h"
 #include "mega/lcdmenu.h"
-
+#include "mega/eeprom.h"
 
 
 extern int main(void);

@@ -21,6 +21,7 @@
           <itemPath>inc/mega/usart.h</itemPath>
           <itemPath>inc/mega/csma.h</itemPath>
           <itemPath>inc/mega/lcdmenu.h</itemPath>
+          <itemPath>inc/mega/eeprom.h</itemPath>
         </logicalFolder>
         <itemPath>inc/mega.h</itemPath>
         <itemPath>inc/resource.h</itemPath>
@@ -79,6 +80,9 @@
               </logicalFolder>
             </logicalFolder>
             <itemPath>src/mega/ds1307/ds1307.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="eeprom" displayName="eeprom" projectFiles="true">
+            <itemPath>src/mega/eeprom/eeprom.c</itemPath>
           </logicalFolder>
           <logicalFolder name="exeeprom" displayName="exeeprom" projectFiles="true">
             <logicalFolder name="examples" displayName="examples" projectFiles="true">
