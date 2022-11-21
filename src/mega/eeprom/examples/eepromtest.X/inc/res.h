@@ -56,8 +56,8 @@
 ----------------------------------------------------------------------------------------
 | < EEPROM_MODULE           : 0 module is not active                                   | 
 |                           : 1 module is active                                       |
-| < SRAM USAGE              : 10-Byte in Read Buffer                                   |  
-| < PROGRAM USAGE           :  Byte ( Instruction)                                     |  
+| < SRAM USAGE              : 21-Byte 10 in Read Buffer 4Byte Time out , 7 Byte used   |  
+| < PROGRAM USAGE           : 722 Byte (361 Instruction)                               |  
 ----------------------------------------------------------------------------------------
  */
 #define       EEPROM_MODULE    (1)

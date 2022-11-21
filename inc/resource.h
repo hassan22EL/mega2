@@ -59,7 +59,7 @@
  | < @ note  :include the res.h from  application                                      |
  ---------------------------------------------------------------------------------------
  */
-#include "../src/mega/eeprom/examples/eepromtest.X/inc/res.h"
+#include "../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h"
 
 
 /*

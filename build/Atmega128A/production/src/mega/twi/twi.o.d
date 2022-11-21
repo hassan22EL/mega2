@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/twi/twi.o.d \
  src/mega/twi/../../../inc/mega/../resource.h \
  src/mega/twi/../../../inc/mega/../mega.h \
  src/mega/twi/../../../inc/mega/../resource.h \
- src/mega/twi/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h \
- src/mega/twi/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h \
+ src/mega/twi/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h \
+ src/mega/twi/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/twi/../../../inc/mega/buffers.h \
  src/mega/twi/../../../inc/mega/../mega.h \
@@ -80,9 +80,9 @@ src/mega/twi/../../../inc/mega/../mega.h:
 
 src/mega/twi/../../../inc/mega/../resource.h:
 
-src/mega/twi/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h:
+src/mega/twi/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h:
 
-src/mega/twi/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h:
+src/mega/twi/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

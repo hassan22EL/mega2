@@ -18,8 +18,8 @@ build/Atmega128A/production/src/mega/system/time.o.d \
  src/mega/system/../../../inc/mega/../resource.h \
  src/mega/system/../../../inc/mega/../mega.h \
  src/mega/system/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/system/../../../inc/mega/buffers.h \
  src/mega/system/../../../inc/mega/../mega.h \
@@ -84,9 +84,9 @@ src/mega/system/../../../inc/mega/../mega.h:
 
 src/mega/system/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

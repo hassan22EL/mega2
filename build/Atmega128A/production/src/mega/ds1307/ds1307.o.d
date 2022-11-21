@@ -18,8 +18,8 @@ build/Atmega128A/production/src/mega/ds1307/ds1307.o.d \
  src/mega/ds1307/../../../inc/mega/../resource.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
  src/mega/ds1307/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/ds1307/../../../inc/mega/buffers.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
@@ -84,9 +84,9 @@ src/mega/ds1307/../../../inc/mega/../mega.h:
 
 src/mega/ds1307/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

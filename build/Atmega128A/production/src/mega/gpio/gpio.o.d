@@ -16,8 +16,8 @@ build/Atmega128A/production/src/mega/gpio/gpio.o.d \
  src/mega/gpio/../../../inc/mega/../resource.h \
  src/mega/gpio/../../../inc/mega/../mega.h \
  src/mega/gpio/../../../inc/mega/../resource.h \
- src/mega/gpio/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h \
- src/mega/gpio/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h \
+ src/mega/gpio/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h \
+ src/mega/gpio/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/gpio/../../../inc/mega/buffers.h \
  src/mega/gpio/../../../inc/mega/../mega.h \
@@ -80,9 +80,9 @@ src/mega/gpio/../../../inc/mega/../mega.h:
 
 src/mega/gpio/../../../inc/mega/../resource.h:
 
-src/mega/gpio/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h:
+src/mega/gpio/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h:
 
-src/mega/gpio/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h:
+src/mega/gpio/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

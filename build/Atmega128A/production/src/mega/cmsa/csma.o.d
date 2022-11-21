@@ -17,8 +17,8 @@ build/Atmega128A/production/src/mega/cmsa/csma.o.d \
  src/mega/cmsa/../../../inc/mega/../resource.h \
  src/mega/cmsa/../../../inc/mega/../mega.h \
  src/mega/cmsa/../../../inc/mega/../resource.h \
- src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h \
- src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h \
+ src/mega/cmsa/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h \
+ src/mega/cmsa/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/cmsa/../../../inc/mega/buffers.h \
  src/mega/cmsa/../../../inc/mega/../mega.h \
@@ -83,9 +83,9 @@ src/mega/cmsa/../../../inc/mega/../mega.h:
 
 src/mega/cmsa/../../../inc/mega/../resource.h:
 
-src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/res.h:
+src/mega/cmsa/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h:
 
-src/mega/cmsa/../../../inc/mega/../../src/mega/eeprom/examples/eepromtest.X/inc/appRes.h:
+src/mega/cmsa/../../../inc/mega/../../src/mega/exeeprom/examples/exeepromExamples.X/inc/appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 

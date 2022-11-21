@@ -11,13 +11,15 @@
 |                          : @Time Out  4 Byte                                           |
 |                          : @eeprom description 11 Byte                                 |
 |                          : @Internal Read Buffer default used 16 Byte                  |
-| < PROGRAM_USAGE          : 1124 byte (562 Instruction)                                 |
+| < PROGRAM_USAGE          : 1002 byte (501 Instruction)                                 |
 | < Hardware Usage         : I2C  as Master                                              |
 | < File Created           : 24-10-2022                                                  |
 -------------------------------------------------------------------------------------------
  */
 
 
+
+#include <stdint-gcc.h>
 
 #include "../../../inc/mega.h"
 #if defined (EX_EEPROM_MODULE)
@@ -576,7 +578,7 @@ void exeepromWriteBuffer(uint32_t address, uint8_t *buf, uint8_t length) {
     exEEPROM_desc.data = buf;
     exEEPROM_desc.pagedata = buf;
     /*active write operation*/
-exEEPROM_desc.u8State.b4_5 = 1;
+    exEEPROM_desc.u8State.b4_5 = 1;
 }
 
 /*
@@ -618,7 +620,7 @@ void exeepromWriteByte(uint32_t address, uint8_t byte) {
  | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-void exeepromReadBuffer(uint32_t address, uint8_t length) {
+void exeepromRequestSteram(uint32_t address, uint8_t length) {
     if (length > EXEEPROM_MEM_MAX_BUFFER) {
         /*error call back with memory  register as buffer error */
         return;
@@ -646,7 +648,7 @@ void exeepromReadBuffer(uint32_t address, uint8_t length) {
  */
 
 
-void exeepromReadByte(uint32_t address) {
+void exeepromRequestByte(uint32_t address) {
     /*assign data into buffer*/
     exEEPROM_desc.u16address = address;
     exEEPROM_desc.size = 1;
@@ -709,5 +711,21 @@ void exEepromInit() {
     exEEPROM_desc.u16address = 0x0000;
     exEEPROM_desc.u8State.byte = 0x00;
 }
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < exEepromRead >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t  exEepromRead                                                         |
+ | < @Description       : Read data From Internal Buffer with Last Operation size                       |        
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+void exEepromRead(uint8_t *buf) {
+    for (uint8_t i = 0; i < exEEPROM_desc.size; i++) {
+        buf[i] = exeeprom_read_buf[i];
+    }
+}
+
 #endif
 #endif

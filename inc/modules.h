@@ -94,8 +94,8 @@
 | < TWI_SDA_PIN             : data gpio pin if has enable interanl pull up             |
 |                           : at disaple pull up don't care                            |
 | < SRAM USAGE              : 8-Byte in Master Mode  && Slave mode 7 Byte              |  
-| < PROGRAM USAGE           : 826 Byte (413 Instruction)   in Master mode              |
-|                          : under test in slave mode                                  |   
+| < PROGRAM USAGE           : 658 Byte (329 Instruction)   in Master mode              |
+|                           : under test in slave mode                                 |   
 ----------------------------------------------------------------------------------------
  */
 #define  TWI_MODULE                                    (0)
@@ -112,8 +112,8 @@
 ----------------------------------------------------------------------------------------
 | < EEPROM_MODULE           : 0 module is not active                                   | 
 |                           : 1 module is active                                       |
-| < SRAM USAGE              : 10-Byte in Read Buffer                                   |  
-| < PROGRAM USAGE           :  Byte ( Instruction)                                     |  
+| < SRAM USAGE              : 21-Byte 10 in Read Buffer 4Byte Time out , 7 Byte used   |  
+| < PROGRAM USAGE           : 722 Byte (361 Instruction)                               |  
 ----------------------------------------------------------------------------------------
  */
 #define       EEPROM_MODULE    (0)
@@ -138,7 +138,7 @@
  |                            : @Time Out  4 Byte                                                                                    |
  |                            : @eeprom description 11 Byte                                                                          |
  |                            : @Internal Read Buffer default used 16 Byte                                                           |
- | < PROGRAM_USAGE            : 1158 byte (579 Instruction)                                                                          |                                                                                                                        
+ | < PROGRAM_USAGE            : 1002 byte (501 Instruction)                                                                          |                                                                                                                        
  -------------------------------------------------------------------------------------------------------------------------------------
  */
 #define  EX_EEPROM_MODULE             (0)

@@ -1,6 +1,8 @@
 build/ATmega128/production/src/app.o.d \
- build/ATmega128/production/src/app.o: src/app.c src/../inc/app.h \
- src/../inc/appRes.h src/../inc/../../../../../../inc/mega.h \
+ build/ATmega128/production/src/app.o: src/app.c \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
+ src/../inc/app.h src/../inc/appRes.h \
+ src/../inc/../../../../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -36,14 +38,18 @@ build/ATmega128/production/src/app.o.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  src/../inc/../../../../../../inc/mega/gpio.h \
  src/../inc/../../../../../../inc/mega/system.h \
+ src/../inc/../../../../../../inc/mega/time.h \
  src/../inc/../../../../../../inc/mega/usart.h \
  src/../inc/../../../../../../inc/mega/lcd.h \
  src/../inc/../../../../../../inc/mega/twi.h \
  src/../inc/../../../../../../inc/mega/exEprom.h \
- src/../inc/../../../../../../inc/mega/time.h \
  src/../inc/../../../../../../inc/mega/ds1307.h \
  src/../inc/../../../../../../inc/mega/keypad.h \
- src/../inc/../../../../../../inc/mega/csma.h
+ src/../inc/../../../../../../inc/mega/csma.h \
+ src/../inc/../../../../../../inc/mega/lcdmenu.h \
+ src/../inc/../../../../../../inc/mega/eeprom.h
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/../inc/app.h:
 
@@ -121,6 +127,8 @@ src/../inc/../../../../../../inc/mega/gpio.h:
 
 src/../inc/../../../../../../inc/mega/system.h:
 
+src/../inc/../../../../../../inc/mega/time.h:
+
 src/../inc/../../../../../../inc/mega/usart.h:
 
 src/../inc/../../../../../../inc/mega/lcd.h:
@@ -129,10 +137,12 @@ src/../inc/../../../../../../inc/mega/twi.h:
 
 src/../inc/../../../../../../inc/mega/exEprom.h:
 
-src/../inc/../../../../../../inc/mega/time.h:
-
 src/../inc/../../../../../../inc/mega/ds1307.h:
 
 src/../inc/../../../../../../inc/mega/keypad.h:
 
 src/../inc/../../../../../../inc/mega/csma.h:
+
+src/../inc/../../../../../../inc/mega/lcdmenu.h:
+
+src/../inc/../../../../../../inc/mega/eeprom.h:

@@ -11,7 +11,7 @@
 |                          : @Time Out  4 Byte                                           |
 |                          : @eeprom description 11 Byte                                 |
 |                          : @Internal Read Buffer default used 16 Byte                  |
-| < PROGRAM_USAGE          : 1124 byte (562 Instruction)                                 |
+| < PROGRAM_USAGE          : 1002 byte (501 Instruction)                                 |
 | < Hardware Usage         : I2C  as a master                                            |
 | < File Created           : 24-10-2022                                                  |
 -------------------------------------------------------------------------------------------
@@ -77,24 +77,24 @@ void exeepromWriteBuffer(uint32_t address, uint8_t *buf, uint8_t length);
 void exeepromWriteByte(uint32_t address, uint8_t byte);
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < exeepromReadBuffer  >                                                   |
+ |                            < exeepromRequestSteram  >                                                |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void  exeepromReadBuffer                                                      |
+ | < @Function          : void  exeepromRequestSteram                                                   |
  | < @Description       : this function assignent data into ex-eeprom description                       |
- *                      : and enable read  fuction and after compelete the data found                   |
- *                      : in internal buffer with specefic length                                       |
+ |                      : and enable read  fuction and after compelete the data found                   |
+ |                      : in internal buffer with specefic length                                       |
  | < @param  address    : specefic address to write data witj specific size                             |                                         |
  | < @param  length     : total number of bytes to read from ex-eeprom                                  |
  | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-void exeepromReadBuffer(uint32_t address, uint8_t length);
+void exeepromRequestSteram(uint32_t address, uint8_t length);
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < exeepromReadByte  >                                                     |
+ |                            < exeepromRequestByte  >                                                  |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void  exeepromReadByte                                                        |
+ | < @Function          : void  exeepromRequestByte                                                     |
  | < @Description       : this function assignment data into ex-eeprom description                      |
  *                      : and enable read  fuction and after compelete the data found                   |
  *                      : in internal buffer with specefic one byte                                     |
@@ -103,7 +103,7 @@ void exeepromReadBuffer(uint32_t address, uint8_t length);
  --------------------------------------------------------------------------------------------------------
  */
 
-void exeepromReadByte(uint32_t address);
+void exeepromRequestByte(uint32_t address);
 /*
  --------------------------------------------------------------------------------------------------------
  |                            < exeepromDriver  >                                                       |
@@ -145,6 +145,16 @@ void exEepromInit();
  --------------------------------------------------------------------------------------------------------
  */
 uint8_t exeepromReady();
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < exEepromRead >                                                          |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t  exEepromRead                                                         |
+ | < @Description       : Read data From Internal Buffer with Last Operation size                       |        
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+void exEepromRead(uint8_t *buf);
 #endif
 #endif
 

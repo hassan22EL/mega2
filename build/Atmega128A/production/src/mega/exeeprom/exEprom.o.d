@@ -1,6 +1,8 @@
 build/Atmega128A/production/src/mega/exeeprom/exEprom.o.d \
  build/Atmega128A/production/src/mega/exeeprom/exEprom.o: \
- src/mega/exeeprom/exEprom.c src/mega/exeeprom/../../../inc/mega.h \
+ src/mega/exeeprom/exEprom.c \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
+ src/mega/exeeprom/../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -16,8 +18,8 @@ build/Atmega128A/production/src/mega/exeeprom/exEprom.o.d \
  src/mega/exeeprom/../../../inc/mega/../resource.h \
  src/mega/exeeprom/../../../inc/mega/../mega.h \
  src/mega/exeeprom/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/exeeprom/../../../inc/mega/buffers.h \
  src/mega/exeeprom/../../../inc/mega/../mega.h \
@@ -47,6 +49,8 @@ build/Atmega128A/production/src/mega/exeeprom/exEprom.o.d \
  src/mega/exeeprom/../../../inc/mega/csma.h \
  src/mega/exeeprom/../../../inc/mega/lcdmenu.h \
  src/mega/exeeprom/../../../inc/mega/eeprom.h
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/mega/exeeprom/../../../inc/mega.h:
 
@@ -80,9 +84,9 @@ src/mega/exeeprom/../../../inc/mega/../mega.h:
 
 src/mega/exeeprom/../../../inc/mega/../resource.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\eeprom\examples\eepromtest.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
