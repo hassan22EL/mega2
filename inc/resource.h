@@ -19,7 +19,6 @@
 #include "resource.h"
 
 
-
 /*
  ---------------------------------------------------------------------------------------
  |                                <System MODULE>                                      | 
@@ -59,7 +58,7 @@
  | < @ note  :include the res.h from  application                                      |
  ---------------------------------------------------------------------------------------
  */
-#include "../src/mega/exeeprom/examples/exeepromExamples.X/inc/res.h"
+#include "../../mega2.X/src/mega/button/example/Button.X/inc/res.h"
 
 
 /*

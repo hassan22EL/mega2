@@ -201,16 +201,22 @@
  */
 
 
-#define  KEY_PERIDIC_TIME(x)        ((x*1000UL)/(N_OF_US_REQUIRED))
+#define  PERIDIC_TIME(x)        ((x*1000UL)/(N_OF_US_REQUIRED))
 
 #ifndef   KEY_PREDIOC_TASK_TIME
-#define   KEY_PERIDIC_TASK            KEY_PERIDIC_TIME(10)     
+#define   KEY_PERIDIC_TASK            PERIDIC_TIME(10)     
 #else
 #define   KEY_PERIDIC_TASK           KEY_PERIDIC_TIME(KEY_PREDIOC_TASK_TIME)
 #endif
 
+#ifndef       BUTTON_PREDIOC_TASK_TIME
+#define       BUT_PERIDIC_TASK                  PERIDIC_TIME(10)
+#else
+#define       BUT_PERIDIC_TASK                  PERIDIC_TIME(BUTTON_PREDIOC_TASK_TIME)
+#endif
 
-#define   MAX_PERODIC_TASKS_TIME     KEY_PERIDIC_TIME(PERIODICALLY_TASKS_MAX_TIME)
+
+#define   MAX_PERODIC_TASKS_TIME                PERIDIC_TIME(PERIODICALLY_TASKS_MAX_TIME)
 
 
 

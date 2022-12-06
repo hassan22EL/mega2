@@ -16,19 +16,18 @@
 #define	XC_MEGA_H
 //#include <xc.h> /*xc compiler*/
 #include <avr/io.h>
-
+#include <avr/pgmspace.h>
 #include "mega/clock.h"
 #include "mega/buffers.h"
 #include "resource.h"
 #include "mega/macros.h"
+#include "mega/bootloadercmd.h"
 #include "mega/types.h"
 
 
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <avr/pgmspace.h>
-#include <avr/io.h>
 #include <math.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
@@ -47,8 +46,7 @@
 #include "mega/csma.h"
 #include "mega/lcdmenu.h"
 #include "mega/eeprom.h"
-
-
+#include "mega/button.h"
 extern int main(void);
 // Application Functions
 extern void appMain(void);

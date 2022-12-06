@@ -22,6 +22,8 @@
           <itemPath>inc/mega/csma.h</itemPath>
           <itemPath>inc/mega/lcdmenu.h</itemPath>
           <itemPath>inc/mega/eeprom.h</itemPath>
+          <itemPath>inc/mega/bootloadercmd.h</itemPath>
+          <itemPath>inc/mega/button.h</itemPath>
         </logicalFolder>
         <itemPath>inc/mega.h</itemPath>
         <itemPath>inc/resource.h</itemPath>
@@ -39,6 +41,11 @@
         <logicalFolder name="mega" displayName="mega" projectFiles="true">
           <logicalFolder name="buffers" displayName="buffers" projectFiles="true">
             <itemPath>src/mega/buffers/buffers.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="button" displayName="button" projectFiles="true">
+            <logicalFolder name="example" displayName="example" projectFiles="true">
+            </logicalFolder>
+            <itemPath>src/mega/button/button.c</itemPath>
           </logicalFolder>
           <logicalFolder name="cmsa" displayName="cmsa" projectFiles="true">
             <itemPath>src/mega/cmsa/csma.c</itemPath>
@@ -1348,7 +1355,7 @@
         <property key="eeprom-segment" value=""/>
         <property key="exclude-standard-libraries" value="false"/>
         <property key="extra-lib-directories" value=""/>
-        <property key="flash-segment" value=""/>
+        <property key="flash-segment" value=".text = 0x800"/>
         <property key="generate-map-file" value="true"/>
         <property key="initial-stack-address" value=""/>
         <property key="input-libraries" value="libm"/>
@@ -1361,6 +1368,7 @@
         <property key="rodata-writable" value="false"/>
         <property key="sram-segment" value=""/>
         <property key="v-printf" value="false"/>
+        <appendMe value="-Wl,--section-start=.text=0x200"/>
       </AVR-LD>
     </conf>
     <conf name="ATmega8" type="3">

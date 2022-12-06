@@ -45,7 +45,7 @@
 #define KEYPAD_PRESS(x)                 (((x)&(0x3F))|KEYPAD_PRESS_EVENT)
 /*
  ---------------------------------------------------------------------------------------------------------
- |                                 < KEYPAD_PRESS >                                                      |
+ |                                 < KEYPAD_LONGPRESS                                                    |
  ---------------------------------------------------------------------------------------------------------
  | < @Function          : void KEYPAD_PRESS                                                              |  
  | < @Description       : set or get long press key event code of from switch id                         | 
@@ -56,7 +56,7 @@
 #define KEYPAD_LONGPRESS(x)             (((x)&(0x3F))|KEYPAD_LONGPRESS_EVENT)
 /*
  ---------------------------------------------------------------------------------------------------------
- |                                 < KEYPAD_PRESS >                                                      |
+ |                                 < KEYPAD_REPEAT >                                                     |
  ---------------------------------------------------------------------------------------------------------
  | < @Function          : void KEYPAD_PRESS                                                              |  
  | < @Description       : set or get repeat key event code of from switch id                             | 
@@ -67,9 +67,9 @@
 #define KEYPAD_REPEAT(x)                (((x)&(0x3F))|KEYPAD_REPEAT_EVENT)
 /*
  ---------------------------------------------------------------------------------------------------------
- |                                 < KEYPAD_PRESS >                                                      |
+ |                                 < KEYPAD_RELEASE >                                                    |
  ---------------------------------------------------------------------------------------------------------
- | < @Function          : void KEYPAD_PRESS                                                              |  
+ | < @Function          : void KEYPAD_RELEASE                                                            |  
  | < @Description       : set or get release key event code of from switch id                            | 
  | < @Param x           : switch id look enum table in keypad.h                                          |
  | < @return            : key event cod from                                                             |

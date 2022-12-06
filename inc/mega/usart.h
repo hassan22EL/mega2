@@ -1,18 +1,18 @@
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   usart.h
- * Author       :   Hassan Elsaied
- * Data Memory  :   total byte used 0 Byte  
- * Program Space:   under upgrade
- * Version      :   Mega2v241022
- * Start Data   :   24-10-2022  20:00:00
- * End Data     :   24-10-2022  23:48:00
- * Work Time    :   1-hour
- * Comments     :   no comment
- *  
- */
+
+/*
+---------------------------------------------------------------------------------------------------------
+|                           < Module  Definition >                                                      | 
+---------------------------------------------------------------------------------------------------------
+| < FILE                     : usart.h                                                                  |                                  
+| < Author                   : Hassan Elsaied                                                           |
+| < Version                  : Mega2v241022                                                             |
+| < Refences                 : no- ref                                                                  |  
+| < SRAM USAGE               : no-used                                                                  |
+| < PROGRAM USAGE            : 40 Byte with enable Uart 0, Uart 1 (20 Instruction)                      |                                    
+| < Hardware Usage           : Uarts                                                                    |
+| < File Created             : 24-10-2022                                                               |
+---------------------------------------------------------------------------------------------------------
+*/
 #ifndef USART_H
 #define	USART_H
 
@@ -24,16 +24,14 @@
 #ifndef  F_CPU
 #error "Please Define F_CPU"
 #endif
-/* 
- * *****************************************************************************
- *                        micros                                  *
- * *****************************************************************************
- **/
-
-
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < Macros  >                                                                  |
+  ---------------------------------------------------------------------------------------------------------
+*/
 /*
  ---------------------------------------------------------------------------------
- |                                UART SPEED                                     |                                      
+ |                               < UART SPEED                                    |                                      
  |-------------------------------------------------------------------------------|
  |  speed (Mbps)             |  Bit duration  |  byte rate      | byte duration  |
  |---------------------------|----------------|-----------------|----------------|  
@@ -60,7 +58,7 @@
 #define StandBaudRate_115200   (115200UL)    
 
 
-#define USART_BAUD_RATE(_br_)     (uint16_t)((float)(F_CPU * 64/ (16 * (float)(_br_)) + 0.5))
+#define USART_BAUD_RATE(_br_)                 (uint16_t)((float)(F_CPU * 64/ (16 * (float)(_br_)) + 0.5))
 #ifdef USART0_ENABLED
 #ifndef     UART0_BUADRATE
 #warning   "Please defined uart0_BuadRate From table look modules.h usart"
@@ -70,31 +68,26 @@
 #define     USART0_BYTE_DURATION                ((uint16_t) ((100000) / (float) (UART0_BUADRATE)) + .5) 
 #endif
 
-
 /*
- * *********************************************************************
- *                            usart0Init                               *
- * *********************************************************************
- * @benfit  : init uart 0
- * @return  : void
- * */
-void usart0Init();
-/*
- * *********************************************************************
- *                            usart0PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte send to other deceives\n
- * @return  : void
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart0PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart0PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart0 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern void usart0PutByte(uint8_t byte);
 /*
- * *********************************************************************
- *                            usart0GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte recived
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart0GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart0GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart0 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern uint8_t usart0GetByte();
 #endif
 
@@ -102,34 +95,31 @@ extern uint8_t usart0GetByte();
 #ifndef     UART1_BUADRATE
 #warning   "Please defined uart1_BuadRate From table look modules.h usart"
 #else
-#define   BUAD1_REG              USART_BAUD_RATE(UART1_BUADRATE) 
+#define   BUAD1_REG                               USART_BAUD_RATE(UART1_BUADRATE) 
 #define     USART1_BIT_DURATION                 ((uint16_t) ((1000000) / (float) (UART1_BUADRATE)) + .5)            
 #define     USART1_BYTE_DURATION                ((uint16_t) ((100000) / (float) (UART1_BUADRATE)) + .5) 
 #endif
+
 /*
- * *********************************************************************
- *                            usart1Init                               *
- * *********************************************************************
- * @benfit  : init uart 1
- * @return  : void
- * */
-void usart1Init();
-/*
- * *********************************************************************
- *                            usart1PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte send to other deceives\n
- * @return  : void
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart1PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart1PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart1 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern void usart1PutByte(uint8_t byte);
 /*
- * *********************************************************************
- *                            usart1GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte received
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart1GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart1GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart1 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern uint8_t usart1GetByte();
 #endif
 
@@ -143,30 +133,27 @@ extern uint8_t usart1GetByte();
 #define     USART2_BIT_DURATION                 ((uint16_t) ((1000000) / (float) (UART2_BUADRATE)) + .5)            
 #define     USART2_BYTE_DURATION                ((uint16_t) ((100000) / (float) (UART2_BUADRATE)) + .5) 
 #endif
+
 /*
- * *********************************************************************
- *                            usart2Init                               *
- * *********************************************************************
- * @benfit  : init uart 2
- * @return  : void
- * */
-void usart2Init();
-/*
- * *********************************************************************
- *                            usart2PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte send to other deceives\n
- * @return  : void
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart2PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart2PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart2 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern void usart2PutByte(uint8_t byte);
 /*
- * *********************************************************************
- *                            usart2GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte received
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart2GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart2GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart2 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern uint8_t usart2GetByte();
 #endif
 
@@ -178,32 +165,43 @@ extern uint8_t usart2GetByte();
 #define     USART3_BIT_DURATION                 ((uint16_t) ((1000000) / (float) (UART3_BUADRATE)) + .5)            
 #define     USART3_BYTE_DURATION                ((uint16_t) ((100000) / (float)  (UART3_BUADRATE)) + .5) 
 #endif
+
 /*
- * *********************************************************************
- *                            usart3Init                               *
- * *********************************************************************
- * @benfit  : init uart 3
- * @return  : void
- * */
-void usart3Init();
-/*
- * *********************************************************************
- *                            usart3PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte send to other deceives\n
- * @return  : void
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart3PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart3PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart3 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern void usart3PutByte(uint8_t byte);
 /*
- * *********************************************************************
- *                            usart3GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte received
- * */
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart3GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart3GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart3 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
 extern uint8_t usart3GetByte();
 #endif
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usartInit  >                                                              |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usartInit                                                                  |
+ | < @Description       : initialization Hardware for all enabled                                         |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+void usartInit();
+
+
+
 
 #endif
 #endif

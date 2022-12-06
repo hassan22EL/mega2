@@ -18,6 +18,13 @@
 
 #include "../mega.h"
 
+typedef struct {
+    uint8_t Write;
+    uint8_t Read;
+    uint8_t Length;
+    uint8_t Max_Length;
+    uint8_t* Data_Buffer;
+}
 /*
  --------------------------------------------------------------------------------------------------
  |                                <byte buffer Descirption   >                                    |
@@ -32,13 +39,7 @@
  | < param Data_Buffer             : pointer to buffer  or write or read                          |                                           |
  --------------------------------------------------------------------------------------------------
  */
-typedef struct {
-    uint8_t Write;
-    uint8_t Read;
-    uint8_t Length;
-    uint8_t Max_Length;
-    uint8_t* Data_Buffer;
-} stByteBufDescriptor_t;
+stByteBufDescriptor_t;
 
 /*
  --------------------------------------------------------------------------------------------------

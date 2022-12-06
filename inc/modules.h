@@ -16,7 +16,6 @@
 #ifndef XC_MODULES_H
 #define	XC_MODULES_H
 
-#include "mega/keypad.h"
 
 
 
@@ -42,19 +41,19 @@
 
 /*
  ------------------------------------------------------------------------------------------------------------
- |                              USART_MODULE                                                                |                                       
+ |                             < USART_MODULE  >                                                            |                                       
  |-----------------------------------------------------------------------------------------------------------
- | @USART_MODULE               : 0 module is not active                                         |
- |                             : 1 module is active                                             |
+ | < USART_MODULE               : 0 module is not active                                                    |
+ |                              : 1 module is active                                                        |
  ------------------------------------------------------------------------------------------------------------
- | @USARTx_ENABLED             : to enable USART please define USART0_ENABLED                               |
+ | < USARTx_ENABLED            : to enable USART please define USART0_ENABLED                               |
  |                             : or defined USART0_ENABLED or defined both                                  |
  |                             : version supported a 4 USART (0,1,2,3)                                      |
  |-----------------------------------------------------------------------------------------------------------
- |  speed (Mbps)                                        |  Bit duration  |  byte rate      | byte duration  |
+ | < speed (Mbps)                                       |  Bit duration  |  byte rate      | byte duration  |
  |------------------------------------------------------|----------------|-----------------|----------------|  
- |  UARTx_BUADRATE            @StandBaudRate_1200       |    833.33 us   |  00120 byte/s   |  8333.33 us    |                
- |  x is 0 to 3               @StandBaudRate_2400       |    416.66 us   |  00240 byte/s   |  4166.66 us    |                                   
+ | < UARTx_BUADRATE           @StandBaudRate_1200       |    833.33 us   |  00120 byte/s   |  8333.33 us    |                
+ | < x is 0 to 3              @StandBaudRate_2400       |    416.66 us   |  00240 byte/s   |  4166.66 us    |                                   
  |                            @StandBaudRate_4800       |    208.33 us   |  00480 byte/s   |  2083.33 us    |                     
  |                            @StandBaudRate_9600       |    104.16 us   |  00960 byte/s   |  1041.66 us    |                            
  |                            @StandBaudRate_19200      |    052.08 us   |  01920 byte/s   |  0520.83 us    |                                      
@@ -63,11 +62,13 @@
  |                            @StandBaudRate_76800      |    013.68 us   |  07680 byte/s   |  0130.20 us    |
  |                            @StandBaudRate_115200     |    008.68 us   |  11520 byte/s   |  0086.00 us    |                                                                  
  ------------------------------------------------------------------------------------------------------------
- | @note : @UARTx_BUADRATE      : x  0 to 3 if defined more UART please defined the baud rate every uart     |
- *       : @UART_XYZ            : not supported in current version the usart is work only 8nit data and      |
- *       :                      : and  no parity and 1-stop bit in new version can support this and          |
- *       :                      : @X is a number of bits and @Y type the parity and @Z is n-stop bits        |                                                 
- -------------------------------------------------------------------------------------------------------------
+ | < note : @UARTx_BUADRATE      : x  0 to 3 if defined more UART please defined the baud rate every uart   |
+ |        : @UART_XYZ            : not supported in current version the usart is work only 8nit data and    |
+ |                               : and  no parity and 1-stop bit in new version can support this  and       | 
+ |                               : @X is a number of bits and @Y type the parity and @Z is n-stop bits      | 
+ | < SRAM USAGE                  : no-used                                                                  |
+ | < PROGRAM USAGE               : 40 Byte with enable Uart 0, Uart 1 (20 Instruction)                      |                                                |
+ ------------------------------------------------------------------------------------------------------------
  */
 #define  USART_MODULE                                                           (0)
 #if      USART_MODULE
@@ -230,8 +231,34 @@
 #endif
 
 
-
-
+/* 
+ -------------------------------------------------------------------------------------------------
+ |                          < BUTTON_MODULE   >                                                  |                                             
+ -------------------------------------------------------------------------------------------------
+ | < BUTTON_MODULE                : 0 module is not active                                       |
+ |                                : 1 module is active                                           |
+ | < NUMBER_OF_BUTTON             : number  of Buttons  used                                     |  
+ | < BUTTON_PREDIOC_TASK_TIME     : run evey x time                                              |
+ | < BUTTON_MAX_BUFFER            : max key stored                                               |
+ | < BUTTON_DEDEBOUND_TIME        : time required to press or released switch                    |
+ | < BUTTON_LONG_TIME             : time required to long press                                  |
+ | < BUTTON_REPEAT_TIME           : time required to repeat key                                  |
+ | < BUTTON_REPEAT_RATE           : time required between repeat key                             |
+ | < note                         : keypad state is fixed active low                             |          
+ | < SRAM USAGE                   : 14 Byte + BUTTON_MAX_BUFFER                                  |  
+ | < PROGRAM USAGE                : 624 Byte (312 Instruction)                                   |               
+ -------------------------------------------------------------------------------------------------
+ */
+#define   BUTTON_MODULE                   0
+#if BUTTON_MODULE
+#define   NUMBER_OF_BUTTON               (1)
+#define   BUTTON_DEDEBOUND_TIME          (20)   /* 20 ms*/
+#define   BUTTON_LONG_TIME               (2000) /* 2 second*/
+#define   BUTTON_REPEAT_TIME             (3000) /* 3 second*/
+#define   BUTTON_REPEAT_RATE             (5)    /* 5 ms*/
+#define   BUTTON_PREDIOC_TASK_TIME       (10)   
+#define   BUTTON_MAX_BUFFER              (4)
+#endif
 
 /* 
  -------------------------------------------------------------------------------------------------
@@ -293,6 +320,26 @@
 #if        CSMA_MODULE
 #define    CSMA_DEVICE_TYPE                                (CSMA_MASTER)
 #endif
+
+
+
+/*
+ ----------------------------------------------------------------------------------------
+ |                                <BOOTLOADER MODULE>                                   | 
+ ----------------------------------------------------------------------------------------
+ | < BOOTLOADER_MODULE       : 0 module is not active                                   | 
+ |                           : 1 module is active                                       |
+ | < BOOT_LED                : Boot loader led indicator in decive in boot mode         |
+ | < SRAM USAGE              : no used                                                  |      
+ | < PROGRAM USAGE           : depend select boot size if enable Lcd with this select   |
+                             : large boot size 1K                                       |  
+ ----------------------------------------------------------------------------------------
+ */
+#define       BOOTLOADER_MODULE    (0)
+#if BOOTLOADER_MODULE
+#define   BOOT_LED               NOT_A_PIN
+#endif
+
 
 
 

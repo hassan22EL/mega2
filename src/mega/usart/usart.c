@@ -1,20 +1,18 @@
 
-/* 
- * *****************************************************************************
- *                        Module  Definition                                   *
- * *****************************************************************************
- * File         :   usart.h
- * Author       :   Hassan Elsaied
- * Data Memory  :   total byte used 0 Byte  
- * Program Space:   under upgrade
- * Version      :   Mega2v241022
- * Start Data   :   24-10-2022  20:00:00
- * End Data     :   24-10-2022  23:48:00
- * Work Time    :   1-hour
- * Comments     :   no comment
- *  
+/*
+---------------------------------------------------------------------------------------------------------
+|                           < Module  Definition >                                                      | 
+---------------------------------------------------------------------------------------------------------
+| < FILE                     : usart.c                                                                  |                                  
+| < Author                   : Hassan Elsaied                                                           |
+| < Version                  : Mega2v241022                                                             |
+| < Refences                 : no- ref                                                                  |  
+| < SRAM USAGE               : no-used                                                                  |
+| < PROGRAM USAGE            : 40 Byte with enable Uart 0, Uart 1 (20 Instruction)                      |                                    
+| < Hardware Usage           : Uarts                                                                    |
+| < File Created             : 24-10-2022                                                               |
+---------------------------------------------------------------------------------------------------------
  */
-
 
 #include "../../../inc/mega.h"
 #if defined  USART_MODULE                                                          
@@ -22,10 +20,10 @@
 
 
 /* 
- * *****************************************************************************
- *                        device  mode                              *
- * *****************************************************************************    
- **/
+ ---------------------------------------------------------------------------------------------------------
+ |                      <  Device  Mode >                                                                |
+ ---------------------------------------------------------------------------------------------------------   
+ */
 
 
 
@@ -224,18 +222,86 @@
 #define UART1_DATA     UDR1
 #define UART1_UDRIE    UDRIE1
 #endif
+/* 
+ ---------------------------------------------------------------------------------------------------------
+ |                      <  Basic Function Definition >                                                   |
+ ---------------------------------------------------------------------------------------------------------   
+ */
+
+#ifdef USART0_ENABLED
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart0Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart0Init                                                                 |
+ | < @Description       : initialization Hardware Uart0                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+static void usart0Init();
+#endif
 
 
+#ifdef USART1_ENABLED
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart1Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart1Init                                                                 |
+ | < @Description       : initialization Hardware Uart1                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+static void usart1Init();
+#endif
+
+#ifdef USART2_ENABLED
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart2Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart2Init                                                                 |
+ | < @Description       : initialization Hardware Uart2                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+static void usart2Init();
+#endif
+
+
+#ifdef USART3_ENABLED
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart3Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart3Init                                                                 |
+ | < @Description       : initialization Hardware Uart3                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+static void usart3Init();
+#endif
+/* 
+ ---------------------------------------------------------------------------------------------------------
+ |                      <  Basic Function Implementions >                                                |
+ ---------------------------------------------------------------------------------------------------------   
+ */
 #ifdef USART0_ENABLED
 
 /*
- * *********************************************************************
- *                            usart0Init                               *
- * *********************************************************************
- * @benfit  : init uart 0
- * @return  : void
- * */
-void usart0Init() {
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart0Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart0Init                                                                 |
+ | < @Description       : initialization Hardware Uart0                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+#if (defined BOOTLOADER_MODULE) || (BOOTLOADER_MODULE == 1)
+static void usart0Init() __attribute__((section(".bootloader")));
+#endif
+
+static void usart0Init() {
 #if defined(ATMEGA_USART)
     UBRRH = (uint8_t) (BUAD0_REG >> 8);
     UBRRL = (uint8_t) BUAD0_REG;
@@ -265,49 +331,25 @@ void usart0Init() {
     /* Enable UART receiver and transmitter and receive complete interrupt */
     UART0_CONTROL = _BV(RXCIE) | (1 << RXEN) | (1 << TXEN)
 #endif
-
-}
-
-/*
- * *********************************************************************
- *                            usart0PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte to send other device\n 
- * @return  : void
- * */
-inline void usart0PutByte(uint8_t byte) {
-#if defined(ATMEGA_USART)
-    UART0_DATA = byte;
-#elif defined(ATMEGA_USART0)
-    UART0_DATA = byte;
-#elif defined(ATMEGA_UART)
-    UART0_DATA = byte;
-#endif
-}
-
-/*
- * *********************************************************************
- *                            usart0GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte recived
- * */
-inline uint8_t usart0GetByte() {
-    return UART0_DATA;
 }
 #endif
 
 #ifdef USART1_ENABLED
 
 /*
- * *********************************************************************
- *                            usart1Init                               *
- * *********************************************************************
- * @benfit  : init uart 1
- * @return  : void
- * */
-void usart1Init() {
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart1Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart1Init                                                                 |
+ | < @Description       : initialization Hardware Uart1                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+#if (defined BOOTLOADER_MODULE) || (BOOTLOADER_MODULE == 1)
+static void usart1Init() __attribute__((section(".bootloader")));
+#endif
+
+static void usart1Init() {
 #if defined ATMEGA_USART1
     UBRR1H = (uint8_t) (BUAD1_REG >> 8);
     UBRR1L = (uint8_t) BUAD1_REG;
@@ -325,47 +367,24 @@ void usart1Init() {
 #error "This Target not support USART 1 Plase remove t USART 1 configuration or chang target to support uart1"
 #endif
 }
-
-/*
- * *********************************************************************
- *                            usart1PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte send to other deceives\n
- * @return  : void
- * */
-inline void usart1PutByte(uint8_t byte) {
-#if defined ATMEGA_USART1
-    UART1_DATA = byte;
 #endif
-}
-
-/*
- * *********************************************************************
- *                            usart1GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte received
- * */
-inline uint8_t usart1GetByte() {
-#if defined ATMEGA_USART1
-    return (UART1_DATA);
-#endif
-}
-
-#endif
-
 
 #ifdef USART2_ENABLED
 
 /*
- * *********************************************************************
- *                            usart2Init                               *
- * *********************************************************************
- * @benfit  : init uart 2
- * @return  : void
- * */
-void usart2Init() {
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart2Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart2Init                                                                 |
+ | < @Description       : initialization Hardware Uart2                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+#if (defined BOOTLOADER_MODULE) || (BOOTLOADER_MODULE == 1)
+static void usart2Init() __attribute__((section(".bootloader")));
+#endif
+
+static void usart2Init() {
 #if defined(ATMEGA_USART2)
     UBRR2H = (uint8_t) (BUAD2_REG >> 8);
     UBRR2L = (uint8_t) BUAD2_REG;
@@ -383,47 +402,24 @@ void usart2Init() {
 #error "This Target not support USART 2 Plase remove t USART 2 configuration or chang target to support USART 2"
 #endif
 }
-
-/*
- * *********************************************************************
- *                            usart2PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte send to other deceives\n
- * @return  : void
- * */
-inline void usart2PutByte(uint8_t byte) {
-#if defined(ATMEGA_USART2)
-    UART2_DATA = byte;
-#endif    
-}
-
-/*
- * *********************************************************************
- *                            usart2GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte received
- * */
-inline uint8_t usart2GetByte() {
-#if defined(ATMEGA_USART2)
-    return UART2_DATA;
-#endif
-}
-
-
 #endif
 
 #ifdef USART3_ENABLED
 
 /*
- * *********************************************************************
- *                            usart3Init                               *
- * *********************************************************************
- * @benfit  : init uart 3
- * @return  : void
- * */
-void usart3Init() {
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart3Init  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart3Init                                                                 |
+ | < @Description       : initialization Hardware Uart3                                                   |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+#if (defined BOOTLOADER_MODULE) || (BOOTLOADER_MODULE == 1)
+static void usart3Init() __attribute__((section(".bootloader")));
+#endif
+
+static void usart3Init() {
 #if defined (ATMEGA_USART3)
     UBRR3H = (uint8_t) (BUAD3_REG >> 8);
     UBRR3L = (uint8_t) BUAD3_REG;
@@ -438,36 +434,189 @@ void usart3Init() {
     UCSR3C = (3 << UCSZ30);
 #endif
 #else 
-    #error "This Target not support USART 3 Plase remove t USART 3 configuration or chang target to support USART 3"
+#error "This Target not support USART 3 Plase remove t USART 3 configuration or chang target to support USART 3"
 #endif
 }
+#endif
+
+
+/* 
+ ---------------------------------------------------------------------------------------------------------
+ |                      <  user Function Implementions >                                                 |
+ ---------------------------------------------------------------------------------------------------------   
+ */
+#ifdef USART0_ENABLED
+
 /*
- * *********************************************************************
- *                            usart3PutByte                               *
- * *********************************************************************
- * @benfit  : load transmission buffer\n
- * @param   : byte send to other deceives\n
- * @return  : void
- * */
-extern void usart3PutByte(uint8_t byte){
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart0PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart0PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart0 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline void usart0PutByte(uint8_t byte) {
+#if defined(ATMEGA_USART)
+    UART0_DATA = byte;
+#elif defined(ATMEGA_USART0)
+    UART0_DATA = byte;
+#elif defined(ATMEGA_UART)
+    UART0_DATA = byte;
+#endif
+}
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart0GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart0GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart0 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline uint8_t usart0GetByte() {
+    return UART0_DATA;
+}
+#endif
+
+#ifdef USART1_ENABLED
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart1PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart1PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart1 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline void usart1PutByte(uint8_t byte) {
+#if defined ATMEGA_USART1
+    UART1_DATA = byte;
+#endif
+}
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart1GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart1GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart1 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline uint8_t usart1GetByte() {
+#if defined ATMEGA_USART1
+    return (UART1_DATA);
+#endif
+}
+
+#endif
+
+
+#ifdef USART2_ENABLED
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart2PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart2PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart2 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline void usart2PutByte(uint8_t byte) {
+#if defined(ATMEGA_USART2)
+    UART2_DATA = byte;
+#endif    
+}
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart2GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart2GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart2 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline uint8_t usart2GetByte() {
+#if defined(ATMEGA_USART2)
+    return UART2_DATA;
+#endif
+}
+
+
+#endif
+
+#ifdef USART3_ENABLED
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart3PutByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart3PutByte                                                              |
+ | < @Description       : load transmission Hardware Uart3 buffer                                         |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline void usart3PutByte(uint8_t byte) {
 #if ATMEGA_USART3
-     UART3_DATA = byte;
+    UART3_DATA = byte;
 #endif
 }
+
 /*
- * *********************************************************************
- *                            usart3GetByte                              *
- * *********************************************************************
- * @benfit  : load from Receiver buffer
- * @return  : byte received
- * */
-inline uint8_t usart3GetByte(){
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart3GetByte  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t usart3GetByte                                                           |
+ | < @Description       : load from receiver Hardware Uart3 buffer                                        |     
+ | < @return            : byte received from other decives                                                |
+  ---------------------------------------------------------------------------------------------------------
+ */
+inline uint8_t usart3GetByte() {
 #if ATMEGA_USART3
     return UART3_DATA;
 #endif
 }
 
 #endif
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usartInit  >                                                              |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usartInit                                                                  |
+ | < @Description       : initialization Hardware for all enabled                                         |                    
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+#if (defined BOOTLOADER_MODULE) || (BOOTLOADER_MODULE == 1)
+void usartInit() __attribute__((section(".bootloader")));
+#endif
+void usartInit() {
+#if defined USART0_ENABLED
+    usart0Init();
+#endif
+
+#if defined USART1_ENABLED
+    usart1Init();
+#endif
+
+#if defined USART2_ENABLED
+    usart2Init();
+#endif
+
+#if defined USART3_ENABLED
+    usart3Init();
+#endif
+}
 
 #endif
 #endif

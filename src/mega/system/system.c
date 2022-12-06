@@ -13,8 +13,6 @@
 | < File Created           : 24-10-2022                                                                                     |
 -----------------------------------------------------------------------------------------------------------------------------
  */
-
-
 #include "../../../inc/mega.h"
 /*
   ----------------------------------------------------------------------------------------------------------------------------
@@ -320,6 +318,14 @@ ISR(TIMER0_OVF_vect)
     }
 #endif
 #endif
+
+#if defined BUTTON_MODULE
+#if BUTTON_MODULE
+    if (gu8PerdiocTasks % BUT_PERIDIC_TASK == 0) {
+        buttonScan();
+    }
+#endif
+#endif    
 
     if (++gu8PerdiocTasks == MAX_PERODIC_TASKS_TIME) {
         gu8PerdiocTasks = 0;
