@@ -325,19 +325,18 @@
 
 /*
  ----------------------------------------------------------------------------------------
- |                                <BOOTLOADER MODULE>                                   | 
+ |                                <SIGNALGENERATED_MODULE>                              | 
  ----------------------------------------------------------------------------------------
- | < BOOTLOADER_MODULE       : 0 module is not active                                   | 
+ | < BUZ_MODULE              : 0 module is not active                                   | 
  |                           : 1 module is active                                       |
- | < BOOT_LED                : Boot loader led indicator in decive in boot mode         |
- | < SRAM USAGE              : no used                                                  |      
- | < PROGRAM USAGE           : depend select boot size if enable Lcd with this select   |
-                             : large boot size 1K                                       |  
+ | < SIGNAL_NUMBER_OF_PINS   : number of Pins to Generated different signal             |
+ | < SRAM USAGE              : 10 Byte Per Pin  +2 Byte Pinter to first signal          |      
+ | < PROGRAM USAGE           : (1190 Byte ) 595 Instruction                             |  
  ----------------------------------------------------------------------------------------
  */
-#define       BOOTLOADER_MODULE    (0)
-#if BOOTLOADER_MODULE
-#define   BOOT_LED               NOT_A_PIN
+#define       SIGNALGENERATED_MODULE                  (1)
+#if SIGNALGENERATED_MODULE
+#define   SIGNAL_NUMBER_OF_PINS                       (2)
 #endif
 
 

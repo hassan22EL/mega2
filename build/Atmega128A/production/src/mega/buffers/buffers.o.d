@@ -18,9 +18,8 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/buffers/../../../inc/mega/../mega/buffers.h \
  src/mega/buffers/../../../inc/mega/../resource.h \
@@ -49,7 +48,8 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/csma.h \
  src/mega/buffers/../../../inc/mega/../mega/lcdmenu.h \
  src/mega/buffers/../../../inc/mega/../mega/eeprom.h \
- src/mega/buffers/../../../inc/mega/../mega/button.h
+ src/mega/buffers/../../../inc/mega/../mega/button.h \
+ src/mega/buffers/../../../inc/mega/../mega/signalGenerator.h
 
 src/mega/buffers/../../../inc/mega/buffers.h:
 
@@ -87,11 +87,9 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -150,3 +148,5 @@ src/mega/buffers/../../../inc/mega/../mega/lcdmenu.h:
 src/mega/buffers/../../../inc/mega/../mega/eeprom.h:
 
 src/mega/buffers/../../../inc/mega/../mega/button.h:
+
+src/mega/buffers/../../../inc/mega/../mega/signalGenerator.h:

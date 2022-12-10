@@ -206,7 +206,7 @@
 #ifndef   KEY_PREDIOC_TASK_TIME
 #define   KEY_PERIDIC_TASK            PERIDIC_TIME(10)     
 #else
-#define   KEY_PERIDIC_TASK           KEY_PERIDIC_TIME(KEY_PREDIOC_TASK_TIME)
+#define   KEY_PERIDIC_TASK                      PERIDIC_TIME(KEY_PREDIOC_TASK_TIME)
 #endif
 
 #ifndef       BUTTON_PREDIOC_TASK_TIME

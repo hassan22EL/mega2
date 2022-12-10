@@ -24,6 +24,7 @@
           <itemPath>inc/mega/eeprom.h</itemPath>
           <itemPath>inc/mega/bootloadercmd.h</itemPath>
           <itemPath>inc/mega/button.h</itemPath>
+          <itemPath>inc/mega/signalGenerator.h</itemPath>
         </logicalFolder>
         <itemPath>inc/mega.h</itemPath>
         <itemPath>inc/resource.h</itemPath>
@@ -112,6 +113,11 @@
             </logicalFolder>
             <itemPath>src/mega/lcdmnue/lcdmnue.c</itemPath>
           </logicalFolder>
+          <logicalFolder name="signalGenertor"
+                         displayName="signalGenertor"
+                         projectFiles="true">
+            <itemPath>src/mega/signalGenertor/signalGenertor.c</itemPath>
+          </logicalFolder>
           <logicalFolder name="system" displayName="system" projectFiles="true">
             <logicalFolder name="examples" displayName="examples" projectFiles="true">
             </logicalFolder>
@@ -154,7 +160,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="ATmega_DFP" vendor="Microchip" version="2.4.131"/>
+        <pack name="ATmega_DFP" vendor="Microchip" version="3.0.158"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -594,7 +600,7 @@
                   value="report"/>
         <property key="warningmessagebreakoptions.W0247_ADC_CONVERSION_BAD_RESSEL"
                   value="report"/>
-        <property key="warningmessagebreakoptions.W0248_ADC_WR_BEFORE_KEY_SEQ"
+        <property key="warningmessagebreakoptions.W0300_NVM_WR_BEFORE_KEY_SEQ"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0400_PWM_PWM_FASTER_THAN_FOSC"
                   value="report"/>
@@ -1067,6 +1073,8 @@
         <property key="warningmessagebreakoptions.W0247_ADC_CONVERSION_BAD_RESSEL"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0248_ADC_WR_BEFORE_KEY_SEQ"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0300_NVM_WR_BEFORE_KEY_SEQ"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0400_PWM_PWM_FASTER_THAN_FOSC"
                   value="report"/>
@@ -1823,7 +1831,7 @@
                   value="report"/>
         <property key="warningmessagebreakoptions.W0247_ADC_CONVERSION_BAD_RESSEL"
                   value="report"/>
-        <property key="warningmessagebreakoptions.W0248_ADC_WR_BEFORE_KEY_SEQ"
+        <property key="warningmessagebreakoptions.W0300_NVM_WR_BEFORE_KEY_SEQ"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0400_PWM_PWM_FASTER_THAN_FOSC"
                   value="report"/>
@@ -2296,6 +2304,8 @@
         <property key="warningmessagebreakoptions.W0247_ADC_CONVERSION_BAD_RESSEL"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0248_ADC_WR_BEFORE_KEY_SEQ"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0300_NVM_WR_BEFORE_KEY_SEQ"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0400_PWM_PWM_FASTER_THAN_FOSC"
                   value="report"/>

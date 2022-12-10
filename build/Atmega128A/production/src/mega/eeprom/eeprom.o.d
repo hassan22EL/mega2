@@ -19,9 +19,8 @@ build/Atmega128A/production/src/mega/eeprom/eeprom.o.d \
  src/mega/eeprom/../../../inc/mega/clock.h \
  src/mega/eeprom/../../../inc/mega/../resource.h \
  src/mega/eeprom/../../../inc/mega/../mega.h \
- src/mega/eeprom/../../../inc/mega/../resource.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/eeprom/../../../inc/mega/buffers.h \
  src/mega/eeprom/../../../inc/mega/../mega.h \
@@ -50,7 +49,8 @@ build/Atmega128A/production/src/mega/eeprom/eeprom.o.d \
  src/mega/eeprom/../../../inc/mega/csma.h \
  src/mega/eeprom/../../../inc/mega/lcdmenu.h \
  src/mega/eeprom/../../../inc/mega/eeprom.h \
- src/mega/eeprom/../../../inc/mega/button.h
+ src/mega/eeprom/../../../inc/mega/button.h \
+ src/mega/eeprom/../../../inc/mega/signalGenerator.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
@@ -88,11 +88,9 @@ src/mega/eeprom/../../../inc/mega/../resource.h:
 
 src/mega/eeprom/../../../inc/mega/../mega.h:
 
-src/mega/eeprom/../../../inc/mega/../resource.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -151,3 +149,5 @@ src/mega/eeprom/../../../inc/mega/lcdmenu.h:
 src/mega/eeprom/../../../inc/mega/eeprom.h:
 
 src/mega/eeprom/../../../inc/mega/button.h:
+
+src/mega/eeprom/../../../inc/mega/signalGenerator.h:

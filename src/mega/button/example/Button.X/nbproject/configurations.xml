@@ -25,6 +25,7 @@
             <itemPath>../../../../../inc/mega/twi.h</itemPath>
             <itemPath>../../../../../inc/mega/types.h</itemPath>
             <itemPath>../../../../../inc/mega/usart.h</itemPath>
+            <itemPath>../../../../../inc/buz.h</itemPath>
           </logicalFolder>
           <itemPath>../../../../../inc/mega.h</itemPath>
           <itemPath>../../../../../inc/modules.h</itemPath>

@@ -326,6 +326,16 @@ ISR(TIMER0_OVF_vect)
     }
 #endif
 #endif    
+    /*
+    ---------------------------------------------------------------------------------------------------------
+    |                       < signals Interface  Initialization  >                                             |
+    ---------------------------------------------------------------------------------------------------------
+     */
+#if defined (SIGNALGENERATED_MODULE)
+#if SIGNALGENERATED_MODULE
+    SignalsTask();
+#endif
+#endif
 
     if (++gu8PerdiocTasks == MAX_PERODIC_TASKS_TIME) {
         gu8PerdiocTasks = 0;
