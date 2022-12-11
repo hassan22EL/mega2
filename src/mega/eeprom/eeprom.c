@@ -383,29 +383,6 @@ void eepromWriteBuf(uint16_t address, uint8_t size, uint8_t *data) {
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < eepromWriteByte >                                                       |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void  eepromWriteBuf                                                          |
- | < @Description       : application write data into eeprom by this function to write single byte      | 
- | < @Param address     : start address request to write data this address+size less than (EEPROM_END)  |
- | < @param data        : payload data into eeprom                                                      |              
- | < @return            : void                                                                          |              
- --------------------------------------------------------------------------------------------------------
- */
-void eepromWriteByte(uint16_t address, uint8_t data) {
-    if (address >= E2END) return; /*error */
-    /*assignment data*/
-    gEepromDescriptor.u16address = address;
-    gEepromDescriptor.u8DataIndex = 0;
-    gEepromDescriptor.data = &data;
-    gEepromDescriptor.size = 1;
-    /*active update state*/
-    gEepromDescriptor.u8State.b4_5 = 1;
-    sysSetPeriodMS(&gstEepromTimeOut, EEPORM_READ_TIME_OUT);
-}
-
-/*
- --------------------------------------------------------------------------------------------------------
  |                            < eepromRequestSterm >                                                    |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void  eepromRequestSterm                                                      |

@@ -235,7 +235,8 @@ static const uint8_t getSignalIndex(const Signal_t *signal) {
  --------------------------------------------------------------------------------------------------
  */
 static inline void SignalToggle(const Signal_t *signal, uint8_t Index) {
-    if (!gSignalsArray[Index].SignalState.b1) {
+    gSignalsArray[Index].SignalState.b1 ^= 1; /*toggle flag and led*/
+    if (gSignalsArray[Index].SignalState.b1) {
         gSignalsArray[Index].SignalTimerToggleCount = PERIDIC_TIME(SIGNAL_DUTY_HIGH(gSignalsArray[Index].SignalDuty, gSignalsArray[Index].SignalPeriod));
     } else {
         gSignalsArray[Index].SignalTimerToggleCount = PERIDIC_TIME(SIGNAL_DUTY_LOW(gSignalsArray[Index].SignalDuty, gSignalsArray[Index].SignalPeriod));
@@ -301,7 +302,7 @@ static void SignalTask(const Signal_t *signal, uint8_t Index) {
             }
 
         } else {
-            if (gSignalsArray[Index].SignalState.b1) {
+            if (gSignalsArray[Index].SignalState.b4) {
                 gSignalsArray[Index].SignalDurationcycles--;
             }
         }
@@ -310,7 +311,7 @@ static void SignalTask(const Signal_t *signal, uint8_t Index) {
         } else {
             SignalSleep(signal, Index);
         }
-        gSignalsArray[Index].SignalState.b1 ^= 1; /*toggle flag and led*/
+        gSignalsArray[Index].SignalState.b4 ^= 1; /*toggle flag and led*/
     }
 
 }

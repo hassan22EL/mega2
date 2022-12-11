@@ -185,7 +185,7 @@ void sysTimerInitS(stTimer_t *psTimer, time_t Delay, time_t Period);
  |                      : the time out is return  after expired micro second period                                         |
  | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
  | < @return            : 0 when timer does expired period                                                                  |
- |                      : 1 when timer does expired period                                                                  |
+ |                      : 1 when timer doesn't expired period                                                                    |
  ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutUs(stTimer_TimeOut_t *psTimer);
@@ -198,7 +198,7 @@ uint8_t sysIsTimeoutUs(stTimer_TimeOut_t *psTimer);
  |                      : the time out is return  after expired milli second period                                         |
  | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
  | < @return            : 0 when timer does expired period                                                                  |
- |                      : 1 when timer does expired period                                                                  |
+ |                      : 1 when timer doesn't expired period                                                                   |
  ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutMs(stTimer_TimeOut_t *psTimer);
@@ -211,10 +211,9 @@ uint8_t sysIsTimeoutMs(stTimer_TimeOut_t *psTimer);
  |                      : the time out is return  after expired second period                                               |
  | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
  | < @return            : 0 when timer does expired period                                                                  |
- |                      : 1 when timer does expired period                                                                  |
+ |                      : 1 when timer doesn't expired period                                                                    |
  ----------------------------------------------------------------------------------------------------------------------------
  */
-
 uint8_t sysIsTimeoutS(stTimer_TimeOut_t *psTimer);
 
 /*

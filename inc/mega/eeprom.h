@@ -54,18 +54,6 @@ void eepromDriver();
 void eepromWriteBuf(uint16_t address, uint8_t size, uint8_t *data);
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < eepromWriteByte >                                                       |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void  eepromWriteBuf                                                          |
- | < @Description       : application write data into eeprom by this function to write single byte      | 
- | < @Param address     : start address request to write data this address less than (EEPROM_END)       |
- | < @param data        : payload data into eeprom                                                      |              
- | < @return            : void                                                                          |              
- --------------------------------------------------------------------------------------------------------
- */
-void eepromWriteByte(uint16_t address, uint8_t data);
-/*
- --------------------------------------------------------------------------------------------------------
  |                            < eepromRequestSterm >                                                    |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void  eepromRequestSterm                                                      |

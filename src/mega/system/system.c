@@ -485,8 +485,8 @@ void sysTimerInitS(stTimer_t *psTimer, time_t Delay, time_t Period) {
  | < @Description       : check of the period is expired or not by compared micro secomds system and timer stored value     |
  |                      : the time out is return  after expired micro second period                                         |
  | < @Param psTimer     : pointer of time out Timer                                                                         |                                                                             
- | < @return            : 0 when timer does expired period                                                                  |
- |                      : 1 when timer does expired period                                                                  |
+ | < @return            : 0 when timer does  expired period                                                                  |
+ |                      : 1 when timer doesn't expired period                                                                  |
  ----------------------------------------------------------------------------------------------------------------------------
  */
 uint8_t sysIsTimeoutUs(stTimer_TimeOut_t *psTimer) {

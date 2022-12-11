@@ -6,13 +6,12 @@
 | < Author                   : Hassan Elsaied                                                           |
 | < Version                  : Mega2v241022                                                             |
 | < Refences                 : no- ref                                                                  |  
-| < SRAM USAGE               : 28-Byte  (4 Byte buffer , 6 buffer dis , 16 byte internal conter , 2byte |                    |
-| < PROGRAM USAGE            : 822 Byte  (411 Instruction)                                              |                                    
+| < SRAM USAGE               : (4 Byte buffer , 6 buffer dis , r*c byte internal conter , 2byte         |
+| < PROGRAM USAGE            : (764)((548 Byte  (274 Instruction))+(216Byte when enable signal))        |                                    
 | < Hardware Usage           : GPIO                                                                     |
 | < File Created             : 24-10-2022                                                               |
 ---------------------------------------------------------------------------------------------------------
  */
-
 
 #include "../../../inc/mega.h"
 #if defined (KEYPAD_MODULE)
@@ -339,11 +338,11 @@ static void keypadstoreKey(volatile uint8_t index, volatile gpio_t pinC) {
 #if defined(SIGNALGENERATED_MODULE)
 #if SIGNALGENERATED_MODULE
         if (putByte(&gstKeypadDescriptor, u8Event)) {
-            if (u8Event == KEYPAD_PRESS(u8CounterIndex + 1)) {
+            if (u8Event == KEYPAD_PRESS(index + 1)) {
                 SignalStart(gpSignalActionATPressSw, 200, 100, 1, 1, SIGNAL_SLEEP_WITH_LOW, 1);
             }
         } else {
-            if (u8Event == KEYPAD_PRESS(u8CounterIndex + 1)) {
+            if (u8Event == KEYPAD_PRESS(index + 1)) {
                 SignalStart(gpSignalActionATPressSw, 500, 100, 1, 1, SIGNAL_SLEEP_WITH_LOW, 1);
             }
         }
@@ -440,12 +439,12 @@ uint8_t keypadGetEvent() {
 
 /*
  ---------------------------------------------------------------------------------------------------------
- |                                 < buttonSignal >                                                      |
+ |                                 < keypadSignal >                                                      |
  ---------------------------------------------------------------------------------------------------------
  | < @Function          : void button buttonSignal                                                       |  
- | < @Description       : Assignment signal to generate fixed signal at press Button                     | 
+ | < @Description       : Assignment signal to generate fixed signal at press any  switch in keypad      | 
  | < @Param signal      : pointer to signal to generate event with time at buffer is full and            |
- |                      : button press                                                                   |
+ |                      : switch keypad press                                                            |
  | < @return            : void                                                                           |
  ---------------------------------------------------------------------------------------------------------
  */

@@ -2,12 +2,12 @@
 ---------------------------------------------------------------------------------------------------------
 |                           < Module  Definition >                                                      | 
 ---------------------------------------------------------------------------------------------------------
-| < FILE                     : keypad.c                                                                 |                                  
+| < FILE                     : keypad.h                                                                 |                                  
 | < Author                   : Hassan Elsaied                                                           |
 | < Version                  : Mega2v241022                                                             |
 | < Refences                 : no- ref                                                                  |  
-| < SRAM USAGE               : 28-Byte  (4 Byte buffer , 6 buffer dis , 16 byte internal conter , 2byte |                    |
-| < PROGRAM USAGE            : 822 Byte  (411 Instruction)                                              |                                    
+| < SRAM USAGE               : (4 Byte buffer , 6 buffer dis , r*c byte internal conter , 2byte         |
+| < PROGRAM USAGE            : (764)((548 Byte  (274 Instruction))+(216Byte when enable signal))        |                                    
 | < Hardware Usage           : GPIO                                                                     |
 | < File Created             : 24-10-2022                                                               |
 ---------------------------------------------------------------------------------------------------------
@@ -126,6 +126,26 @@ void keyInit();
  ---------------------------------------------------------------------------------------------------------
  */
 uint8_t keypadGetEvent();
+#if defined (SIGNALGENERATED_MODULE) 
+#if (SIGNALGENERATED_MODULE)
+
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < keypadSignal >                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void button buttonSignal                                                       |  
+ | < @Description       : Assignment signal to generate fixed signal at press any  switch in keypad      | 
+ | < @Param signal      : pointer to signal to generate event with time at buffer is full and            |
+ |                      : switch keypad press                                                            |
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void keypadSignal(const Signal_t *signal);
+
+#endif
+#endif
+
+
 
 #endif
 #endif

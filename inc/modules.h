@@ -198,8 +198,8 @@
  | < KEYPAD_REPEAT_RATE           : time required between repeat key                             |
  | < note                         : keypad state is fixed active low                             |
  | < pin                          : replace NOT_A_PIN by digital pin with max rows and column    |                    
- | < SRAM USAGE                   : 28-Byte used  (4 buffer + 6buffer dis , 16 counter +2byte    |  
- | < PROGRAM USAGE                : 822 Byte (411 Instruction)                                   |               
+ | < SRAM USAGE                   : (4 Byte buffer , 6 buffer dis , r*c byte  , 2byte            |
+ | < PROGRAM USAGE                : (764)((548 Byte)+(216Byte when enable signal))               |               
  -------------------------------------------------------------------------------------------------
  */
 #define   KEYPAD_MODULE                   0

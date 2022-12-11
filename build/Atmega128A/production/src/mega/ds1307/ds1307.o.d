@@ -19,8 +19,8 @@ build/Atmega128A/production/src/mega/ds1307/ds1307.o.d \
  src/mega/ds1307/../../../inc/mega/clock.h \
  src/mega/ds1307/../../../inc/mega/../resource.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\electronicsafe.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\electronicsafe.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/ds1307/../../../inc/mega/buffers.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
@@ -88,9 +88,9 @@ src/mega/ds1307/../../../inc/mega/../resource.h:
 
 src/mega/ds1307/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h:
+d:\company\smart\mega\new\ lib\electronicsafe.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\electronicsafe.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
