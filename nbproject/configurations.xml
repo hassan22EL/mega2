@@ -1248,7 +1248,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="ATmega_DFP" vendor="Microchip" version="2.4.131"/>
+        <pack name="ATmega_DFP" vendor="Microchip" version="3.0.158"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1391,7 +1391,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="ATmega_DFP" vendor="Microchip" version="2.4.131"/>
+        <pack name="ATmega_DFP" vendor="Microchip" version="3.0.158"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

@@ -17,7 +17,6 @@ build/ATmega128/production/src/app.o.d \
  src/../inc/../../../../../../inc/mega/clock.h \
  src/../inc/../../../../../../inc/mega/../resource.h \
  src/../inc/../../../../../../inc/mega/../mega.h \
- src/../inc/../../../../../../inc/mega/../resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h \
  d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h \
  src/../inc/../../../../../../inc/mega/buffers.h \
@@ -43,10 +42,11 @@ build/ATmega128/production/src/app.o.d \
  src/../inc/../../../../../../inc/mega/twi.h \
  src/../inc/../../../../../../inc/mega/exEprom.h \
  src/../inc/../../../../../../inc/mega/ds1307.h \
- src/../inc/../../../../../../inc/mega/keypad.h \
  src/../inc/../../../../../../inc/mega/csma.h \
  src/../inc/../../../../../../inc/mega/lcdmenu.h \
  src/../inc/../../../../../../inc/mega/eeprom.h \
+ src/../inc/../../../../../../inc/mega/signalGenerator.h \
+ src/../inc/../../../../../../inc/mega/keypad.h \
  src/../inc/../../../../../../inc/mega/button.h
 
 src/../inc/app.h:
@@ -86,8 +86,6 @@ src/../inc/../../../../../../inc/mega/clock.h:
 src/../inc/../../../../../../inc/mega/../resource.h:
 
 src/../inc/../../../../../../inc/mega/../mega.h:
-
-src/../inc/../../../../../../inc/mega/../resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h:
 
@@ -139,12 +137,14 @@ src/../inc/../../../../../../inc/mega/exEprom.h:
 
 src/../inc/../../../../../../inc/mega/ds1307.h:
 
-src/../inc/../../../../../../inc/mega/keypad.h:
-
 src/../inc/../../../../../../inc/mega/csma.h:
 
 src/../inc/../../../../../../inc/mega/lcdmenu.h:
 
 src/../inc/../../../../../../inc/mega/eeprom.h:
+
+src/../inc/../../../../../../inc/mega/signalGenerator.h:
+
+src/../inc/../../../../../../inc/mega/keypad.h:
 
 src/../inc/../../../../../../inc/mega/button.h:

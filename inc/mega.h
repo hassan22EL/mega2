@@ -42,12 +42,12 @@
 #include "mega/twi.h"
 #include "mega/exEprom.h"
 #include "mega/ds1307.h"
-#include "mega/keypad.h"
 #include "mega/csma.h"
 #include "mega/lcdmenu.h"
 #include "mega/eeprom.h"
-#include "mega/button.h"
 #include "mega/signalGenerator.h"
+#include "mega/keypad.h"
+#include "mega/button.h"
 extern int main(void);
 // Application Functions
 extern void appMain(void);

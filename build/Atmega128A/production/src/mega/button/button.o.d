@@ -1,8 +1,6 @@
 build/Atmega128A/production/src/mega/button/button.o.d \
  build/Atmega128A/production/src/mega/button/button.o: \
- src/mega/button/button.c \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
- src/mega/button/../../../inc/mega.h \
+ src/mega/button/button.c src/mega/button/../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -19,8 +17,8 @@ build/Atmega128A/production/src/mega/button/button.o.d \
  src/mega/button/../../../inc/mega/clock.h \
  src/mega/button/../../../inc/mega/../resource.h \
  src/mega/button/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/button/../../../inc/mega/buffers.h \
  src/mega/button/../../../inc/mega/../mega.h \
@@ -45,14 +43,12 @@ build/Atmega128A/production/src/mega/button/button.o.d \
  src/mega/button/../../../inc/mega/twi.h \
  src/mega/button/../../../inc/mega/exEprom.h \
  src/mega/button/../../../inc/mega/ds1307.h \
- src/mega/button/../../../inc/mega/keypad.h \
  src/mega/button/../../../inc/mega/csma.h \
  src/mega/button/../../../inc/mega/lcdmenu.h \
  src/mega/button/../../../inc/mega/eeprom.h \
- src/mega/button/../../../inc/mega/button.h \
- src/mega/button/../../../inc/mega/signalGenerator.h
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
+ src/mega/button/../../../inc/mega/signalGenerator.h \
+ src/mega/button/../../../inc/mega/keypad.h \
+ src/mega/button/../../../inc/mega/button.h
 
 src/mega/button/../../../inc/mega.h:
 
@@ -88,9 +84,9 @@ src/mega/button/../../../inc/mega/../resource.h:
 
 src/mega/button/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -140,14 +136,14 @@ src/mega/button/../../../inc/mega/exEprom.h:
 
 src/mega/button/../../../inc/mega/ds1307.h:
 
-src/mega/button/../../../inc/mega/keypad.h:
-
 src/mega/button/../../../inc/mega/csma.h:
 
 src/mega/button/../../../inc/mega/lcdmenu.h:
 
 src/mega/button/../../../inc/mega/eeprom.h:
 
-src/mega/button/../../../inc/mega/button.h:
-
 src/mega/button/../../../inc/mega/signalGenerator.h:
+
+src/mega/button/../../../inc/mega/keypad.h:
+
+src/mega/button/../../../inc/mega/button.h:

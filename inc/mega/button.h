@@ -6,12 +6,13 @@
 | < Author                   : Hassan Elsaied                                                           |
 | < Version                  : Mega2v241022                                                             |
 | < Refences                 : no refence                                                               |
-| < SRAM USAGE               : 14 Byte + BUTTON_MAX_BUFFER                                              |
-| < PROGRAM USAGE            : 624 Byte (312 Instruction)                                               |                                      
+| < SRAM USAGE               : 14 Byte + BUTTON_MAX_BUFFER + 2 Byte Pointer of signal when enable       |                                             |
+| < PROGRAM USAGE            : (966) 624 Byte (312 Instruction) +(342 Byte whan add signal)             |                                      
 | < Hardware Usage           : GPIO                                                                     |
 | < File Created             : 24-10-2022                                                               |
 ---------------------------------------------------------------------------------------------------------
  */
+
 #ifndef XC_BUTTON_H
 #define	XC_BUTTON_H
 
@@ -184,6 +185,24 @@ uint8_t buttonGetEvent();
  ---------------------------------------------------------------------------------------------------------
  */
 void FirstButton(const Button_t *button);
+#if defined (SIGNALGENERATED_MODULE) 
+#if (SIGNALGENERATED_MODULE)
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < buttonSignal >                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void button buttonSignal                                                       |  
+ | < @Description       : Assignment signal to generate fixed signal at press Button                     | 
+ | < @Param signal      : pointer to signal to generate event with time at buffer is full and            |
+ |                      : button press                                                                   |
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void buttonSignal(const Signal_t *signal);
+#endif
+#endif
+
+
 #endif
 #endif
 

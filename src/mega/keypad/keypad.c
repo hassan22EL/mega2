@@ -196,7 +196,7 @@ static const gpio_t keyCloumn[KEYPAD_MAX_COL] PROGMEM = {KEYPAD_SW01_PIN, KEYPAD
 #elif KEYPAD_MAX_COL == 6
 static const gpio_t keyCloumn[KEYPAD_MAX_COL] PROGMEM = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN, KEYPAD_SW06_PIN};
 #elif KEYPAD_MAX_COL == 5
-static const gpio_t keyCloumn[KEYPAD_MAX_COL] PROGMEM= {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN};
+static const gpio_t keyCloumn[KEYPAD_MAX_COL] PROGMEM = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN, KEYPAD_SW05_PIN};
 #elif KEYPAD_MAX_COL == 4
 static const gpio_t keyCloumn[KEYPAD_MAX_COL] PROGMEM = {KEYPAD_SW01_PIN, KEYPAD_SW02_PIN, KEYPAD_SW03_PIN, KEYPAD_SW04_PIN};
 #elif KEYPAD_MAX_COL == 3
@@ -278,7 +278,14 @@ static volatile uint8_t gu8KeypadLastKey;
  * @var gu8KeypadRepeatCounter  : repeat time to create new char
  */
 static volatile uint8_t gu8KeypadRepeatCounter;
-
+#if defined (SIGNALGENERATED_MODULE)
+#if (SIGNALGENERATED_MODULE)
+/*
+ * @var gpSignalActionATPressSw  : pointer to signal to action on buzzer or LED at press any switch in keypad
+ */
+static const Signal_t *gpSignalActionATPressSw;
+#endif
+#endif
 /*
  ---------------------------------------------------------------------------------------------------------
  |                                 < keypadstoreKey >                                                    |
@@ -329,18 +336,20 @@ static void keypadstoreKey(volatile uint8_t index, volatile gpio_t pinC) {
     }
     /*store data into buffer*/
     if (u8Event != KEYPAD_NOT_AN_EVENT) {
-#if (BUZ_MODULE)
+#if defined(SIGNALGENERATED_MODULE)
+#if SIGNALGENERATED_MODULE
         if (putByte(&gstKeypadDescriptor, u8Event)) {
-            if (u8Event == KEYPAD01_PRESS(u8CounterIndex + 1)) {
-                //                buzStop();
-                buzGenerateSignalTime(100, 0);
+            if (u8Event == KEYPAD_PRESS(u8CounterIndex + 1)) {
+                SignalStart(gpSignalActionATPressSw, 200, 100, 1, 1, SIGNAL_SLEEP_WITH_LOW, 1);
             }
         } else {
-            if (u8Event == KEYPAD01_PRESS(u8CounterIndex + 1)) {
-                //                 buzStop();
-                buzGenerateSignalTime(200, 0);
+            if (u8Event == KEYPAD_PRESS(u8CounterIndex + 1)) {
+                SignalStart(gpSignalActionATPressSw, 500, 100, 1, 1, SIGNAL_SLEEP_WITH_LOW, 1);
             }
         }
+#else
+        putByte(&gstKeypadDescriptor, u8Event);
+#endif
 #else
         putByte(&gstKeypadDescriptor, u8Event);
 #endif
@@ -425,6 +434,31 @@ uint8_t keypadGetEvent() {
         return u8keypadevent;
     return KEYPAD_NOT_AN_EVENT;
 }
+
+#if defined (SIGNALGENERATED_MODULE) 
+#if (SIGNALGENERATED_MODULE)
+
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < buttonSignal >                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void button buttonSignal                                                       |  
+ | < @Description       : Assignment signal to generate fixed signal at press Button                     | 
+ | < @Param signal      : pointer to signal to generate event with time at buffer is full and            |
+ |                      : button press                                                                   |
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void keypadSignal(const Signal_t *signal) {
+    if (signal && signal != &NullISignal) {
+        gpSignalActionATPressSw = signal;
+    }
+}
+
+#endif
+#endif
+
+
 
 #endif
 #endif

@@ -283,7 +283,7 @@
  |                           : 1 module is active                                       |
  | < SIGNAL_NUMBER_OF_PINS   : number of Pins to Generated different signal             |
  | < SRAM USAGE              : 10 Byte Per Pin + 2 Byte Pointer to First Signal         |      
- | < PROGRAM USAGE           : (1190 Byte) 595 Insttruction                             |  
+ | < PROGRAM USAGE           : (918 Byte) 459 Insttruction                              |  
  ----------------------------------------------------------------------------------------
  */
 #define       SIGNALGENERATED_MODULE                  (1)

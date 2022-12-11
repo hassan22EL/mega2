@@ -1,5 +1,4 @@
 
-
 /*
 --------------------------------------------------------------------------------------------------
 |                           < Module  Definition >                                               | 
@@ -9,7 +8,7 @@
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : no refence                                                        |
 | < SRAM USAGE               : 10 Byte Per Signal   + 2 Byte Pointer to first signal in table    |
-| < PROGRAM USAGE            : 1190 Byte (595 Instruction)                                       |                                     
+| < PROGRAM USAGE            : 918 Byte (459 Instruction)                                        |                                     
 | < Hardware Usage           : no-used                                                           |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------

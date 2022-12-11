@@ -6,14 +6,13 @@
 | < Author                   : Hassan Elsaied                                                           |
 | < Version                  : Mega2v241022                                                             |
 | < Refences                 : no refence                                                               |
-| < SRAM USAGE               : 14 Byte + BUTTON_MAX_BUFFER                                              |
-| < PROGRAM USAGE            : 624 Byte (312 Instruction)                                               |                                      
+| < SRAM USAGE               : 14 Byte + BUTTON_MAX_BUFFER + 2 Byte Pointer of signal when enable       |                                             |
+| < PROGRAM USAGE            : (966) 624 Byte (312 Instruction) +(342 Byte whan add signal)             |                                      
 | < Hardware Usage           : GPIO                                                                     |
 | < File Created             : 24-10-2022                                                               |
 ---------------------------------------------------------------------------------------------------------
  */
 
-#include <stdint-gcc.h>
 
 #include "../../../inc/mega.h"
 
@@ -160,7 +159,14 @@ static uint8_t gu8ButtonBufferEvents[BUTTON_MAX_BUFFER];
  * @var gstKeypadDescriptor  : create buffer as a ring buffer operations
  */
 static stByteBufDescriptor_t gstButtonDescriptor;
-
+#if defined (SIGNALGENERATED_MODULE)
+#if (SIGNALGENERATED_MODULE)
+/*
+ * @var gpSignalActionATPressButton  : pointer to signal to action on buzzer or LED at press any Button
+ */
+static const Signal_t *gpSignalActionATPressButton;
+#endif
+#endif
 /*
  ---------------------------------------------------------------------------------------------------------
  |                                 < Internal Function Defintion>                                        |
@@ -305,16 +311,20 @@ static void scanButton(uint8_t u8CounterIndex, gpio_t ButtonPin, uint8_t ButtonP
 
     /*Put Into Buffer Event*/
     if (u8Event != BUTTON_NOT_AN_EVENT) {
-#if (BUZ_MODULE)
+#if (defined (SIGNALGENERATED_MODULE))
+#if (SIGNALGENERATED_MODULE)
         if (putByte(&gstButtonDescriptor, u8Event)) {
             if (u8Event == BUTTON_PRESS(u8CounterIndex + 1)) {
-                buzGenerateSignalTime(100, 0);
+                SignalStart(gpSignalActionATPressButton, 200, 100, 1, 1, SIGNAL_SLEEP_WITH_LOW, 1);
             }
         } else {
             if (u8Event == BUTTON_PRESS(u8CounterIndex + 1)) {
-                buzGenerateSignalTime(200, 0);
+                SignalStart(gpSignalActionATPressButton, 500, 100, 1, 1, SIGNAL_SLEEP_WITH_LOW, 1);
             }
         }
+#else
+        putByte(&gstButtonDescriptor, u8Event);
+#endif
 #else
         putByte(&gstButtonDescriptor, u8Event);
 #endif
@@ -405,6 +415,29 @@ void FirstButton(const Button_t *button) {
     if (button && button != &NullIButton)
         gpFirstButton = button;
 }
+
+#if defined (SIGNALGENERATED_MODULE) 
+#if (SIGNALGENERATED_MODULE)
+
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < buttonSignal >                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void button buttonSignal                                                       |  
+ | < @Description       : Assignment signal to generate fixed signal at press Button                     | 
+ | < @Param signal      : pointer to signal to generate event with time at buffer is full and            |
+ |                      : button press                                                                   |
+ | < @return            : void                                                                           |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void buttonSignal(const Signal_t *signal) {
+    if (signal && signal != &NullISignal) {
+        gpSignalActionATPressButton = signal;
+    }
+}
+
+#endif
+#endif
 
 #endif
 #endif

@@ -20,8 +20,8 @@ build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h \
- d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/buffers.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
@@ -45,12 +45,12 @@ build/Atmega128A/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/twi.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/exEprom.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/ds1307.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/lcdmenu.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/eeprom.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega/button.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega/signalGenerator.h
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/signalGenerator.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/button.h
 
 src/mega/ds1307/example/ds1307.X/src/../inc/app.h:
 
@@ -90,9 +90,9 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\src\mega\signalgenertor\signalgenerator.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\button\example\button.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/buffers.h:
 
@@ -140,14 +140,14 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/exEprom.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/ds1307.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h:
-
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/csma.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/lcdmenu.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/eeprom.h:
 
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega/button.h:
-
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/signalGenerator.h:
+
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/keypad.h:
+
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega/button.h:

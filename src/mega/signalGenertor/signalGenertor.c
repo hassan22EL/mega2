@@ -8,7 +8,7 @@
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : no refence                                                        |
 | < SRAM USAGE               : 10 Byte Per Signal   + 2 Byte Pointer to first signal in table    |
-| < PROGRAM USAGE            : 1190 Byte (595 Instruction)                                       |                                     
+| < PROGRAM USAGE            : 918 Byte (459 Instruction)                                        |                                     
 | < Hardware Usage           : no-used                                                           |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
@@ -143,21 +143,23 @@ static const uint8_t getSignalIndex(const Signal_t *signal);
  | < @Function          : void SignalToggle                                                       |  
  | < @Description       : Perdioc Toggle Function                                                 |  
  | < @Param signal      : signal to be action execution                                           |
+ | < @Param Index       : signal index in array                                                   |
  | < @return            :void                                                                     |
  --------------------------------------------------------------------------------------------------
  */
-static inline void SignalToggle(const Signal_t *signal);
+static inline void SignalToggle(const Signal_t *signal, uint8_t Index);
 /*
  --------------------------------------------------------------------------------------------------
  |                                 < SignalOff >                                                  |
  --------------------------------------------------------------------------------------------------
  | < @Function          : void SignalOff                                                          |  
- | < @Description       : Perdioc sleep Function                                                     |  
+ | < @Description       : Perdioc sleep Function                                                  |  
  | < @Param signal      : signal to be action execution                                           |
+ | < @Param Index       : signal index in array                                                   |
  | < @return             :void                                                                    |
  --------------------------------------------------------------------------------------------------
  */
-static inline void SignalSleep(const Signal_t *signal);
+static inline void SignalSleep(const Signal_t *signal, uint8_t Index);
 /*
  --------------------------------------------------------------------------------------------------
  |                                 < SignalTask >                                                 |
@@ -165,10 +167,11 @@ static inline void SignalSleep(const Signal_t *signal);
  | < @Function          : void SignalTask                                                         |  
  | < @Description       : this function run in isr to decrement the signal toggle time            |  
  | < @Param Period      : signal to be action execution                                           |
+ | < @Param Index       : signal index in array                                                   |
  | < @return            :void                                                                     |
  --------------------------------------------------------------------------------------------------
  */
-static void SignalTask(const Signal_t *signal);
+static void SignalTask(const Signal_t *signal, uint8_t Index);
 /*
  --------------------------------------------------------------------------------------------------
  |                                < Internal Function Implemetions   >                            |
@@ -227,14 +230,15 @@ static const uint8_t getSignalIndex(const Signal_t *signal) {
  | < @Function          : void SignalToggle                                                       |  
  | < @Description       : Perdioc Toggle Function                                                 |  
  | < @Param signal      : signal to be action execution                                           |
+ | < @Param Index       : signal index in array                                                   |
  | < @return            :void                                                                     |
  --------------------------------------------------------------------------------------------------
  */
-static inline void SignalToggle(const Signal_t *signal) {
-    if (!gSignalsArray[getSignalIndex(signal)].SignalState.b1) {
-        gSignalsArray[getSignalIndex(signal)].SignalTimerToggleCount = PERIDIC_TIME(SIGNAL_DUTY_HIGH(gSignalsArray[getSignalIndex(signal)].SignalDuty, gSignalsArray[getSignalIndex(signal)].SignalPeriod));
+static inline void SignalToggle(const Signal_t *signal, uint8_t Index) {
+    if (!gSignalsArray[Index].SignalState.b1) {
+        gSignalsArray[Index].SignalTimerToggleCount = PERIDIC_TIME(SIGNAL_DUTY_HIGH(gSignalsArray[Index].SignalDuty, gSignalsArray[Index].SignalPeriod));
     } else {
-        gSignalsArray[getSignalIndex(signal)].SignalTimerToggleCount = PERIDIC_TIME(SIGNAL_DUTY_LOW(gSignalsArray[getSignalIndex(signal)].SignalDuty, gSignalsArray[getSignalIndex(signal)].SignalPeriod));
+        gSignalsArray[Index].SignalTimerToggleCount = PERIDIC_TIME(SIGNAL_DUTY_LOW(gSignalsArray[Index].SignalDuty, gSignalsArray[Index].SignalPeriod));
     }
     digitalPinWrite(getSignalPin(signal), GPIO_TGL);
 }
@@ -244,18 +248,19 @@ static inline void SignalToggle(const Signal_t *signal) {
  |                                 < SignalOff >                                                  |
  --------------------------------------------------------------------------------------------------
  | < @Function          : void SignalOff                                                          |  
- | < @Description       : Perdioc sleep Function                                                     |  
+ | < @Description       : Perdioc sleep Function                                                  |  
  | < @Param signal      : signal to be action execution                                           |
- | < @return             :void                                                                    |
+ | < @Param Index       : signal index in array                                                   |
+ | < @return            : void                                                                    |
  --------------------------------------------------------------------------------------------------
  */
-static inline void SignalSleep(const Signal_t *signal) {
-    if (!gSignalsArray[getSignalIndex(signal)].SignalState.b2) {
+static inline void SignalSleep(const Signal_t *signal, uint8_t Index) {
+    if (!gSignalsArray[Index].SignalState.b2) {
         digitalPinWrite(getSignalPin(signal), GPIO_LOW);
     } else {
         digitalPinWrite(getSignalPin(signal), GPIO_HIGH);
     }
-    gSignalsArray[getSignalIndex(signal)].SignalTimerToggleCount = PERIDIC_TIME(gSignalsArray[getSignalIndex(signal)].SignalPeriod) >> 1;
+    gSignalsArray[Index].SignalTimerToggleCount = PERIDIC_TIME(gSignalsArray[Index].SignalPeriod) >> 1;
 }
 
 /*
@@ -265,46 +270,47 @@ static inline void SignalSleep(const Signal_t *signal) {
  | < @Function          : void SignalTask                                                         |  
  | < @Description       : this function run in isr to decrement the signal toggle time            |  
  | < @Param Period      : signal to be action execution                                           |
- | < @return            :void                                                                     |
+ | < @Param Index       : signal index in array                                                   |
+ | < @return            : void                                                                    |
  --------------------------------------------------------------------------------------------------
  */
-static void SignalTask(const Signal_t *signal) {
+static void SignalTask(const Signal_t *signal, uint8_t Index) {
     /*stop case*/
-    if (!gSignalsArray[getSignalIndex(signal)].SignalState.b0) {
+    if (!gSignalsArray[Index].SignalState.b0) {
         return;
     }
-    
-    if (gSignalsArray[getSignalIndex(signal)].SignalTimerToggleCount != 0) {
-        gSignalsArray[getSignalIndex(signal)].SignalTimerToggleCount--;
+
+    if (gSignalsArray[Index].SignalTimerToggleCount != 0) {
+        gSignalsArray[Index].SignalTimerToggleCount--;
     } else {/*Period is done */
         /*in first period duration*/
-        if (!gSignalsArray[getSignalIndex(signal)].SignalDurationcycles) {
-            gSignalsArray[getSignalIndex(signal)].SignalState.b3 ^= 1;
-            if (!gSignalsArray[getSignalIndex(signal)].SignalState.b3) {
-                if (gSignalsArray[getSignalIndex(signal)].SignalNEx != SIGNAL_NOT_STOP_CHECK) {
-                    if (gSignalsArray[getSignalIndex(signal)].SignalNEx) {
-                        gSignalsArray[getSignalIndex(signal)].SignalNEx--;
+        if (!gSignalsArray[Index].SignalDurationcycles) {
+            gSignalsArray[Index].SignalState.b3 ^= 1;
+            if (!gSignalsArray[Index].SignalState.b3) {
+                if (gSignalsArray[Index].SignalNEx != SIGNAL_NOT_STOP_CHECK) {
+                    if (gSignalsArray[Index].SignalNEx) {
+                        gSignalsArray[Index].SignalNEx--;
                     } else {
                         SignalStop(signal);
                         return;
                     }
                 }
-                gSignalsArray[getSignalIndex(signal)].SignalDurationcycles = gSignalsArray[getSignalIndex(signal)].ToggleDuration;
+                gSignalsArray[Index].SignalDurationcycles = gSignalsArray[Index].ToggleDuration;
             } else {
-                gSignalsArray[getSignalIndex(signal)].SignalDurationcycles = gSignalsArray[getSignalIndex(signal)].SleepDuration;
+                gSignalsArray[Index].SignalDurationcycles = gSignalsArray[Index].SleepDuration;
             }
 
         } else {
-            if (gSignalsArray[getSignalIndex(signal)].SignalState.b1) {
-                gSignalsArray[getSignalIndex(signal)].SignalDurationcycles--;
+            if (gSignalsArray[Index].SignalState.b1) {
+                gSignalsArray[Index].SignalDurationcycles--;
             }
         }
-        if (!gSignalsArray[getSignalIndex(signal)].SignalState.b3) {
-            SignalToggle(signal);
+        if (!gSignalsArray[Index].SignalState.b3) {
+            SignalToggle(signal, Index);
         } else {
-            SignalSleep(signal);
+            SignalSleep(signal, Index);
         }
-        gSignalsArray[getSignalIndex(signal)].SignalState.b1 ^= 1; /*toggle flag and led*/
+        gSignalsArray[Index].SignalState.b1 ^= 1; /*toggle flag and led*/
     }
 
 }
@@ -407,7 +413,7 @@ uint8_t SignalsState(const Signal_t *signal) {
 void SignalsTask() {
     const Signal_t *i = gpFirstSignal;
     for (; i && i != &NullISignal; i = getNextSignal(i)) {
-        SignalTask(i);
+        SignalTask(i, getSignalIndex(i));
     }
 }
 

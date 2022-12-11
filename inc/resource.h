@@ -58,7 +58,7 @@
  | < @ note  :include the res.h from  application                                      |
  ---------------------------------------------------------------------------------------
  */
-#include "../../mega2.X/src/mega/signalGenertor/SignalGenerator.X/inc/res.h"
+#include "../../mega2.X/src/mega/button/example/Button.X/inc/res.h"
 
 
 /*
