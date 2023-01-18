@@ -1,0 +1,1 @@
+ $(MP_EXTRA_CC_PRE) -mmcu=atmega8a ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -DXPRJ_ATmega8=$(CND_CONF)  $(COMPARISON_BUILD) D:\Company\SMART\MEGA\new lib\ElectronicSafe.X\src\resepassword.c
