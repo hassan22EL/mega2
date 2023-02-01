@@ -24,6 +24,15 @@
 #define	TIME_H
 
 /*
+ * < @mcro PRINT_BUF_TIME_lENGTH                    : Print time buffer Length
+ */
+#define  PRINT_BUF_TIME_lENGTH             (9)
+/*
+ * < @mcro PRINT_BUF_DATE_lENGTH                    : Print date buffer Length
+ */
+#define  PRINT_BUF_DATE_lENGTH             (16)
+
+/*
  ---------------------------------------------------------------------------------------------------------
  |                                <  tm struct   >                                                       |
  ---------------------------------------------------------------------------------------------------------
@@ -103,13 +112,11 @@ time_t getTime(tm_t *timeptr);
  -----------------------------------------------------------------------------------------------------------------
  | < @Function          : void getDate                                                                           |
  | < @Description       : convert current time form date to timestamp                                            |
- | < @Param timeptr     : ponter of the date time struct                                                         | 
- | < @Param timer       : pointer of the timestamp                                                               |
+ | < @Param timeptr     : ponter of the date time struct                                                         |                                                            |
  | < @return            : void                                                                                   |
  -----------------------------------------------------------------------------------------------------------------
  */
-void getDate(time_t *timer, tm_t *timeptr);
-
+void getDate(tm_t *timeptr);
 /*
  -----------------------------------------------------------------------------------------------------------------
  |                                 < PrintDate >                                                                 |
@@ -121,6 +128,20 @@ void getDate(time_t *timer, tm_t *timeptr);
  | < @return            : void                                                                                   |
  -----------------------------------------------------------------------------------------------------------------
  */
-void PrintDate(tm_t * timeptr, char *buffer);
+void PrintDate(tm_t * timeptr, uint8_t *buffer);
+
+/*
+ -----------------------------------------------------------------------------------------------------------------
+ |                                 < PrintTime >                                                                 |
+ -----------------------------------------------------------------------------------------------------------------
+ | < @Function          : void PrintDate                                                                         |
+ | < @Description       : convert the date to assii  format  00:00:00                                                            |
+ | < @Param timeptr     : ponter of the date time struct                                                         | 
+ | < @Param buffer      : pinter to store date                                                                   |
+ | < @return            : void                                                                                   |
+ -----------------------------------------------------------------------------------------------------------------
+ */
+void PrintTime(tm_t * timeptr, uint8_t *buffer);
+
 #endif	/* TIME_H */
 

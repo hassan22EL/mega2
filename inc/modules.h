@@ -16,6 +16,9 @@
 #ifndef XC_MODULES_H
 #define	XC_MODULES_H
 
+#include "mega/gpio.h"
+
+
 
 
 
@@ -370,21 +373,37 @@
 
 /*
  ----------------------------------------------------------------------------------------
- |                                <SIGNALGENERATED_MODULE>                              | 
+ |                                <TONE_MODULE>                                         | 
  ----------------------------------------------------------------------------------------
- | < BUZ_MODULE              : 0 module is not active                                   | 
+ | < TONE_MODULE             : 0 module is not active                                   | 
  |                           : 1 module is active                                       |
- | < SIGNAL_NUMBER_OF_PINS   : number of Pins to Generated different signal             |
- | < SRAM USAGE              : 10 Byte Per Pin  +2 Byte Pinter to first signal          |      
- | < PROGRAM USAGE           : (918 Byte ) 459 Instruction                              |  
+ | <MAX_PINS_USED            : Number of Pin Used                                       |
+ | < SRAM USAGE              :  Byte Per Pin  +2 Byte Pinter to first signal            |      
+ | < PROGRAM USAGE           :                                                          |  
  ----------------------------------------------------------------------------------------
  */
-#define       SIGNALGENERATED_MODULE                  (1)
-#if SIGNALGENERATED_MODULE
-#define   SIGNAL_NUMBER_OF_PINS                       (2)
+#define       TONE_MODULE                  (1)
+#if TONE_MODULE
+#define          MAX_PINS_USED             (4)
+#define          TONE_PIN0_GPIO             GPIO_D3
+#define          TONE_PIN1_GPIO             GPIO_D4
+#define          TONE_PIN2_GPIO             GPIO_D5
+#define          TONE_PIN2_GPIO             GPIO_D6
 #endif
 
-
+/*
+ ----------------------------------------------------------------------------------------
+ |                                <ZLP_MODULE>                                         | 
+ ----------------------------------------------------------------------------------------
+ | < TONE_MODULE             : 0 module is not active                                   | 
+ |                           : 1 module is active                                       |
+ | <MAX_PINS_USED            : Number of Pin Used                                       |
+ | < SRAM USAGE              :  Byte Per Pin  +2 Byte Pinter to first signal            |      
+ | < PROGRAM USAGE           :                                                          |  
+ ----------------------------------------------------------------------------------------
+ */
+#define  ZLP_MODULE     (1)
+#define  BUAD_RATE         
 
 
 #endif	/* XC_MODULES_H */

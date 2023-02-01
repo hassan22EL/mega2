@@ -11,7 +11,7 @@
 |                          : @Time Out  4 Byte                                           |
 |                          : @eeprom description 11 Byte                                 |
 |                          : @Internal Read Buffer default used 16 Byte                  |
-| < PROGRAM_USAGE          : 1002 byte (501 Instruction)                                 |
+| < PROGRAM_USAGE          : 944 byte (501 Instruction)                                 |
 | < Hardware Usage         : I2C  as Master                                              |
 | < File Created           : 24-10-2022                                                  |
 -------------------------------------------------------------------------------------------

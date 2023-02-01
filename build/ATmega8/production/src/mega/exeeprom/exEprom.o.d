@@ -19,11 +19,12 @@ build/ATmega8/production/src/mega/exeeprom/exEprom.o.d \
  src/mega/exeeprom/../../../inc/mega/clock.h \
  src/mega/exeeprom/../../../inc/mega/../resource.h \
  src/mega/exeeprom/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/exeeprom/../../../inc/mega/buffers.h \
  src/mega/exeeprom/../../../inc/mega/../mega.h \
+ src/mega/exeeprom/../../../inc/mega/ui.h \
  src/mega/exeeprom/../../../inc/resource.h \
  src/mega/exeeprom/../../../inc/mega/macros.h \
  src/mega/exeeprom/../../../inc/mega/bootloadercmd.h \
@@ -88,15 +89,17 @@ src/mega/exeeprom/../../../inc/mega/../resource.h:
 
 src/mega/exeeprom/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/exeeprom/../../../inc/mega/buffers.h:
 
 src/mega/exeeprom/../../../inc/mega/../mega.h:
+
+src/mega/exeeprom/../../../inc/mega/ui.h:
 
 src/mega/exeeprom/../../../inc/resource.h:
 

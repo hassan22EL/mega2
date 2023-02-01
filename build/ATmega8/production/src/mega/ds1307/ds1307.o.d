@@ -19,11 +19,12 @@ build/ATmega8/production/src/mega/ds1307/ds1307.o.d \
  src/mega/ds1307/../../../inc/mega/clock.h \
  src/mega/ds1307/../../../inc/mega/../resource.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/ds1307/../../../inc/mega/buffers.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
+ src/mega/ds1307/../../../inc/mega/ui.h \
  src/mega/ds1307/../../../inc/resource.h \
  src/mega/ds1307/../../../inc/mega/macros.h \
  src/mega/ds1307/../../../inc/mega/bootloadercmd.h \
@@ -88,15 +89,17 @@ src/mega/ds1307/../../../inc/mega/../resource.h:
 
 src/mega/ds1307/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/ds1307/../../../inc/mega/buffers.h:
 
 src/mega/ds1307/../../../inc/mega/../mega.h:
+
+src/mega/ds1307/../../../inc/mega/ui.h:
 
 src/mega/ds1307/../../../inc/resource.h:
 

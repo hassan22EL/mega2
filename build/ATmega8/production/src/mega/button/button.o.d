@@ -19,11 +19,12 @@ build/ATmega8/production/src/mega/button/button.o.d \
  src/mega/button/../../../inc/mega/clock.h \
  src/mega/button/../../../inc/mega/../resource.h \
  src/mega/button/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/button/../../../inc/mega/buffers.h \
  src/mega/button/../../../inc/mega/../mega.h \
+ src/mega/button/../../../inc/mega/ui.h \
  src/mega/button/../../../inc/resource.h \
  src/mega/button/../../../inc/mega/macros.h \
  src/mega/button/../../../inc/mega/bootloadercmd.h \
@@ -88,15 +89,17 @@ src/mega/button/../../../inc/mega/../resource.h:
 
 src/mega/button/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/button/../../../inc/mega/buffers.h:
 
 src/mega/button/../../../inc/mega/../mega.h:
+
+src/mega/button/../../../inc/mega/ui.h:
 
 src/mega/button/../../../inc/resource.h:
 

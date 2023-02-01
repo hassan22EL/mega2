@@ -19,11 +19,12 @@ build/ATmega8/production/src/mega/keypad/keypad.o.d \
  src/mega/keypad/../../../inc/mega/clock.h \
  src/mega/keypad/../../../inc/mega/../resource.h \
  src/mega/keypad/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/keypad/../../../inc/mega/buffers.h \
  src/mega/keypad/../../../inc/mega/../mega.h \
+ src/mega/keypad/../../../inc/mega/ui.h \
  src/mega/keypad/../../../inc/resource.h \
  src/mega/keypad/../../../inc/mega/macros.h \
  src/mega/keypad/../../../inc/mega/bootloadercmd.h \
@@ -88,15 +89,17 @@ src/mega/keypad/../../../inc/mega/../resource.h:
 
 src/mega/keypad/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/keypad/../../../inc/mega/buffers.h:
 
 src/mega/keypad/../../../inc/mega/../mega.h:
+
+src/mega/keypad/../../../inc/mega/ui.h:
 
 src/mega/keypad/../../../inc/resource.h:
 

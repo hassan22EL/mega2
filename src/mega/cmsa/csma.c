@@ -2583,11 +2583,6 @@ void csmaInit() {
 #if defined (OCR0A) 
     OCR2A = TIMER2_VALUE;
 #endif
-    digitalpinMode(GPIO_B0, MODE_OUTPUT);
-    digitalpinMode(GPIO_B1, MODE_OUTPUT);
-    digitalpinMode(GPIO_B3, MODE_INPUT);
-    digitalpinMode(GPIO_B4, MODE_INPUT);
-
 #if defined(__AVR_ATmega128__) ||  defined(__AVR_ATmega128A__)
     // CPU specific: different values for the ATmega128
     TIMER2_PRESCALLER2;
@@ -2642,11 +2637,7 @@ void csmaInit() {
     TIMER2_PRESCALLER0;
     TIMER2_MODE1;
     TIMER2_MODE0;
-
-
 #endif
-
-
     /*External Interrupt Worked start*/
 #if defined PCIE2 
     PCMSK2 |= (1 << PCINT16);

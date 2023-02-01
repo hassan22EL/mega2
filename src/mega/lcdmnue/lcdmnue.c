@@ -407,8 +407,8 @@ static menuItemInfo_t getItemInfo(const menueItem_t *item) {
  */
 static void menuLCDChild(const menueItem_t *item, uint8_t line, uint8_t pos) {
     /*upgrade*/
-    uint8_t len
-            const char * PROGMEM ScurrentItem = getmenuLable(item);
+    uint8_t len;
+    const char * PROGMEM ScurrentItem = getmenuLable(item);
     len = strlen_P(ScurrentItem);
     char s[len];
     strcpy_P(s, ScurrentItem);
@@ -535,6 +535,7 @@ void menueDriver() {
     if (!gu8OPenMenueFlag.b2)
         return;
     menueReadEvents();
+    /*register callbacks with Index*/
     if (gu8OPenMenueFlag.b0) {
         menuAction();
         return;

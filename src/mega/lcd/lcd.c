@@ -8,12 +8,14 @@
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : https://www.sparkfun.com/datasheets/LCD/HD44780.pdf               |
 | < SRAM USAGE               : 36-Byte  (32 Byte buffer , 4 byte internal used                   |
-| < PROGRAM USAGE            : 980 Byte (950 byte (475 Instruction)) + 30 Byte custom char       |                                    
+| < PROGRAM USAGE            : 1010 Byte (950 byte (475 Instruction)) + 30 Byte custom char      |                                    
 | < Hardware Usage           : GPIO                                                              |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
  */
 
+
+#include <stdint-gcc.h>
 
 #include "../../../inc/mega.h"
 #if defined (LCD_MODULE)
@@ -369,6 +371,7 @@ static inline void Pulse_En() __attribute__((always_inline, unused));
 
 static inline void Pulse_En() {
     digitalPinWrite(LCD_EN, GPIO_HIGH);
+    _delay_us(1);
     digitalPinWrite(LCD_EN, GPIO_LOW);
 }
 
@@ -572,12 +575,13 @@ static void lcdSendCommdHigh(uint8_t u8Data) {
 static uint8_t lcdUpdate() {
     if (!gu8LCDFlags.b1) {
         lcdSendCommand(LCD_CGRAM_ADDRESS_CHECK);
-        if (lcdReadByte() != (LCD_CGRAM_ADDRESS_CHECK)) {
+        if ((lcdReadByte()) != (LCD_CGRAM_ADDRESS_CHECK)) {
             if (lcdInit() == LCD_ERORR) {
                 /*call back error*/
                 gu8LCDFlags.b1 = 0;
                 return LCD_ERORR;
             } else {
+                digitalPinWrite(LCD_BL, GPIO_HIGH);
                 gu8LCDFlags.b1 = 1;
             }
         } else {
@@ -618,6 +622,7 @@ static uint8_t lcdUpdate() {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdInit() {
+    digitalPinWrite(LCD_BL, GPIO_LOW);
     gu8LcdOPtion = LCD_DISPLAY_ON_COMMAND; /*the display on*/
     gu8LCDPosition = 0;
     gu8LcdBufferIndex = 0;
@@ -644,6 +649,7 @@ static uint8_t lcdInit() {
     lcdCreateChar(3, CGRAM_THREE);
     lcdCreateChar(4, CGRAM_FOUR);
     lcdCreateChar(5, CGRAM_FIVE);
+
     return LCD_SUCCSS;
 }
 
@@ -746,32 +752,32 @@ void lcdHwInit() {
     digitalpinMode(LCD_D5, MODE_OUTPUT);
     digitalpinMode(LCD_D6, MODE_OUTPUT);
     digitalpinMode(LCD_D7, MODE_OUTPUT);
-
+    digitalpinMode(LCD_BL, MODE_OUTPUT);
 }
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                                 < lcdwrite >                                                         |
+ |                                 < lcdwritebuf >                                                      |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void lcdwrite                                                                 |
+ | < @Function          : void lcdwritebuf                                                              |
  | < @Description       : write data into buffer with select position                                   |
  | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
  | < @Param  pos        : write in specific char (y) in line and                                        |
  |                      : y is 0 to max number of byte per line                                         |
- | < @Param string      : data put into lcd buffer                                                      |
+ | < @Param buf         : data put into lcd buffer                                                      |
+ | < @Param Length      : Number of byte Load
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-
-void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
+void lcdwritebuf(uint8_t line, uint8_t pos, uint8_t *buf, uint8_t Length) {
     uint8_t newPos;
     if (pos != LCD_TEXT_CENTER) {
         newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
     } else {
-        newPos = (line * LCD_NUMBER_OF_BYTE) + ((LCD_NUMBER_OF_BYTE - strlen(string)) / 2) + 1;
+        newPos = (line * LCD_NUMBER_OF_BYTE) + ((LCD_NUMBER_OF_BYTE - Length) / 2) + 1;
     }
-    for (uint8_t i = 0; i < strlen(string); i++)
-        gu8LCDBuffer[newPos + i] = string[i];
+    for (uint8_t i = 0; i < Length; i++)
+        gu8LCDBuffer[newPos + i] = buf[i];
 }
 
 /*
@@ -787,13 +793,37 @@ void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
  |                      : 1 if the position is a number                                                 |                         
  --------------------------------------------------------------------------------------------------------
  */
-
 uint8_t lcdIsCurrentNumber(uint8_t line, uint8_t pos) {
     uint8_t newPos;
     newPos = line * LCD_NUMBER_OF_BYTE + pos;
     if (gu8LCDBuffer[newPos] >= '0' && gu8LCDBuffer[newPos] <= '9')
         return (1);
     return (0);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdwrite >                                                         |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdwrite                                                                 |
+ | < @Description       : write data into buffer with select position                                   |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
+ | < @Param  pos        : write in specific char (y) in line and                                        |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @Param string      : data put into lcd buffer                                                      |
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
+    uint8_t newPos;
+    if (pos != LCD_TEXT_CENTER) {
+        newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
+    } else {
+        newPos = (line * LCD_NUMBER_OF_BYTE) + ((LCD_NUMBER_OF_BYTE - strlen(string)) / 2) + 1;
+    }
+    for (uint8_t i = 0; i < strlen(string); i++) {
+        gu8LCDBuffer[newPos + i] = string[i];
+    }
 }
 
 /*
@@ -920,9 +950,6 @@ void lcdDriver() {
     } else if (state == LCD_ERORR) {
         gu8LCDFlags.b0 = 0;
     }
-
-
-
 }
 
 /*

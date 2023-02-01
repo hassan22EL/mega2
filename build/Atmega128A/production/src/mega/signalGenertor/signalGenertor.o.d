@@ -19,11 +19,12 @@ build/Atmega128A/production/src/mega/signalGenertor/signalGenertor.o.d \
  src/mega/signalGenertor/../../../inc/mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/signalGenertor/../../../inc/mega/buffers.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/mega/signalGenertor/../../../inc/mega/ui.h \
  src/mega/signalGenertor/../../../inc/resource.h \
  src/mega/signalGenertor/../../../inc/mega/macros.h \
  src/mega/signalGenertor/../../../inc/mega/bootloadercmd.h \
@@ -88,15 +89,17 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/signalGenertor/../../../inc/mega/buffers.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+src/mega/signalGenertor/../../../inc/mega/ui.h:
 
 src/mega/signalGenertor/../../../inc/resource.h:
 

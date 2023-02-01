@@ -18,7 +18,9 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include "mega/clock.h"
+#include "mega/mainTones.h"
 #include "mega/buffers.h"
+#include "mega/utility.h"
 #include "resource.h"
 #include "mega/macros.h"
 #include "mega/bootloadercmd.h"
@@ -48,6 +50,8 @@
 #include "mega/signalGenerator.h"
 #include "mega/keypad.h"
 #include "mega/button.h"
+#include "mega/Tone.h"
+#include "mega/ZLP.h"
 extern int main(void);
 // Application Functions
 extern void appMain(void);

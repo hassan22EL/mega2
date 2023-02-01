@@ -18,10 +18,12 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h \
- d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/buffers/../../../inc/mega/../mega/buffers.h \
+ src/mega/buffers/../../../inc/mega/../mega/ui.h \
+ d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/buffers/../../../inc/mega/../resource.h \
  src/mega/buffers/../../../inc/mega/../mega/macros.h \
  src/mega/buffers/../../../inc/mega/../mega/bootloadercmd.h \
@@ -36,7 +38,6 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  src/mega/buffers/../../../inc/mega/../mega/gpio.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/buffers/../../../inc/mega/../mega/system.h \
  src/mega/buffers/../../../inc/mega/../mega/time.h \
  src/mega/buffers/../../../inc/mega/../mega/usart.h \
@@ -87,13 +88,17 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\res.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\callpoint.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/buffers/../../../inc/mega/../mega/buffers.h:
+
+src/mega/buffers/../../../inc/mega/../mega/ui.h:
+
+d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/buffers/../../../inc/mega/../resource.h:
 
@@ -122,8 +127,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
 
 src/mega/buffers/../../../inc/mega/../mega/gpio.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
 src/mega/buffers/../../../inc/mega/../mega/system.h:
 

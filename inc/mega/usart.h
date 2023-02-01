@@ -42,12 +42,14 @@
 #if   defined(__AVR_ATmega8__) \
    || defined (__AVR_ATmega8A__)\
    || defined(__AVR_ATmega16__) \
+   || defined (__AVR_ATmega16A__)\
    || defined(__AVR_ATmega32__) \
    || defined(__AVR_ATmega323__)
 /* ATmega with one USART */
 #define ATMEGA_USART
-#define UART0_RECEIVE_INTERRUPT   USART_RXC_vect
-#define UART0_TRANSMIT_INTERRUPT  USART_UDRE_vect
+#define UART0_RECEIVE_INTERRUPT    USART_RXC_vect
+#define UART0_TRANSMIT_INTERRUPT   USART_TXC_vect
+#define UART0_UDREMPTY_INTERRUPT   USART_UDRE_vect
 #define UART0_STATUS   UCSRA
 #define UART0_CONTROL  UCSRB
 #define UART0_DATA     UDR

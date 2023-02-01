@@ -78,6 +78,11 @@
 #define bitToggle(value, bit) ((value) ^= (1UL << (bit)))
 #define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
 
+
+#define bitSet8Bit(value, bit) ((value) |= (0x01 << (bit)))
+#define bitClear8Bit(value, bit) ((value) &=  ~(0x01 << (bit)))
+#define bitToggle8Bit(value, bit) ((value) ^= (0x01 << (bit)))
+#define bitWrite8Bit(value, bit, bitvalue) ((bitvalue) ? bitSet8Bit(value, bit) : bitClear8Bit(value, bit))
 /* 
  * ******************************************************************************
  *                  Bits Operation  checks                                      *
@@ -139,48 +144,7 @@
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
-/* 
- * ******************************************************************************
- *                  Decoder Value                                               *
- * ******************************************************************************
- */
-static inline uint8_t u8Decoder(uint8_t Value, uint8_t Number_of_outLine) {
 
-    if (!Value) {
-        return ((Number_of_outLine - 1) & 0x01);
-    }
 
-    for (uint8_t i = 0; i < Number_of_outLine; i++) {
-        if (i == Value) {
-            return ((Value & 0x01) << i) & (Number_of_outLine - 1);
-        }
-    }
-
-}
-
-static inline uint8_t map(uint32_t x, uint8_t in_min, uint32_t in_max, uint8_t out_min, uint8_t out_max) {
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-static inline uint8_t power2(uint8_t x) {
-    uint8_t y = 1;
-    if (x == 0) {
-        return 1;
-    }
-    for (uint8_t i = 0; i < x; i++) {
-        y *= 2;
-    }
-    return y;
-}
-
-static inline uint8_t Match_2BUF(volatile uint8_t *buf1, volatile uint8_t *buf2, volatile uint8_t Length) {
-    for (uint8_t i = 0; i < Length; i++) {
-        if (buf1[i] != buf2[i]) {
-            return (0);
-        }
-
-    }
-    return (1);
-}
 #endif	/* XC_MACRO_H */
 

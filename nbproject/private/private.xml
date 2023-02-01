@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/inc/mega/keypad.h</file>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/inc/mega/ZLP.h</file>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/inc/mega/macros.h</file>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/src/mega.c</file>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/inc/mega/gpio.h</file>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/src/mega/ZLP/ZLP.c</file>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/src/mega/keypad/keypad.c</file>
+            <file>file:/D:/Company/SMART/MEGA/new%20lib/mega2.X/src/mega/system/system.c</file>
+        </group>
     </open-files>
 </project-private>

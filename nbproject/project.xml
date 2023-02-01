@@ -25,6 +25,10 @@
                     <name>ATmega8</name>
                     <type>3</type>
                 </confElem>
+                <confElem>
+                    <name>ATmega16</name>
+                    <type>3</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>

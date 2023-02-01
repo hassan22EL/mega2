@@ -12,7 +12,7 @@
 |                          : 9-Byte TWI-interface                                        |
 |                          : 7-Byte Internal Buffer                                      |
 |                          : 4-Byte Time Out                                             |
-| < PROGRAM USAGE          : 1248 Byte (624 Instruction)                                 |
+| < PROGRAM USAGE          : 950 Byte (624 Instruction)                                 |
 | < Hardware Usage         : I2C  as a master                                            |
 | < File Created           : 24-10-2022                                                  |
 ------------------------------------------------------------------------------------------
@@ -223,12 +223,12 @@ static uint8_t ds1307Read() {
     time_t time;
     if (twi_master_read(&gstDs1307TwiPag) == TWI_SUCCESS) {
         /*convert bcd to decimal*/
-        tm.tm_sec = BcdToDec(gu8ds1307Buffer[ds1307_sec] & 0x7F);
-        tm.tm_min = BcdToDec(gu8ds1307Buffer[ds1307_min] & 0x7F);
-        tm.tm_hour = BcdToDec(gu8ds1307Buffer[ds1307_hour] & 0x3F);
-        tm.tm_wday = BcdToDec(gu8ds1307Buffer[ds1307_dayw] & 0x07);
-        tm.tm_mday = BcdToDec(gu8ds1307Buffer[ds1307_daym] & 0x3F);
-        tm.tm_mon = BcdToDec(gu8ds1307Buffer[ds1307_month] & 0x1F);
+        tm.tm_sec = BcdToDec(gu8ds1307Buffer[ds1307_sec]);
+        tm.tm_min = BcdToDec(gu8ds1307Buffer[ds1307_min]);
+        tm.tm_hour = BcdToDec(gu8ds1307Buffer[ds1307_hour]);
+        tm.tm_wday = BcdToDec(gu8ds1307Buffer[ds1307_dayw]) - 1;
+        tm.tm_mday = BcdToDec(gu8ds1307Buffer[ds1307_daym]);
+        tm.tm_mon = BcdToDec(gu8ds1307Buffer[ds1307_month]) - 1;
         tm.tm_year = BcdToDec(gu8ds1307Buffer[ds1307_year]);
         time = getTime(&tm);
         sysUpdateNow(time);
@@ -267,6 +267,7 @@ void ds1307Init() {
     gstDs1307TwiPag.length = DS1307_DATA_LENGTH;
     /*DS - Chip Speed*/
     gstDs1307TwiPag.baud_reg = TWI_100KHZ;
+    gu8ds1307States.b1 = 1;
     for (uint8_t i = 0; i < DS1307_DATA_LENGTH; i++)
         gu8ds1307Buffer[i] = 0x00;
 

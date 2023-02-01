@@ -953,6 +953,7 @@ void _digitalPinWrite(gpio_t pin, uint8_t value); // implemented in gpio.c
 static inline void digitalpinMode(gpio_t pin, uint8_t mode) __attribute__((always_inline, unused));
 
 static inline void digitalpinMode(gpio_t pin, uint8_t mode) {
+
     if (__builtin_constant_p(pin) && __builtin_constant_p(mode)) {
         GPIO2_OPTIONAL_ATOMIC_BEGIN
         if (mode == MODE_OUTPUT) {

@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=mega2.X
 
 # Active Configuration
-DEFAULTCONF=ATmega8
+DEFAULTCONF=ATmega16
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Atmega128A ATmega8 
+ALLCONFS=Atmega128A ATmega8 ATmega16 
 
 
 # build
@@ -47,6 +47,7 @@ ALLCONFS=Atmega128A ATmega8
 .clobber-impl: .clobber-pre .depcheck-impl
 	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=Atmega128A clean
 	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=ATmega8 clean
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=ATmega16 clean
 
 
 
@@ -54,6 +55,7 @@ ALLCONFS=Atmega128A ATmega8
 .all-impl: .all-pre .depcheck-impl
 	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=Atmega128A build
 	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=ATmega8 build
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=ATmega16 build
 
 
 

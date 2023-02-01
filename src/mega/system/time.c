@@ -161,7 +161,7 @@ static uint8_t month_length(uint8_t year, uint8_t month);
  | < @return            : void                                                                                   |
  -----------------------------------------------------------------------------------------------------------------
  */
-static void __print_2Digit(int i, char *buffer, char s);
+static void __print_2Digit(int i, uint8_t *buffer, char s);
 
 
 /*
@@ -228,12 +228,12 @@ static int timeEquation(time_t *time) {
  -----------------------------------------------------------------------------------------------------------------
  */
 
-static void __print_2Digit(int i, char *buffer, char s) {
+static void __print_2Digit(int i, uint8_t *buffer, char s) {
     div_t res;
     res = div(i, 10);
     *buffer++ = res.quot + '0';
     *buffer++ = res.rem + '0';
-    *buffer = s;
+    *buffer = (uint8_t) s;
 }
 
 /*
@@ -348,19 +348,19 @@ time_t getTime(tm_t *timeptr) {
  -----------------------------------------------------------------------------------------------------------------
  | < @Function          : void getDate                                                                           |
  | < @Description       : convert current time form date to timestamp                                            |
- | < @Param timeptr     : ponter of the date time struct                                                         | 
- | < @Param timer       : pointer of the timestamp                                                               |
+ | < @Param timeptr     : ponter of the date time struct                                                         |                                                            |
  | < @return            : void                                                                                   |
  -----------------------------------------------------------------------------------------------------------------
  */
-void getDate(time_t *timer, tm_t *timeptr) {
-    int32_t fract;
+void getDate(tm_t *timeptr) {
+    time_t Time;
+    uint32_t fract;
     ldiv_t lresult;
     div_t result;
     uint16_t days, n, leapyear, years;
-
-    days = *timer / SECS_PER_DAY; /*number of days from 2000*/
-    fract = *timer % SECS_PER_DAY; /*day */
+    Time = systemNow();
+    days = Time / SECS_PER_DAY; /*number of days from 2000*/
+    fract = Time % SECS_PER_DAY; /*day */
     /*get hour , min , second*/
     lresult = ldiv(fract, 60L);
     timeptr->tm_sec = lresult.rem; /*fract % 60*/
@@ -401,7 +401,7 @@ void getDate(time_t *timer, tm_t *timeptr) {
         years += result.quot;
         days = result.rem; /*number of days in this year less than 365*/
     }
-    timeptr->tm_yday = years;
+    timeptr->tm_year = years;
     timeptr->tm_yday = days; /*number of days per year*/
     /*28+31 + leap day*/
     n = 59 + leapyear;
@@ -436,29 +436,82 @@ void getDate(time_t *timer, tm_t *timeptr) {
  | < @return            : void                                                                                   |
  -----------------------------------------------------------------------------------------------------------------
  */
-void PrintDate(tm_t * timeptr, char *buffer) {
-    uint8_t i, m, d;
+//void PrintDate(tm_t * timeptr, char *buffer) {
+//    uint8_t i, m, d;
+//    div_t result;
+//    d = timeptr->tm_wday * 3; /*name of the day week has 3 char */
+//    m = timeptr->tm_mon * 3; /*name of the month is 3 char*/
+//    for (i = 0; i < 3; i++) {
+//        buffer[i] = pgm_read_byte(ascdays + d++); /*0 to 2 and space is index 3 ++*/
+//        buffer[i + 4] = pgm_read_byte(ascmonths + m++); /*4 to 6 and space in index 7*/
+//    }
+//    buffer[3] = ',';
+//    buffer[7] = ' ';
+//    buffer += 8; /*start index of the time*/
+//    __print_2Digit(timeptr->tm_mday, buffer, ' '); /*SAT  jan 5*/
+//    buffer += 3; /*mday has 3 char 2 char digit and 1 char space*/
+//    /*show the clock*/
+//    __print_2Digit(timeptr->tm_hour, buffer, ':');
+//    buffer += 3;
+//    __print_2Digit(timeptr->tm_min, buffer, ':');
+//    buffer += 3;
+//    __print_2Digit(timeptr->tm_sec, buffer, ' ');
+//    buffer += 3;
+//    result = div(timeptr->tm_year + RTC_BASE_TIME, 100);
+//    __print_2Digit(result.quot, buffer, ' ');
+//    buffer += 2;
+//    __print_2Digit(result.rem, buffer, 0);
+//}
+
+/*
+ -----------------------------------------------------------------------------------------------------------------
+ |                                 < PrintDate >                                                                 |
+ -----------------------------------------------------------------------------------------------------------------
+ | < @Function          : void PrintDate                                                                         |
+ | < @Description       : convert the date to assii  format Fri, 20 Jan 2023                                                            |
+ | < @Param timeptr     : ponter of the date time struct                                                         | 
+ | < @Param buffer      : pinter to store date                                                                   |
+ | < @return            : void                                                                                   |
+ -----------------------------------------------------------------------------------------------------------------
+ */
+void PrintDate(tm_t * timeptr, uint8_t *buffer) {
+    uint8_t m, d;
     div_t result;
     d = timeptr->tm_wday * 3; /*name of the day week has 3 char */
     m = timeptr->tm_mon * 3; /*name of the month is 3 char*/
-    for (i = 0; i < 3; i++) {
+    for (uint8_t i = 0; i < 3; i++) {
         buffer[i] = pgm_read_byte(ascdays + d++); /*0 to 2 and space is index 3 ++*/
-        buffer[i + 4] = pgm_read_byte(ascmonths + m++); /*4 to 6 and space in index 7*/
     }
-    buffer[3] = ' ';
-    buffer[7] = ' ';
-    buffer += 8; /*start index of the time*/
+    buffer[3] = ',';
+    buffer += 4; /*start index of the date*/
     __print_2Digit(timeptr->tm_mday, buffer, ' '); /*SAT  jan 5*/
-    buffer += 3; /*mday has 3 char 2 char digit and 1 char space*/
-    /*show the clock*/
-    __print_2Digit(timeptr->tm_hour, buffer, ':');
-    buffer += 3;
-    __print_2Digit(timeptr->tm_min, buffer, ':');
-    buffer += 3;
-    __print_2Digit(timeptr->tm_sec, buffer, ' ');
-    buffer += 3;
+    for (uint8_t i = 0; i < 3; i++) {
+        buffer[i + 3] = pgm_read_byte(ascmonths + m++); /*0 to 2 and space is index 3 ++*/
+    }
+    buffer[6] = ' ';
+    buffer += 7; /*start index of the Year*/
     result = div(timeptr->tm_year + RTC_BASE_TIME, 100);
     __print_2Digit(result.quot, buffer, ' ');
     buffer += 2;
     __print_2Digit(result.rem, buffer, 0);
 }
+
+/*
+ -----------------------------------------------------------------------------------------------------------------
+ |                                 < PrintTime >                                                                 |
+ -----------------------------------------------------------------------------------------------------------------
+ | < @Function          : void PrintDate                                                                         |
+ | < @Description       : convert the date to assii  format  00:00:00                                                            |
+ | < @Param timeptr     : ponter of the date time struct                                                         | 
+ | < @Param buffer      : pinter to store date                                                                   |
+ | < @return            : void                                                                                   |
+ -----------------------------------------------------------------------------------------------------------------
+ */
+void PrintTime(tm_t * timeptr, uint8_t *buffer) {
+    __print_2Digit(timeptr->tm_hour, buffer, ':');
+    buffer += 3;
+    __print_2Digit(timeptr->tm_min, buffer, ':');
+    buffer += 3;
+    __print_2Digit(timeptr->tm_sec, buffer, ' ');
+}
+

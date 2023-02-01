@@ -98,7 +98,7 @@ static void usart0Init() {
     UBRRH = (uint8_t) (BUAD0_REG >> 8);
     UBRRL = (uint8_t) BUAD0_REG;
     /* Enable USART receiver and transmitter and receive complete interrupt */
-    UART0_CONTROL = _BV(RXCIE) | (1 << RXEN) | (1 << TXEN);
+    UART0_CONTROL = _BV(TXCIE) | _BV(RXCIE) | (1 << RXEN) | (1 << TXEN);
     /* Set frame format: asynchronous, 8data, no parity, 1stop bit */
 #ifdef URSEL
     UCSRC = (1 << URSEL) | (3 << UCSZ0);

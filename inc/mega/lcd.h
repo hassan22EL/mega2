@@ -7,7 +7,7 @@
 | < Version                  : Mega2v241022                                                      |
 | < Refences                 : https://www.sparkfun.com/datasheets/LCD/HD44780.pdf               |
 | < SRAM USAGE               : 36-Byte  (32 Byte buffer , 4 byte internal used                   |
-| < PROGRAM USAGE            : 980 Byte (950 byte (475 Instruction)) + 30 Byte custom char       |                                      
+| < PROGRAM USAGE            : 1010 Byte (950 byte (475 Instruction)) + 30 Byte custom char      |                                      
 | < Hardware Usage           : GPIO                                                              |
 | < File Created             : 24-10-2022                                                        |
 --------------------------------------------------------------------------------------------------
@@ -99,6 +99,15 @@
 
 #ifndef   LCD_D4
 #define   LCD_D4    NOT_A_PIN
+#endif
+/*
+--------------------------------------------------------------------------------------------------
+|                           < LCD Data BACK LIGTH Pin >                                                   | 
+--------------------------------------------------------------------------------------------------
+ */
+
+#ifndef   LCD_BL
+#define   LCD_BL    NOT_A_PIN
 #endif
 /*
 --------------------------------------------------------------------------------------------------
@@ -202,7 +211,21 @@ void lcdHwInit();
  */
 
 void lcdwrite(uint8_t line, uint8_t pos, const char *string);
-
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdwritebuf >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdwritebuf                                                              |
+ | < @Description       : write data into buffer with select position                                   |
+ | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
+ | < @Param  pos        : write in specific char (y) in line and                                        |
+ |                      : y is 0 to max number of byte per line                                         |
+ | < @Param buf         : data put into lcd buffer                                                      |
+ | < @Param Length      : Number of byte Load
+ | < @return            : void                                                                          |
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdwritebuf(uint8_t line, uint8_t pos, uint8_t *buf, uint8_t Length);
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < lcdIsCurrentNumber >                                               |
@@ -300,7 +323,6 @@ void lcdClear();
  | < @return            : 0 when  lcd is ready and other case lcd has not ready                         |                                                                       |
  --------------------------------------------------------------------------------------------------------
  */
-
 uint8_t lcdIsBusy();
 /*
  --------------------------------------------------------------------------------------------------------

@@ -123,9 +123,9 @@ void byteBufferInit(stByteBufDescriptor_t* Buf, uint8_t* storeBuf, uint8_t store
  | < @return                : void                                                                |
  --------------------------------------------------------------------------------------------------
  */
-void structBufferInit(stBufferStructDescriptor_t* Buf, uint8_t* storeBuf, uint8_t storeBufSize, uint8_t structSize) {
+void structBufferInit(stBufferStructDescriptor_t* Buf, void * storeBuf, uint8_t storeBufSize, uint8_t structSize) {
     Buf->StructSize = structSize;
-    byteBufferInit((&(Buf->stByteBufDescriptor)), storeBuf, storeBufSize);
+    byteBufferInit((&(Buf->stByteBufDescriptor)), storeBuf, (storeBufSize * structSize));
 }
 
 /*

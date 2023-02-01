@@ -7,8 +7,8 @@
 | < Author                 : overflow problem solutions created by eng /Ahmed Saied and implementation by Hassan Elsaied    | 
 | < Version                : Mega2v241022                                                                                   |
 | < References             : no-used references in this documents                                                           |
-| < SRAM_USAGE             : 14 Byte                                                                                        |
-| < PROGRAM_USAGE          : 694 byte (347 Instruction)                                                                     |
+| < SRAM_USAGE             : 17 Byte                                                                                        |
+| < PROGRAM_USAGE          : 552 byte (347 Instruction)                                                                     |
 | < Hardware Usage         : Timer 0                                                                                        |
 | < File Created           : 24-10-2022                                                                                     |
 -----------------------------------------------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@
 #else
 #error Timer 0 prescale factor 64 not set correctly
 #endif
-#define  TIME_VALUE               (108)
+#define  TIME_VALUE               (107)
 #define  CLOCK_DIVID              (64)
 #define MICROSECONDS_PER_TIMER0_OVERFLOW  _0625us
 #elif N_OF_US_REQUIRED == _1250us 
@@ -126,9 +126,9 @@
 #define  TIMER_MODE1         (sbi(TCCR0A, WGM01));
 #define  TIMER_MODE0         (sbi(TCCR0A, WGM00));
 #else
-#error Timer 0 prescale factor 64 not set correctly
+
 #endif
-#define  TIME_VALUE                        (216)
+#define  TIME_VALUE                        (215)
 #define  CLOCK_DIVID                       (64)
 #define MICROSECONDS_PER_TIMER0_OVERFLOW  _1250us
 #elif N_OF_US_REQUIRED == _1875us
@@ -335,6 +335,10 @@ static volatile uint8_t gu8PerdiocTasks;
  */
 static volatile uint16_t gu16SecondEvent;
 /*
+ * < @var Second Event      : Informe System Have New Second
+ */
+static volatile uint8_t gu8SecondEventFlag;
+/*
  ----------------------------------------------------------------------------------------------------------------------------
  |                                 < system Interrupt >                                                                     |
  ----------------------------------------------------------------------------------------------------------------------------
@@ -348,24 +352,14 @@ ISR(TIMER0_COMPA_vect)
 ISR(TIMER0_OVF_vect)
 #endif
 {
-
     /*store data in local variables can be stored in registers*/
-    millis_t m;
-    time_t s;
-    uint8_t f;
-
-    m = gu32TimeMs;
-    s = gu32SystemTime;
-    f = gu8NumberOFusPerMs;
-
-
     /*milli event*/
-    m += MILLIS_INC;
-    f += FRACT_INC;
+    gu32TimeMs += MILLIS_INC;
+    gu8NumberOFusPerMs += FRACT_INC;
 
-    if (f >= FRACT_MAX) {
-        f -= FRACT_MAX;
-        m++;
+    if (gu8NumberOFusPerMs >= FRACT_MAX) {
+        gu8NumberOFusPerMs -= FRACT_MAX;
+        gu32TimeMs++;
     }
 
     /*
@@ -375,19 +369,18 @@ ISR(TIMER0_OVF_vect)
      |  if (m % 1000 == 0)  this condition is have error because fraction for example  999m + 2 ms  = 1001 %1000 == 1 error     |
      ----------------------------------------------------------------------------------------------------------------------------
      */
-
-
     gu16SecondEvent++;
     if (gu16SecondEvent >= TICK_PER_SEC) {
-        gu16SecondEvent -= TICK_PER_SEC;
-        s++;
+        gu16SecondEvent -= TICK_PER_SEC; /*Reset The Counter*/
+        /*second Event update*/
+        gu8SecondEventFlag = 1;
+        gu32SystemTime++;
     }
     /*periodically task Operation*/
 #if defined KEYPAD_MODULE       
 #if   KEYPAD_MODULE == MODULE_ENABLE
-    if (gu8PerdiocTasks % KEY_PERIDIC_TASK == 0) {
-        keyscan();
-    }
+    keyscan();
+
 #endif
 #endif
 
@@ -399,15 +392,10 @@ ISR(TIMER0_OVF_vect)
 #endif
 #endif    
 
-
-
     if (++gu8PerdiocTasks == MAX_PERODIC_TASKS_TIME) {
         gu8PerdiocTasks = 0;
     }
-    /*stored registers into memory */
-    gu32TimeMs = m;
-    gu8NumberOFusPerMs = f;
-    gu32SystemTime = s;
+
     gu32SystemTick++;
 
 
@@ -423,9 +411,6 @@ ISR(TIMER0_OVF_vect)
 #else
 #error	Timer 0 overflow interrupt not set correctly
 #endif
-
- 
-
 }
 
 /*
@@ -440,8 +425,10 @@ ISR(TIMER0_OVF_vect)
 void systemInit() {
     gu32SystemTick = 0;
     gu32TimeMs = 0;
+    gu8SecondEventFlag = 1;
     gu32SystemTime = 0;
     gu8NumberOFusPerMs = 0;
+    gu16SecondEvent = 0;
 }
 
 /*
@@ -555,6 +542,7 @@ void sysTimerInitS(stTimer_t *psTimer, time_t Delay, time_t Period) {
  */
 uint8_t sysIsTimeoutUs(stTimer_TimeOut_t *psTimer) {
     millis_t End, Current;
+
 
     if (psTimer->EndTime > (SYSTEM_MAX)) {
         //error case
@@ -782,6 +770,23 @@ void sysUpdateNow(time_t now) {
 
 /*
  ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemSecondEvent >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : millis_t systemSecondEvent                                                                             |  
+ | < @Description       : system Have a new Second                                                                    |                                                                 |                    
+ | < @return            : 1 System Have Second , 0 System at same Secod                                                                           |
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
+uint8_t systemSecondEvent() {
+    if (gu8SecondEventFlag) {
+        gu8SecondEventFlag = 0;
+        return 1;
+    }
+    return (0);
+}
+
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
  |                                 < systemMillis >                                                                         |
  ----------------------------------------------------------------------------------------------------------------------------
  | < @Function          : millis_t systemMillis                                                                             |  
@@ -820,14 +825,20 @@ micros_t systemMicros() {
 #endif
 
 #if defined(TIFR) &&   defined (OCF0)
-    if ((TIFR & _BV(OCF0)) && (t >= OCR0)) /*the overflow at top value*/
+    if ((TIFR & _BV(OCF0)) && (t >= OCR0)) { /*the overflow at top value*/
         currentInterruptTick++;
+        t = 0;
+    }
 #elif  defined(TIFR) && defined (TOV0)
-    if ((TIFR & _BV(TOV0)) && (t < (256))) /*the overflow at max value*/
+    if ((TIFR & _BV(TOV0)) && (t < (256))) { /*the overflow at max value*/
         currentInterruptTick++;
+        t = 0;
+    }
 #elif defined(TIFR0) && defined(OCF0A)
-    if ((TIFR0 & _BV(OCF0A)) && (t >= OCR0A)) /*the overflow at at compare match value*/
+    if ((TIFR0 & _BV(OCF0A)) && (t >= OCR0A)) {/*the overflow at at compare match value*/
         currentInterruptTick++;
+        t = 0;
+    }
 #else
 #error	Timer 0  interrupt not set correctly
 #endif

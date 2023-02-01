@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------------------
 |                          < Module  Definition >                                        | 
 ------------------------------------------------------------------------------------------
-| < FILE                   : ds1307.h                                                    |                                  
+| < FILE                   : ds1307.c                                                    |                                  
 | < Author                 : Hassan Elsaied                                              | 
 | < Version                : Mega2v241022                                                |
 | < References             : no-used references in this documents                        |
@@ -12,11 +12,12 @@
 |                          : 9-Byte TWI-interface                                        |
 |                          : 7-Byte Internal Buffer                                      |
 |                          : 4-Byte Time Out                                             |
-| < PROGRAM USAGE          : 1248 Byte (624 Instruction)                                 |
+| < PROGRAM USAGE          : 950 Byte (624 Instruction)                                 |
 | < Hardware Usage         : I2C  as a master                                            |
 | < File Created           : 24-10-2022                                                  |
--------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
  */
+
 
 
 

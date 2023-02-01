@@ -24,7 +24,7 @@
  | < @ note  :include the res.h from  application                                      |
  ---------------------------------------------------------------------------------------
  */
-#include "../../CallPoint.X/inc/res.h"
+#include "../../SerialTools.X/inc/res.h"
 
 #endif
 

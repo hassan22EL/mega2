@@ -1,0 +1,1 @@
+ $(MP_EXTRA_CC_PRE) -mmcu=atmega128a    -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -DXPRJ_Atmega128A=$(CND_CONF)  $(COMPARISON_BUILD) D:\Company\SMART\MEGA\new lib\mega2.X\src\mega\lcd\lcd.c
