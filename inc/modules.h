@@ -364,10 +364,14 @@
  */
 #define    CSMA_MODULE                                     (0)
 #if        CSMA_MODULE
-#define    STATION_BLOCK_TIME                              (50)  
-#define    COM_PAYLOAD_SIZE                               (10)
-#define    COM_MAX_RETARY                                  (10)
+#define    STATION_BLOCK_TIME                              (100)  
+#define    COM_PAYLOAD_SIZE                                (8)
+#define    COM_MAX_RETARY                                  (5)
+#define    STATION_ASSIGN_ADDRESS                          (1)
+#define    COLIISION_MAX_NUMBER                            (8)
+#define    SERIAL_NUMBER_LENGTH                            (4)
 #endif
+
 
 
 

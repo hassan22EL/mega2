@@ -169,7 +169,12 @@ typedef union {
  |< @Description : Indicator the End List Of The Button                                           |
  ---------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 const keypadConstantCode_t PROGMEM NO_CODE = {0xFF, 0, 0, (keypadConstantCode_t *) NULL};
+#elif COMPILER_TYPE == XC
+const keypadConstantCode_t  NO_CODE = {0xFF, 0, 0, (keypadConstantCode_t *) NULL};
+#endif
+
 /*
  ---------------------------------------------------------------------------------------------------------
  |                               Keypad scan Variables                                                   |
@@ -652,7 +657,7 @@ static void KeypadGetFromQueue(void) {
             const keypadConstantCode_t *i = gpcKeyEvents;
             for (; i && i != &NO_CODE; i = getNextCode(i)) {
                 gpFunKeyEvent = gpFunKeyEvents[getIndex(i)];
-                if (gpFunKeyEvent && gGetKey.Keycode == getCode(i)) {
+                if (gpFunKeyEvent != NULL && gGetKey.Keycode == getCode(i)) {
                     /*tone Generation*/
 #if defined TONE_MODULE
 #if TONE_MODULE
@@ -734,7 +739,6 @@ static void KeypadPutIntoQueue(void) {
         guKeypadFlags.LongTabFlag = 0;
     }
     putStruct(&gstKeyQueueStructDescriptor, &key); /*Put Key Into Queue*/
-
     return;
 }
 
@@ -773,9 +777,11 @@ static uint8_t KeypadIsMultiKeyPress(uint8_t Code) {
  --------------------------------------------------------------------------------------------------------
  */
 static const keypadConstantCode_t * getNextCode(const keypadConstantCode_t *Code) {
-
+#if COMPILER_TYPE == GCC
     return (const keypadConstantCode_t *) pgm_read_word(&Code->Next); /*gcc-compiler*/
-    // return (const keypadConstantCode_t *) (&Code->Nextt); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const keypadConstantCode_t *) (Code->Next); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -789,9 +795,11 @@ static const keypadConstantCode_t * getNextCode(const keypadConstantCode_t *Code
  --------------------------------------------------------------------------------------------------------
  */
 static const uint8_t getCode(const keypadConstantCode_t *Code) {
-
+#if COMPILER_TYPE == GCC
     return (const uint8_t) pgm_read_byte(&Code->Code); /*gcc-compiler*/
-    // return (const uint8_t) (Code->Code); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const uint8_t) (Code->Code); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -805,9 +813,11 @@ static const uint8_t getCode(const keypadConstantCode_t *Code) {
  --------------------------------------------------------------------------------------------------------
  */
 static const uint16_t getTone(const keypadConstantCode_t *Code) {
-
+#if COMPILER_TYPE == GCC
     return (const uint16_t) pgm_read_byte(&Code->Tone); /*gcc-compiler*/
-    // return (const uint8_t) (Code->Tone); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const uint8_t) (Code->Tone); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -821,9 +831,11 @@ static const uint16_t getTone(const keypadConstantCode_t *Code) {
  --------------------------------------------------------------------------------------------------------
  */
 static const uint8_t getIndex(const keypadConstantCode_t *Code) {
-
+#if COMPILER_TYPE == GCC
     return (const uint8_t) pgm_read_byte(&Code->Index); /*gcc-compiler*/
-    // return (const uint8_t) (Code->Index); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const uint8_t) (Code->Index); /*xc-compiler*/
+#endif
 }
 /*
  ---------------------------------------------------------------------------------------------------------
@@ -842,7 +854,6 @@ static const uint8_t getIndex(const keypadConstantCode_t *Code) {
  */
 void keyscan() {
     if (gpFunKeyScan != NULL) {
-
         gpFunKeyScan();
     }
 }
@@ -869,6 +880,8 @@ void keyInit() {
     gu8BeforeLastCode = NO_KEY;
     gu8LastCode = NO_KEY;
     gu8CurrentCode = NO_KEY;
+    gpcKeyEvents = &NO_CODE;
+    gpFunKeyEvent = NULL;
     structBufferInit(&gstKeyQueueStructDescriptor, gKeyEventQueue, KEYS_QUEUE_SIZE, sizeof (stkey_t));
     for (uint8_t i = 0; i < KEYPAD_MAX_EVENT; i++) {
         gpFunKeyEvents[i] = NULL;
@@ -878,7 +891,10 @@ void keyInit() {
         gKeyEventQueue[i].UserState.TabCounter = 0;
         gKeyEventQueue[i].Keycode = 0xFF;
     }
-    guKeypadFlags.Flags = 0;
+    gGetKey.Keycode = 0xFF;
+    gGetKey.UserState.State = KEY_RELEASE;
+    gGetKey.UserState.TabCounter = 0;
+    guKeypadFlags.Flags = 0x00;
 }
 
 /*

@@ -41,7 +41,7 @@ static stTone_t gstTones[TONES_MAX_PINS_USED];
  | < @return            :void                                                   |                                                                           |
  ---------------------------------------------------------------------------------------------------------
  */
-static void myTone(gpio_t pin, uint8_t defalutstate, stTone_t *tone);
+static void myTone(gpio_t pin, EN_GPIO_t defalutstate, stTone_t *tone);
 
 /*
  ---------------------------------------------------------------------------------------------------------
@@ -106,8 +106,11 @@ void Toneplay(gpio_t pin, uint8_t Index, uint16_t frequency, uint32_t duration, 
 
     Ton = duty;
     Toff = 100 - duty;
-    gstTones[Index].Period = (10000UL / frequency);
-
+    if (frequency) {
+        gstTones[Index].Period = (10000UL / frequency);
+    } else {
+        gstTones[Index].Period = 1;
+    }
     gstTones[Index].State = 1;
     sysSetPeriodMS(&gstTones[Index].duration, duration);
     sysSetPeriodUs(& gstTones[Index].Freq, (gstTones[Index].Period * Ton));

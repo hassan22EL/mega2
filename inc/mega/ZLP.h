@@ -61,9 +61,30 @@
  * @macro  _4IN_PER_SEC                              Print Rate 4 inch / second 
  */
 #define   _4IN_PER_SEC                                  (4)
-
-
-
+/*
+ * <@macro ZLP_TEXT                                  :Select to send Text
+ */
+#define  ZLP_TEXT                                       (0)  
+/*
+ * <@macro ZLP_BAR                                  :Select to send Bar
+ */
+#define  ZLP_BAR                                         (1)
+/*
+ * <@macro ZLP_TEXT                                  :Select to send Text
+ */
+#define  ZLP_ROTAION_0                                       (0)
+/* 
+ * <@macro ZLP_BAR                                  :Select to send Bar
+ */
+#define  ZLP_ROTAION_90                                      (1)
+/*
+ * <@macro ZLP_TEXT                                  :Select to send Text
+ */
+#define  ZLP_ROTAION_180                                     (2)
+/*
+ * <@macro ZLP_TEXT                                  :Select to send Text
+ */
+#define  ZLP_ROTAION_270                                      (3)
 /*
  ---------------------------------------------------------------------------------------------------------
  |                                 < ZLPInit >                                                         |
@@ -76,26 +97,17 @@
 void ZLPInit();
 /*
  ---------------------------------------------------------------------------------------------------------
- |                                 < ZLPDriver >                                                         |
- ---------------------------------------------------------------------------------------------------------
- | < @Function          : void ZLPDriver                                                                 |  
- | < @Description       : background task                                                                | 
- | < @return            : void                                                                           |
- ---------------------------------------------------------------------------------------------------------
- */
-void ZLPDriver();
-/*
- ---------------------------------------------------------------------------------------------------------
  |                                 < ZLPMediaType >                                                      |
  ---------------------------------------------------------------------------------------------------------
  | < @Function          : void ZLPMediaType                                                              |  
  | < @Description       : Set Media Type  direct thermal media and thermal transfer media                | 
  | < @Param Type        : 0 Direct thermal media                                                         |                       
  |                      : 1 Thermal transfer media                                                       |
+ | < @Param Resulation  : Reslation from 1-15
  | < @return            : void                                                                           |
  ---------------------------------------------------------------------------------------------------------
  */
-void ZLPMediaType(uint8_t Type);
+void ZLPMediaType(uint8_t Type, uint8_t Resulation);
 /*
  ---------------------------------------------------------------------------------------------------------
  |                                 < ZLPLableSize >                                                      |
@@ -110,31 +122,16 @@ void ZLPMediaType(uint8_t Type);
 void ZLPLableSize(uint8_t width, uint8_t Length);
 /*
  ---------------------------------------------------------------------------------------------------------
- |                                 < ZLPMediaType >                                                      |
- ---------------------------------------------------------------------------------------------------------
- | < @Function             : void ZLPMediaType                                                           |  
- | < @Description          : Set Media Type  direct thermal media and thermal transfer media             | 
- | < @Param Fontsize       : set Font Size from 1 to 5                                                   |                       
- | < @Param FontResulation : set Font Size From 0 to 15                                                  |
- | < @return               : void                                                                        |
- ---------------------------------------------------------------------------------------------------------
- */
-void ZLPFont(uint8_t Fontsize, uint8_t FontResulation);
-
-/*
- ---------------------------------------------------------------------------------------------------------
  |                                 < ZLPPrintText >                                                      |
  ---------------------------------------------------------------------------------------------------------
  | < @Function             : void ZLPMediaType                                                           |  
  | < @Description          : Set Media Type  direct thermal media and thermal transfer media             | 
- | < @Param x              : Position  in x                                                              |                       
- | < @Param margin         : text margin in top and bottom                                               |
  | < @Param s              : Pointer to text Buffer                                                      |
  | < @Param Len            : Number of Char In Text Buffer                                               |
  | < @return               : void                                                                        |
  ---------------------------------------------------------------------------------------------------------
  */
-void ZLPPrintText(uint16_t x, uint8_t margin, uint8_t *s, uint8_t Len);
+void ZLPPrintText(uint8_t *s, uint8_t Len);
 /*
  ---------------------------------------------------------------------------------------------------------
  |                                 < ZLPPrintState >                                                    |
@@ -157,6 +154,41 @@ uint8_t ZLPPrintState();
  ---------------------------------------------------------------------------------------------------------
  */
 void ZLPPrintNOW(uint8_t LableCopies);
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < ZLPClearLastLable >                                                 |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void ZLPClearLastLable                                                         |  
+ | < @Description       : Clear last Print Before send Next Lable                                        |                                                          |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void ZLPClearLastLable();
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < ZLPPirentLOGO >                                                 |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void ZLPPirentLOGO                                                         |  
+ | < @Description       : ZLP Custome Log                                       |                                                          |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void ZLPPirentLOGO();
+/*
+---------------------------------------------------------------------------------------------------------
+|                                 < ZLPsetPos >                                                         |
+---------------------------------------------------------------------------------------------------------
+| < @Function          : void ZLPsetPos                                                                 |  
+| < @Description       : set X,Y poision after send command                                             | 
+| < @Param X           : Text Pos in X-Axis                                                             |
+| < @Param Y           : Text Pos in Y-Axis                                                             |
+| < @Param Font        : Font Size selct from '1' to '9' and a-z and A-Z                                |
+| < @PAram Ration      : Select from 0 to 3 when 0 is normal , 1 is 90 and 2 = 180 , 3 =270             |
+| < @Param Type        : Select From
+| < @return            : void                                                                           |                                                                         |
+---------------------------------------------------------------------------------------------------------
+ */
+void ZLPsetData(uint16_t x, uint16_t y, uint8_t Font, uint8_t Rotation, uint8_t Type);
 #endif
 #endif
 

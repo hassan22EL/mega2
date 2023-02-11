@@ -122,7 +122,11 @@ typedef struct Button_s {
  |< @Description : Indicator the End List Of The Button                                           |
  ---------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 extern const Button_t PROGMEM NullIButton;
+#elif COMPILER_TYPE == XC
+extern const Button_t NullIButton;
+#endif
 /*
  --------------------------------------------------------------------------------------------------
  |                           < Button  >                                                          | 
@@ -140,10 +144,15 @@ extern const Button_t PROGMEM NullIButton;
  |                   : active high (at press switch pin read low)                                 |
  --------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 #define Button(Name,Next, Pin, Option) \
     extern const Button_t PROGMEM   Next; \
     const Button_t PROGMEM Name = {&Next,Pin,Option};
-
+#elif COMPILER_TYPE == XC
+#define Button(Name,Next, Pin, Option) \
+    extern const Button_t    Next; \
+    const Button_t  Name = {&Next,Pin,Option};
+#endif
 
 /*
  ---------------------------------------------------------------------------------------------------------

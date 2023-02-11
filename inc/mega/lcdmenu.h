@@ -23,24 +23,6 @@
 |                           < menu main actions >                                                | 
 --------------------------------------------------------------------------------------------------
  */
-/*down switch (-)*/
-#ifndef MENU_DOWN_SW 
-#define  MENU_DOWN_SW  KEYPAD01_SW01
-#endif 
-/*up switch (+)*/
-#ifndef MENU_UP_SW 
-#define  MENU_UP_SW  KEYPAD01_SW02
-#endif 
-
-/*enter switch*/
-#ifndef  MENU_ENTER_SW 
-#define  MENU_ENTER_SW  KEYPAD01_SW03
-#endif 
-/*cancel switch*/
-#ifndef MENU_CANSEL_SW
-#define MENU_CANSEL_SW  KEYPAD01_SW04
-#endif
-
 
 /*
 --------------------------------------------------------------------------------------------------
@@ -65,10 +47,10 @@ typedef uint8_t(* pFuncMenueCallBack_t)(void);
  */
 
 typedef struct menueItem_s {
-    struct menueItem_s const * PROGMEM menuNext; /*pointer to constant menueItem_s */
-    struct menueItem_s const * PROGMEM menuPre; /*pointer to constant menueItem_s */
-    struct menueItem_s const * PROGMEM menuParent; /*pointer to constant menueItem_s */
-    struct menueItem_s const * PROGMEM menuChild; /*pointer to constant menueItem_s */
+    struct menueItem_s const * menuNext; /*pointer to constant menueItem_s */
+    struct menueItem_s const * menuPre; /*pointer to constant menueItem_s */
+    struct menueItem_s const * menuParent; /*pointer to constant menueItem_s */
+    struct menueItem_s const * menuChild; /*pointer to constant menueItem_s */
     const pFuncMenueCallBack_t menuCallback; /*pointer to constant pointer (pointer of the call back function)*/
     const char * menuLable; /*pointer to constant char */
 } menueItem_t;
@@ -82,7 +64,11 @@ typedef struct menueItem_s {
  |              : and apply this in all                                                           |
  ---------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 extern const menueItem_t PROGMEM NullItem;
+#elif COMPILER_TYPE == XC
+extern const menueItem_t NullItem;
+#endif
 /*
  --------------------------------------------------------------------------------------------------
  |                           < MenuItem  >                                                        | 
@@ -97,6 +83,7 @@ extern const menueItem_t PROGMEM NullItem;
  | < @Lable          : Data show in LCD                                                           |
  --------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 #define MenuItem(Name, Next, Previous, Parent, Child, Callback,NameLable , Lable) \
     extern const menueItem_t PROGMEM   Next; \
     extern const menueItem_t  PROGMEM  Previous;\
@@ -104,16 +91,16 @@ extern const menueItem_t PROGMEM NullItem;
     extern const menueItem_t PROGMEM  Child; \
     const char NameLable[] PROGMEM = {Lable};\
     const menueItem_t PROGMEM Name = {&Next, &Previous, &Parent, &Child, Callback, NameLable};
-
+#elif COMPILER_TYPE == XC
 /*xc-compiler*/
-/*
-#define MenuItem(Name, Next, Previous, Parent, Child, Callback, Lable) \
+#define MenuItem(Name, Next, Previous, Parent, Child, Callback,NameLable ,Lable) \
     extern const menueItem_t    Next; \
     extern const menueItem_t    Previous;\
     extern const menueItem_t    Parent;\
     extern const menueItem_t   Child;\
-const menueItem_t PROGMEM Name = {&Next, &Previous, &Parent, &Child, Callback, Lable};
- */
+const menueItem_t  Name = {&Next, &Previous, &Parent, &Child, Callback, Lable};
+
+#endif
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < MenuInit >                                                         |

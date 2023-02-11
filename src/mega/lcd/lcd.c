@@ -175,8 +175,11 @@ static volatile uint8_t gu8LCDBuffer[LCD_SIZE];
 --------------------------------------------------------------------------------------------------------
  */
 
-
+#if COMPILER_TYPE == GCC
 static const PROGMEM uint8_t CGRAM_ZERO[] = {
+#elif COMPILER_TYPE == XC
+static const uint8_t CGRAM_ZERO[] = {
+#endif
     0b11111,
     0b00000,
     0b00000,
@@ -186,7 +189,11 @@ static const PROGMEM uint8_t CGRAM_ZERO[] = {
     0b00000,
     0b11111
 };
+#if COMPILER_TYPE == GCC
 static const PROGMEM uint8_t CGRAM_ONE[] = {
+#elif COMPILER_TYPE == XC
+static const uint8_t CGRAM_ONE[] = {
+#endif
     0b11111,
     0b10000,
     0b10000,
@@ -196,7 +203,12 @@ static const PROGMEM uint8_t CGRAM_ONE[] = {
     0b10000,
     0b11111
 };
+#if COMPILER_TYPE == GCC
 static const PROGMEM uint8_t CGRAM_TWO[] = {
+#elif COMPILER_TYPE == XC
+static const uint8_t CGRAM_TWO[] = {
+#endif
+
     0b11111,
     0b11000,
     0b11000,
@@ -206,7 +218,11 @@ static const PROGMEM uint8_t CGRAM_TWO[] = {
     0b11000,
     0b11111
 };
+#if COMPILER_TYPE == GCC
 static const PROGMEM uint8_t CGRAM_THREE[] = {
+#elif COMPILER_TYPE == XC
+static const uint8_t CGRAM_THREE[] = {
+#endif
     0b11111,
     0b11100,
     0b11100,
@@ -216,7 +232,11 @@ static const PROGMEM uint8_t CGRAM_THREE[] = {
     0b11100,
     0b11111
 };
+#if COMPILER_TYPE == GCC
 static const PROGMEM uint8_t CGRAM_FOUR[] = {
+#elif COMPILER_TYPE == XC
+static const uint8_t CGRAM_FOUR[] = {
+#endif
     0b11111,
     0b11110,
     0b11110,
@@ -226,7 +246,11 @@ static const PROGMEM uint8_t CGRAM_FOUR[] = {
     0b11110,
     0b11111
 };
+#if COMPILER_TYPE == GCC
 static const PROGMEM uint8_t CGRAM_FIVE[] = {
+#elif COMPILER_TYPE == XC
+static const uint8_t CGRAM_FIVE[] = {
+#endif
     0b11111,
     0b11111,
     0b11111,
@@ -843,7 +867,11 @@ void lcdCreateChar(uint8_t u8location, const uint8_t *pu8Data) {
     /*set cgram address*/
     lcdSendCommand(LCD_CGRRAM_MODE + u8location);
     for (int i = 0; i < 8; i++) {
+#if COMPILER_TYPE == GCC
         lcdSendByte(pgm_read_byte(pu8Data + i));
+#elif COMPILER_TYPE == XC
+        lcdSendByte((pu8Data[i]));
+#endif
     }
     lcdSendCommand(LCD_DDRAM_MODE);
 }

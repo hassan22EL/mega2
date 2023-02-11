@@ -18,6 +18,7 @@ build/ATmega16/production/src/mega.o.d \
  src/../inc/mega/../../../SerialTools.X/inc/res.h \
  src/../inc/mega/../../../SerialTools.X/inc/appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/../inc/mega/../../../SerialTools.X/inc/appmenu.h \
  src/../inc/mega/mainTones.h src/../inc/mega/buffers.h \
  src/../inc/mega/../mega.h src/../inc/mega/utility.h \
  src/../inc/resource.h src/../inc/mega/macros.h \
@@ -78,6 +79,8 @@ src/../inc/mega/../../../SerialTools.X/inc/res.h:
 src/../inc/mega/../../../SerialTools.X/inc/appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+src/../inc/mega/../../../SerialTools.X/inc/appmenu.h:
 
 src/../inc/mega/mainTones.h:
 

@@ -25,24 +25,7 @@
 
 #include "../../../inc/mega.h"
 
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                          < Micro  Definition >                                                                |  
- -----------------------------------------------------------------------------------------------------------------
- | < marco SECS_PER_MIN          : one minute have a 60 second                                                   |
- | < marco RTC_BASE_TIME         : system start count from 2000                                                  |
- | < marco SECS_PER_HOUR         : one hour have a 60 min and one min have a 60 second one hour = 60*60 second   |
- | < marco DAY_PER_WEEK          : on week have a 7 day                                                          |
- | < marco SECS_PER_DAY          : one day have a 24 hour and one hour = 60*60 ==>one day = 24*60*60             |
- -----------------------------------------------------------------------------------------------------------------
- */
 
-
-#define 	SECS_PER_MIN                  (60UL)
-#define     RTC_BASE_TIME                 (2000UL)
-#define 	SECS_PER_HOUR                 (3600UL)
-#define 	DAY_PER_WEEK                  (7)
-#define     SECS_PER_DAY                 ((SECS_PER_HOUR) * (24UL))
 
 /*
  -----------------------------------------------------------------------------------------------------------------
@@ -105,9 +88,13 @@
  | < @const ascdays       : name of days per week                                                                |
  -----------------------------------------------------------------------------------------------------------------
  */
+#if COMPILER_TYPE == GCC
 const char PROGMEM ascmonths[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
 const char PROGMEM ascdays[] = "SunMonTueWedThuFriSat";
-
+#elif COMPILER_TYPE == XC
+const char ascmonths[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
+const char ascdays[] = "SunMonTueWedThuFriSat";
+#endif
 
 
 
@@ -480,13 +467,22 @@ void PrintDate(tm_t * timeptr, uint8_t *buffer) {
     d = timeptr->tm_wday * 3; /*name of the day week has 3 char */
     m = timeptr->tm_mon * 3; /*name of the month is 3 char*/
     for (uint8_t i = 0; i < 3; i++) {
+#if COMPILER_TYPE == GCC
         buffer[i] = pgm_read_byte(ascdays + d++); /*0 to 2 and space is index 3 ++*/
+#elif COMPILER_TYPE == XC
+        buffer[i] = (ascdays[d++]); /*0 to 2 and space is index 3 ++*/
+#endif
     }
     buffer[3] = ',';
     buffer += 4; /*start index of the date*/
     __print_2Digit(timeptr->tm_mday, buffer, ' '); /*SAT  jan 5*/
     for (uint8_t i = 0; i < 3; i++) {
+#if COMPILER_TYPE == GCC
         buffer[i + 3] = pgm_read_byte(ascmonths + m++); /*0 to 2 and space is index 3 ++*/
+#elif COMPILER_TYPE == XC
+        buffer[i + 3] = (ascmonths [m++]); /*0 to 2 and space is index 3 ++*/
+#endif
+
     }
     buffer[6] = ' ';
     buffer += 7; /*start index of the Year*/

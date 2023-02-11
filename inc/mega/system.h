@@ -25,6 +25,24 @@
  ----------------------------------------------------------------------------------------------------------------------------
  */
 #define      SYSTEM_WAKE_UP    (0xFF)
+/*
+ -----------------------------------------------------------------------------------------------------------------
+ |                          < Micro  Definition >                                                                |  
+ -----------------------------------------------------------------------------------------------------------------
+ | < marco SECS_PER_MIN          : one minute have a 60 second                                                   |
+ | < marco RTC_BASE_TIME         : system start count from 2000                                                  |
+ | < marco SECS_PER_HOUR         : one hour have a 60 min and one min have a 60 second one hour = 60*60 second   |
+ | < marco DAY_PER_WEEK          : on week have a 7 day                                                          |
+ | < marco SECS_PER_DAY          : one day have a 24 hour and one hour = 60*60 ==>one day = 24*60*60             |
+ -----------------------------------------------------------------------------------------------------------------
+ */
+
+
+#define 	SECS_PER_MIN                  (60UL)
+#define     RTC_BASE_TIME                 (2000UL)
+#define 	SECS_PER_HOUR                 (3600UL)
+#define 	DAY_PER_WEEK                  (7)
+#define     SECS_PER_DAY                 ((SECS_PER_HOUR) * (24UL))
 
 typedef struct {
     uint32_t Timer;

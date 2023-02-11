@@ -59,10 +59,15 @@ typedef struct Info_s {
  |              : and apply this in all                                                                 |
  --------------------------------------------------------------------------------------------------------     
  */
+#if COMPILER_TYPE == GCC
 const menueItem_t NullItem PROGMEM = {(const menueItem_t *) NULL, (const menueItem_t *) NULL, (const menueItem_t *) NULL, (const menueItem_t *) NULL,
     (pFuncMenueCallBack_t) NULL,
     (const char *) NULL};
-
+#elif COMPILER_TYPE == XC
+const menueItem_t NullItem = {(const menueItem_t *) NULL, (const menueItem_t *) NULL, (const menueItem_t *) NULL, (const menueItem_t *) NULL,
+    (pFuncMenueCallBack_t) NULL,
+    (const char *) NULL};
+#endif
 /*
  ---------------------------------------------------------------------------------------------------------
  |                           < current item  >                                                           | 
@@ -214,14 +219,56 @@ static void menuLCDChild(const menueItem_t *item, uint8_t line, uint8_t pos);
 static void menuLCDReader();
 /*
  --------------------------------------------------------------------------------------------------------
- |                                 <menueReadEvents >                                                   |
+ |                                 <menueCencelEvent >                                                  |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void   menueReadEvents                                                        |
- | < @Description       : read mnue action and select data                                              |                
+ | < @Function          : void   menueCencelEvent                                                       |
+ | < @Description       : action when set Cencel Event                                                  |                
  | < @return            : void                                                                          |                                                             
  --------------------------------------------------------------------------------------------------------
  */
-static void menueReadEvents();
+static uint8_t menueCencelEvent(stkey_t *key);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <menueUpEvent >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   menueUpEvent                                                           |
+ | < @Description       : action when set Up Event                                                      |                
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static uint8_t menueUpEvent(stkey_t *key);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <menueDownEventEvent >                                               |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   menueDownEventEvent                                                    |
+ | < @Description       : action when set DownEvents Event                                              |                
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static uint8_t menueDownEventEvent(stkey_t *key);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <menueDownEventEvent >                                               |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   menueDownEventEvent                                                    |
+ | < @Description       : action when set DownEvents Event                                              |                
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static uint8_t menueDownEventEvent(stkey_t *key);
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <MenuRegisterKey >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   MenuRegisterKey                                                        |
+ | < @Description       : Menu Event Register                                                           |  
+ | < @Param type        : type 0 is remove all Register data   , one is register all data               |
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static void MenuRegisterKey(uint8_t type);
 /*
  --------------------------------------------------------------------------------------------------------
  |                           < Basic Function Implementions  >                                          | 
@@ -239,9 +286,11 @@ static void menueReadEvents();
  --------------------------------------------------------------------------------------------------------
  */
 static const char * getmenuLable(const menueItem_t *item) {
-
+#if COMPILER_TYPE == GCC
     return (const char *) pgm_read_word(&item->menuLable); /*gcc-compiler*/
-    // return (const char *) (item->menuLable); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const char *) (item->menuLable); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -255,8 +304,11 @@ static const char * getmenuLable(const menueItem_t *item) {
  --------------------------------------------------------------------------------------------------------
  */
 static const menueItem_t * getmenuNext(const menueItem_t *item) {
+#if COMPILER_TYPE == GCC
     return (const menueItem_t *) pgm_read_word(&item->menuNext); /*gcc-compiler*/
-    // return (const menueItem_t *) (item->menuNext); /*xc-compiler*/
+#elif  COMPILER_TYPE == XC
+    return (const menueItem_t *) (item->menuNext); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -270,8 +322,11 @@ static const menueItem_t * getmenuNext(const menueItem_t *item) {
  --------------------------------------------------------------------------------------------------------
  */
 static const menueItem_t * getmenuPrev(const menueItem_t *item) {
+#if COMPILER_TYPE == GCC
     return (const menueItem_t *) pgm_read_word(&item->menuPre); /*gcc-compiler*/
-    //return (const menueItem_t *) (item->menuPre); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const menueItem_t *) (item->menuPre); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -285,8 +340,11 @@ static const menueItem_t * getmenuPrev(const menueItem_t *item) {
  --------------------------------------------------------------------------------------------------------
  */
 static const menueItem_t * getmenuParent(const menueItem_t *item) {
+#if COMPILER_TYPE == GCC
     return (const menueItem_t *) pgm_read_word(&item->menuParent); /*gcc-compiler*/
-    // return (const menueItem_t *) (item->menuParent);  /*xc-compiler*/
+#elif  COMPILER_TYPE == XC
+    return (const menueItem_t *) (item->menuParent); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -300,8 +358,11 @@ static const menueItem_t * getmenuParent(const menueItem_t *item) {
  --------------------------------------------------------------------------------------------------------
  */
 static const menueItem_t * getmenuChlid(const menueItem_t *item) {
+#if COMPILER_TYPE == GCC
     return (const menueItem_t *) pgm_read_word(&item->menuChild); /*gcc-compiler*/
-    // return (const menueItem_t *) (item->menuChild); /*xc-compiler*/
+#elif  COMPILER_TYPE == XC
+    return (const menueItem_t *) (item->menuChild); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -333,8 +394,11 @@ static void showMenueItem(const menueItem_t *item) {
 static uint8_t menuItemAction() {
     pFuncMenueCallBack_t callback;
     if (gpCurrentMenuItem && gpCurrentMenuItem != &NullItem) {
-        /* callback = (pFuncMenueCallBack_t) pgm_read_word(&gpCurrentMenuItem->menuCallback);*/ /*gcc-compiler*/
+#if COMPILER_TYPE == GCC
+        callback = (pFuncMenueCallBack_t) pgm_read_word(&gpCurrentMenuItem->menuCallback); /*gcc-compiler*/
+#elif COMPILER_TYPE == XC
         callback = (pFuncMenueCallBack_t) (gpCurrentMenuItem->menuCallback);
+#endif
         if (callback) {
             return ((*callback)());
         } else {
@@ -345,7 +409,7 @@ static uint8_t menuItemAction() {
 }
 
 /*
- --------------------------------------------------------------------------------------------------------
+ --------------------------------------------+------------------------------------------------------------
  |                                 <menuAction >                                                        |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void   menuAction                                                             |
@@ -355,9 +419,11 @@ static uint8_t menuItemAction() {
  */
 static void menuAction() {
     if (menuItemAction()) {
+
         if (getmenuChlid(gpCurrentMenuItem) && getmenuChlid(gpCurrentMenuItem) != &NullItem) {
             showMenueItem(getmenuChlid(gpCurrentMenuItem));
         }
+        MenuRegisterKey(1); /*set all register */
         /*menu action done*/
         gu8OPenMenueFlag.b0 = 0;
 
@@ -407,12 +473,19 @@ static menuItemInfo_t getItemInfo(const menueItem_t *item) {
  */
 static void menuLCDChild(const menueItem_t *item, uint8_t line, uint8_t pos) {
     /*upgrade*/
+#if COMPILER_TYPE == GCC
     uint8_t len;
     const char * PROGMEM ScurrentItem = getmenuLable(item);
     len = strlen_P(ScurrentItem);
     char s[len];
     strcpy_P(s, ScurrentItem);
     lcdwrite(line, pos, s);
+
+#elif COMPILER_TYPE == XC
+    const char * ScurrentItem = getmenuLable(item);
+    lcdwrite(line, pos, ScurrentItem);
+#endif
+
 }
 #endif
 
@@ -427,13 +500,14 @@ static void menuLCDChild(const menueItem_t *item, uint8_t line, uint8_t pos) {
  */
 static void menuLCDReader() {
     /*in gcc compiler copy string form program memory to sram*/
-    uint8_t len;
+
+
     if (gpCurrentMenuItem && gpCurrentMenuItem == &NullItem) {
         return; /*no - item select*/
     }
-
     lcdClear();
-
+#if COMPILER_TYPE == GCC
+    uint8_t len;
     /*copy to ram location and return pointer to string*/
     const char * PROGMEM Sparent = (getmenuLable(getmenuParent(gpCurrentMenuItem))) + 2;
     len = strlen_P(Sparent);
@@ -449,43 +523,49 @@ static void menuLCDReader() {
     strcpy_P(s1, lable);
     lcdwrite(1, 0, s1); /*update lcd */
 #endif
+
+#elif COMPILER_TYPE == XC
+    /*copy to ram location and return pointer to string*/
+    const char * Sparent = (getmenuLable(getmenuParent(gpCurrentMenuItem))) + 2;
+    lcdwrite(0, LCD_TEXT_CENTER, Sparent);
+#if LCD_NUMBER_OF_LINE >2
+    menuItemPos();
+#else
+    const char * lable = getmenuLable(gpCurrentMenuItem);
+    lcdwrite(1, 0, lable); /*update lcd */
+#endif
+
+#endif
 }
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                                 <menueReadEvents >                                                   |
+ |                                 <menueEnterEvent >                                                   |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void   menueReadEvents                                                        |
- | < @Description       : read mnue action and select data                                              |                
+ | < @Function          : void   menueEnterEvent                                                        |
+ | < @Description       : action when set Enter Event                                                   |                
  | < @return            : void                                                                          |                                                             
  --------------------------------------------------------------------------------------------------------
  */
-static void menueReadEvents() {
-    uint8_t u8Event;
-    u8Event = keypadGetEvent();
-    if (u8Event == KEYPAD_NOT_AN_EVENT)
-        return;
-    /*down switch action process*/
-    if (u8Event == KEYPAD_PRESS(MENU_DOWN_SW)) {
-        showMenueItem(getmenuPrev(gpCurrentMenuItem));
-        gu8OPenMenueFlag.b1 = 1; /*menu show data update*/
-        return;
-    }
-    /*up switch action process*/
-    if (u8Event == KEYPAD_PRESS(MENU_UP_SW)) {
-        showMenueItem(getmenuNext(gpCurrentMenuItem));
-        gu8OPenMenueFlag.b1 = 1; /*menu show data update*/
-        return;
-    }
+static uint8_t menueEnterEvent(stkey_t *key) {
+    gu8OPenMenueFlag.b0 = 1; /*menu action update*/
+    MenuRegisterKey(0); /*Remove all register */
+    KeypadResetTabCounter(key, 1);
+    return (1);
 
-    /*enter switch action process*/
-    if (u8Event == KEYPAD_PRESS(MENU_ENTER_SW)) {
-        gu8OPenMenueFlag.b0 = 1; /*menu action update*/
-        return;
-    }
+}
 
-    /*cancel switch action process*/
-    if (u8Event == KEYPAD_PRESS(MENU_CANSEL_SW)) {
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <menueCencelEvent >                                                  |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   menueCencelEvent                                                       |
+ | < @Description       : action when set Cencel Event                                                  |                
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static uint8_t menueCencelEvent(stkey_t *key) {
+    if (key->UserState.State == KEY_PRESS) {
         if (getmenuParent(getmenuParent(gpCurrentMenuItem)) == &NullItem) {
             gpCurrentMenuItem = &NullItem;
             lcdClear();
@@ -495,13 +575,83 @@ static void menueReadEvents() {
             gu8OPenMenueFlag.b1 = 0; /*clear any update*/
             lcdNoBlink(); /*close any lcd blink at any position*/
             lcdUpdateNow();
-            return;
+            MenuRegisterKey(0); /*Remove all register */
+            /*assignment*/
+            return (1);
         }
+
         lcdNoBlink(); /*close any blink*/
         showMenueItem(getmenuParent(gpCurrentMenuItem)); /*show parent of the current event with chlid*/
-        return;
+    }
+    KeypadResetTabCounter(key, 1);
+    return (1);
+
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <menueUpEvent >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   menueUpEvent                                                           |
+ | < @Description       : action when set Up Event                                                      |                
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static uint8_t menueUpEvent(stkey_t *key) {
+
+    if (key->UserState.State == KEY_PRESS) {
+        showMenueItem(getmenuNext(gpCurrentMenuItem));
+        gu8OPenMenueFlag.b1 = 1; /*menu show data update*/
+
+    }
+    KeypadResetTabCounter(key, 1);
+    return (1);
+
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <MenuRegisterKey >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   MenuRegisterKey                                                        |
+ | < @Description       : Menu Event Register                                                           |  
+ | < @Param type        : type 0 is remove all Register data   , one is register all data               |
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static void MenuRegisterKey(uint8_t type) {
+    if (type) {
+        KeypadRegisterEvent(menueEnterEvent, ENTERKEY_INDEX);
+        KeypadRegisterEvent(menueCencelEvent, CENCELKEY_INDEX);
+        KeypadRegisterEvent(menueUpEvent, UPKEY_INDEX);
+        KeypadRegisterEvent(menueDownEventEvent, DOWNKEY_INDEX);
+    } else {
+        KeypadRegisterEvent(NULL, ENTERKEY_INDEX);
+        KeypadRegisterEvent(NULL, CENCELKEY_INDEX);
+        KeypadRegisterEvent(NULL, UPKEY_INDEX);
+        KeypadRegisterEvent(NULL, DOWNKEY_INDEX);
     }
 }
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 <menueDownEventEvent >                                               |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void   menueDownEventEvent                                                    |
+ | < @Description       : action when set DownEvents Event                                              |                
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static uint8_t menueDownEventEvent(stkey_t *key) {
+    if (key->UserState.State == KEY_PRESS) {
+        showMenueItem(getmenuPrev(gpCurrentMenuItem));
+        gu8OPenMenueFlag.b1 = 1; /*menu show data update*/
+    }
+    KeypadResetTabCounter(key, 1);
+    return (1);
+}
+
+
 /*
  --------------------------------------------------------------------------------------------------------
  |                           < user Function Implementions >                                            | 
@@ -534,7 +684,6 @@ void MenuInit() {
 void menueDriver() {
     if (!gu8OPenMenueFlag.b2)
         return;
-    menueReadEvents();
     /*register callbacks with Index*/
     if (gu8OPenMenueFlag.b0) {
         menuAction();
@@ -578,6 +727,8 @@ void menuStart(const menueItem_t *item) {
     showMenueItem(item); /*register first item in menu*/
     menuAction(); /*first event */
     gu8OPenMenueFlag.b2 = 1; /*start menu*/
+    /*Register callback from keyIndexs*/
+    MenuRegisterKey(1);
 }
 
 

@@ -22,6 +22,7 @@ build/ATmega16/production/src/mega/button/button.o.d \
  d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
  d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
  src/mega/button/../../../inc/mega/mainTones.h \
  src/mega/button/../../../inc/mega/buffers.h \
  src/mega/button/../../../inc/mega/../mega.h \
@@ -97,6 +98,8 @@ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
 
 src/mega/button/../../../inc/mega/mainTones.h:
 

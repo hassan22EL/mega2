@@ -1,5 +1,54 @@
 
+#include <stdint-gcc.h>
+
 #include "../../../inc/mega.h"
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < uxxTOASII  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t u32TOASII                                                               |
+ | < @Description       : Convert nBit Binary To ASII                                                    |                    
+ | < @return            :  Number Of Digit                                                                |                                                           |
+  ---------------------------------------------------------------------------------------------------------
+ */
+static uint8_t uXXToASII(uint8_t *s, uint32_t x, uint8_t max);
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < uxxTOASII  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t u32TOASII                                                               |
+ | < @Description       : Convert nBit Binary To ASII                                                    |                    
+ | < @return            :  Number Of Digit                                                                |                                                           |
+  ---------------------------------------------------------------------------------------------------------
+ */
+static uint8_t uXXToASII(uint8_t *s, uint32_t x, uint8_t max) {
+    uint8_t size;
+    uint8_t i;
+    size = 0;
+    i = 0;
+
+    if (x == 0) {
+        for (uint8_t i = 0; i < max; i++) {
+            s[i] = '0';
+        }
+        return (2);
+    }
+
+    while (i < max) {
+        if (x != 0) {
+            s[max - 1 - i] = (x % 10) + '0';
+            x /= 10;
+        } else {
+            s[(max - 1) - i] = '0'; /*s[3-1-0] = s[2] ,s[1] , s[0] , */
+            size++;
+        }
+        i++;
+    }
+
+
+    return (size);
+}
 
 /*
   ---------------------------------------------------------------------------------------------------------
@@ -86,29 +135,8 @@ uint8_t Match_2BUF(volatile uint8_t *buf1, volatile uint8_t *buf2, volatile uint
  | < @return            :  Number Of Digit                                                                |                                                           |
   ---------------------------------------------------------------------------------------------------------
  */
-uint8_t u16TOASII(char *s, uint16_t x) {
-    uint8_t size;
-    uint8_t i;
-    size = 0;
-    i = 0;
-    char buffer[5]; /*max number is 5digit 2^16*/
-    digitalpinMode(GPIO_B0, MODE_OUTPUT);
-    do // write least significant digit of value that's left
-    {
-        digitalPinWrite(GPIO_B0, GPIO_TGL);
-        buffer[i] = (x % 10) + '0';
-        x /= 10;
-        i++;
-    } while (x);
-
-    size += i;
-    i = 0;
-    while (i < size) {
-        *(s++) = buffer[size - i - 1];
-        i++;
-    }
-
-    return size;
+uint8_t u16TOASII(uint8_t *s, uint16_t x) {
+    return uXXToASII(s, (uint32_t) x, 5);
 }
 
 /*
@@ -120,28 +148,59 @@ uint8_t u16TOASII(char *s, uint16_t x) {
  | < @return            :  Number Of Digit                                                                |                                                           |
   ---------------------------------------------------------------------------------------------------------
  */
-uint8_t u8TOASII(char *s, uint8_t x) {
-    uint8_t size;
-    uint8_t i;
-    size = 0;
-
-    i = 0;
-    char buffer[3]; /*max number is 3 digit 2^8*/
-
-    do // write least significant digit of value that's left
-    {
-        buffer[i] = (x % 10) + '0';
-        x /= 10;
-        i++;
-    } while (x);
-
-    size += i;
-    i = 0;
-    while (i < size) {
-        *(s++) = buffer[size - i - 1];
-        i++;
-    }
-
-    return size;
+uint8_t u8TOASII(uint8_t *s, uint8_t x) {
+    return uXXToASII(s, (uint32_t) x, 3);
 }
 
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < hex8TOASII  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t hex8TOASII                                                              |
+ | < @Description       : Convert 8Bit Hexnumber To ASII                                                  |                    
+ | < @return            :  void                                                                           |                                                           |
+  ---------------------------------------------------------------------------------------------------------
+ */
+void hex8TOASII(uint8_t *s, uint8_t x) {
+    uint8_t low;
+    uint8_t high;
+
+
+    low = x & 0x0F;
+    high = (x & 0xF0) >> 4;
+    s[0] = high;
+    s[1] = low;
+    s[0] += (high < 10 ? '0' : ('A' - 10));
+    s[1] += (low < 10 ? '0' : ('A' - 10));
+}
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < cpyStringToBuff  >                                                        |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t hex8TOASII                                                              |
+ | < @Description       : copy data from const location to run time buffer location                       | 
+ | < @Param  s          : Const String                                                                    |
+ | < @Param  x          : buffer                                                                          |  
+ | < @Param len         : Length of data copy                                                             |
+ | < @return            :  len of const string                                                            |                                                           |
+  ---------------------------------------------------------------------------------------------------------
+ */
+void cpyStringToBuff(const char *s, uint8_t *x, uint8_t len) {
+    for (uint8_t i = 0; i < len; i++) {
+        x[i] = (uint8_t) s[i];
+    }
+}
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < u32TOASII  >                                                             |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : uint8_t u32TOASII                                                               |
+ | < @Description       : Convert 32Bit Binary To ASII                                                    |                    
+ | < @return            :  Number Of Digit                                                                |                                                           |
+  ---------------------------------------------------------------------------------------------------------
+ */
+uint8_t u32TOASII(uint8_t *s, uint32_t x) {
+    return uXXToASII(s, x, 10);
+}

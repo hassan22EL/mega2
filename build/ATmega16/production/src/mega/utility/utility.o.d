@@ -1,6 +1,8 @@
 build/ATmega16/production/src/mega/utility/utility.o.d \
  build/ATmega16/production/src/mega/utility/utility.o: \
- src/mega/utility/utility.c src/mega/utility/../../../inc/mega.h \
+ src/mega/utility/utility.c \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
+ src/mega/utility/../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -20,6 +22,7 @@ build/ATmega16/production/src/mega/utility/utility.o.d \
  d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
  d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
  src/mega/utility/../../../inc/mega/mainTones.h \
  src/mega/utility/../../../inc/mega/buffers.h \
  src/mega/utility/../../../inc/mega/../mega.h \
@@ -53,6 +56,8 @@ build/ATmega16/production/src/mega/utility/utility.o.d \
  src/mega/utility/../../../inc/mega/button.h \
  src/mega/utility/../../../inc/mega/Tone.h \
  src/mega/utility/../../../inc/mega/ZLP.h
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/mega/utility/../../../inc/mega.h:
 
@@ -93,6 +98,8 @@ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
 
 src/mega/utility/../../../inc/mega/mainTones.h:
 

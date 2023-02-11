@@ -90,7 +90,11 @@ typedef struct keypadConstantCode {
  |< @Description : Indicator the End List Of The Button                                           |
  ---------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 extern const keypadConstantCode_t PROGMEM NO_CODE;
+#elif COMPILER_TYPE == XC
+extern const keypadConstantCode_t NO_CODE;
+#endif
 /*
  --------------------------------------------------------------------------------------------------
  |                           < Create Event  >                                                    | 
@@ -98,9 +102,15 @@ extern const keypadConstantCode_t PROGMEM NO_CODE;
  |< @Description : Indicator the End List Of The Event                                            |
  ---------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 #define KeypadCreateEvent(Name,Code, Tone ,Index, Next) \
 extern const keypadConstantCode_t PROGMEM   Next; \
     const keypadConstantCode_t PROGMEM Name = {Code,Tone ,Index,&Next};
+#elif COMPILER_TYPE == XC
+#define KeypadCreateEvent(Name,Code, Tone ,Index, Next) \
+extern const keypadConstantCode_t    Next; \
+    const keypadConstantCode_t  Name = {Code,Tone ,Index,&Next};
+#endif
 /*
  ---------------------------------------------------------------------------------------------------------
  |                                 < keyscan >                                                           |

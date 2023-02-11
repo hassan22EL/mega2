@@ -229,6 +229,60 @@ static void usart3Init() {
 
 /*
   ---------------------------------------------------------------------------------------------------------
+ |                            < usart0ENABLE_UDRE_INTERRUPT  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart0ENABLE_UDRE_INTERRU                                                    |
+ | < @Description       : Enable UDRE Interrupt                                                           |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+void usart0DIABLE_UDRE_INTERRUPT() {
+#if defined(ATMEGA_USART)
+    /* Enable USART receiver and transmitter and receive complete interrupt */
+    UART0_CONTROL |= (1 << TXCIE);
+    UART0_CONTROL |= (1 << RXCIE);
+    UART0_CONTROL &= ~(1 << UART0_UDRIE);
+#elif defined(ATMEGA_USART0)
+    UART0_CONTROL |= (1 << TXCIE0);
+    UART0_CONTROL |= (1 << RXCIE0);
+    UART0_CONTROL &= ~(1 << UART0_UDRIE0);
+#elif defined(ATMEGA_UART)
+    UART0_CONTROL |= (1 << TXCIE);
+    UART0_CONTROL |= (1 << RXCIE);
+    UART0_CONTROL &= ~(1 << UART0_UDRIE);
+#endif
+}
+
+/*
+  ---------------------------------------------------------------------------------------------------------
+ |                            < usart0ENABLE_UDRE_INTERRUPT  >                                                          |
+  ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void usart0ENABLE_UDRE_INTERRU                                                    |
+ | < @Description       : Enable UDRE Interrupt                                                           |     
+ | < @Param byte        : byte to send other device                                                       |
+ | < @return            : void                                                                            |
+  ---------------------------------------------------------------------------------------------------------
+ */
+void usart0ENABLE_UDRE_INTERRUPT() {
+#if defined(ATMEGA_USART)
+    /* Enable USART receiver and transmitter and receive complete interrupt */
+    UART0_CONTROL &= ~(1 << TXCIE);
+    UART0_CONTROL &= ~(1 << RXCIE);
+    UART0_CONTROL |= (1 << UART0_UDRIE);
+#elif defined(ATMEGA_USART0)
+    UART0_CONTROL &= ~(1 << TXCIE0);
+    UART0_CONTROL &= ~(1 << RXCIE0);
+    UART0_CONTROL |= (1 << UART0_UDRIE0);
+#elif defined(ATMEGA_UART)
+    UART0_CONTROL &= ~(1 << TXCIE);
+    UART0_CONTROL &= ~(1 << RXCIE);
+    UART0_CONTROL |= (1 << UART0_UDRIE);
+#endif
+}
+
+/*
+  ---------------------------------------------------------------------------------------------------------
  |                            < usart0PutByte  >                                                          |
   ---------------------------------------------------------------------------------------------------------
  | < @Function          : void usart0PutByte                                                              |

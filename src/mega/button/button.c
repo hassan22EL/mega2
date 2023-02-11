@@ -136,7 +136,11 @@
  |< @Description : Indicator the End List Of The Button                                           |
  ---------------------------------------------------------------------------------------------------          
  */
+#if COMPILER_TYPE == GCC
 const Button_t NullIButton PROGMEM = {(const Button_t *) NULL, (const gpio_t) 0, (const uint8_t) 0};
+#elif COMPILER_TYPE == XC
+const Button_t NullIButton = {(const Button_t *) NULL, (const gpio_t) 0, (const uint8_t) 0};
+#endif
 /*
  * remember First Button assignment
  */
@@ -239,8 +243,11 @@ static void scanButton(uint8_t u8CounterIndex, gpio_t ButtonPin, uint8_t ButtonP
  --------------------------------------------------------------------------------------------------------
  */
 static const Button_t * getNextButton(const Button_t *button) {
+#if COMPILER_TYPE == GCC
     return (const Button_t *) pgm_read_word(&button->ButtonNext); /*gcc-compiler*/
-    // return (const Button_t *) (button->ButtonNext); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const Button_t *) (button->ButtonNext); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -254,8 +261,11 @@ static const Button_t * getNextButton(const Button_t *button) {
  --------------------------------------------------------------------------------------------------------
  */
 static const gpio_t getButtonPin(const Button_t *button) {
+#if COMPILER_TYPE == GCC
     return (const gpio_t) pgm_read_word(&button->Pin); /*gcc-compiler*/
-    // return (const gpio_t) (button->Pin); /*xc-compiler*/
+#elif COMPILER_TYPE == XC
+    return (const gpio_t) (button->Pin); /*xc-compiler*/
+#endif
 }
 
 /*
@@ -269,8 +279,11 @@ static const gpio_t getButtonPin(const Button_t *button) {
  --------------------------------------------------------------------------------------------------------
  */
 static const uint8_t getButtonOption(const Button_t *button) {
+#if COMPILER_TYPE == GCC
     return (const uint8_t) pgm_read_byte(&button->ButtonOptions); /*gcc-compiler*/
-    // return (const uint8_t) (button->ButtonOptions); /*xc-compiler*/
+#elif  COMPILER_TYPE == XC
+    return (const uint8_t) (button->ButtonOptions); /*xc-compiler*/
+#endif
 }
 
 /*

@@ -21,6 +21,7 @@ build/ATmega16/production/src/mega/ZLP/ZLP.o.d \
  d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
  d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
  src/mega/ZLP/../../../inc/mega/mainTones.h \
  src/mega/ZLP/../../../inc/mega/buffers.h \
  src/mega/ZLP/../../../inc/mega/../mega.h \
@@ -96,6 +97,8 @@ d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
 d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
 
 src/mega/ZLP/../../../inc/mega/mainTones.h:
 
