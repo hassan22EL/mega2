@@ -1,0 +1,1 @@
+ $(MP_EXTRA_CC_PRE) -mmcu=atmega16a ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -DXPRJ_ATmega16A=$(CND_CONF)  $(COMPARISON_BUILD) D:\Company\SMART\MEGA\new lib\SerialTools2.X\src\WorkingTime.c
