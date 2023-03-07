@@ -17,12 +17,13 @@ build/Atmega128A/production/src/mega/gpio/gpio.o.d \
  src/mega/gpio/../../../inc/mega/clock.h \
  src/mega/gpio/../../../inc/mega/../resource.h \
  src/mega/gpio/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/mega/gpio/../../../inc/mega/mainTones.h \
  src/mega/gpio/../../../inc/mega/buffers.h \
  src/mega/gpio/../../../inc/mega/../mega.h \
- src/mega/gpio/../../../inc/mega/ui.h \
+ src/mega/gpio/../../../inc/mega/utility.h \
  src/mega/gpio/../../../inc/resource.h \
  src/mega/gpio/../../../inc/mega/macros.h \
  src/mega/gpio/../../../inc/mega/bootloadercmd.h \
@@ -49,7 +50,9 @@ build/Atmega128A/production/src/mega/gpio/gpio.o.d \
  src/mega/gpio/../../../inc/mega/eeprom.h \
  src/mega/gpio/../../../inc/mega/signalGenerator.h \
  src/mega/gpio/../../../inc/mega/keypad.h \
- src/mega/gpio/../../../inc/mega/button.h
+ src/mega/gpio/../../../inc/mega/button.h \
+ src/mega/gpio/../../../inc/mega/Tone.h \
+ src/mega/gpio/../../../inc/mega/ZLP.h
 
 src/mega/gpio/../../../inc/mega.h:
 
@@ -85,17 +88,19 @@ src/mega/gpio/../../../inc/mega/../resource.h:
 
 src/mega/gpio/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+src/mega/gpio/../../../inc/mega/mainTones.h:
 
 src/mega/gpio/../../../inc/mega/buffers.h:
 
 src/mega/gpio/../../../inc/mega/../mega.h:
 
-src/mega/gpio/../../../inc/mega/ui.h:
+src/mega/gpio/../../../inc/mega/utility.h:
 
 src/mega/gpio/../../../inc/resource.h:
 
@@ -150,3 +155,7 @@ src/mega/gpio/../../../inc/mega/signalGenerator.h:
 src/mega/gpio/../../../inc/mega/keypad.h:
 
 src/mega/gpio/../../../inc/mega/button.h:
+
+src/mega/gpio/../../../inc/mega/Tone.h:
+
+src/mega/gpio/../../../inc/mega/ZLP.h:

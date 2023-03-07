@@ -1,4 +1,3 @@
-
 /*
 --------------------------------------------------------------------------------------------------
 |                           < Module  Definition >                                               | 
@@ -1179,6 +1178,7 @@ static inline void twi_interrupt_handler(void) {
  --------------------------------------------------------------------------------------------------------
  */
 status_code_t twi_master_write(const twi_package_t *package) {
+    millis_t t;
     if (package == NULL) return ERR_INVALID_ARG;
     if (twi_master_busy) {
         return OPERATION_IN_PROGRESS;
@@ -1198,7 +1198,8 @@ status_code_t twi_master_write(const twi_package_t *package) {
     }
 
     twi_send_start();
-    while (twi_master_busy); /*no support time out */
+    t = (systemMillis() + 10);
+    while (twi_master_busy && t > systemMillis()); /*no support time out */
     return twi_master_get_status();
 }
 
@@ -1214,6 +1215,7 @@ status_code_t twi_master_write(const twi_package_t *package) {
  */
 
 status_code_t twi_master_read(const twi_package_t *package) {
+    millis_t t;
     if (package == NULL || package->length == 0) return ERR_INVALID_ARG;
     if (twi_master_busy) {
         return OPERATION_IN_PROGRESS;
@@ -1232,7 +1234,8 @@ status_code_t twi_master_read(const twi_package_t *package) {
     }
 
     twi_send_start();
-    while (twi_master_busy); /*no support time out */
+    t = (systemMillis() + 10);
+    while (twi_master_busy && t > systemMillis()); /*no support time out */
     return twi_master_get_status();
 }
 

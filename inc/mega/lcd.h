@@ -38,7 +38,7 @@
  | < discuss :  this micro is call in pos write buffer the data centered in lcd                        |
  -------------------------------------------------------------------------------------------------------
  */
-#define  LCD_TEXT_CENTER         (0xFF)
+#define  LCD_TEXT_CENTER         (LCD_NUMBER_OF_BYTE >> 1)
 /*
  --------------------------------------------------------------------------------------------------
  |                           < LCD Address of Lines  >                                            | 
@@ -228,23 +228,6 @@ void lcdwrite(uint8_t line, uint8_t pos, const char *string);
 void lcdwritebuf(uint8_t line, uint8_t pos, uint8_t *buf, uint8_t Length);
 /*
  --------------------------------------------------------------------------------------------------------
- |                                 < lcdIsCurrentNumber >                                               |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : uint8_t lcdIsCurrentNumber                                                    |
- | < @Description       : check is specific position is a number or not into buffer                     |
- | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
- | < @Param  pos        : write in specific char (y) in line and                                        |
- |                      : y is 0 to max number of byte per line                                         |
- | < @return            : 0  is buffer not contains a number in position and                            |
- |                      : 1 if the position is a number                                                 |                         |
- --------------------------------------------------------------------------------------------------------
- */
-
-
-uint8_t lcdIsCurrentNumber(uint8_t line, uint8_t pos);
-
-/*
- --------------------------------------------------------------------------------------------------------
  |                                 < lcdCreateChar >                                                    |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void lcdCreateChar                                                            |
@@ -254,7 +237,6 @@ uint8_t lcdIsCurrentNumber(uint8_t line, uint8_t pos);
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-
 void lcdCreateChar(uint8_t u8location, const uint8_t *pu8Data);
 
 /*
@@ -271,23 +253,6 @@ void lcdCreateChar(uint8_t u8location, const uint8_t *pu8Data);
  --------------------------------------------------------------------------------------------------------
  */
 void lcdwriteCGRAM(uint8_t line, uint8_t pos, uint8_t index);
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                                 < getlcdData >                                                       |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void getlcdData                                                               |
- | < @Description       : get data frome lcd buffer start form pos                                      |
- |                      : assignment into pointer of the string read and max length data to be get is   |
- |                      : max size of the data pointer can to be read                                   |
- | < @Param  str        : pointer to assignment data read from buffer                                   |
- | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
- | < @Param  pos        : write in specific char (y) in line and                                        |
- |                      : y is 0 to max number of byte per line                                         |
- | < @return            : void                                                                          |
- --------------------------------------------------------------------------------------------------------
- */
-void getlcdData(char *str, uint8_t line, uint8_t pos);
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < lcdClearlines >                                                    |
@@ -301,7 +266,7 @@ void getlcdData(char *str, uint8_t line, uint8_t pos);
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-void lcdClearlines(uint8_t from);
+void lcdClearlines(bool from);
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < lcdClear >                                                         |
@@ -344,7 +309,46 @@ void lcdDriver();
  --------------------------------------------------------------------------------------------------------
  */
 void lcdUpdateNow();
-
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdGetLineDate >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdGetLineDate                                                           |
+ | < @Description       : assignment Line Date Into app Buffer                                          |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdGetLineDate(uint8_t *u8Data, uint8_t Line);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < LcdWriteIndex >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void LcdWriteIndex                                                           |
+ | < @Description       : assignment Index By this Function                                        |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void LcdWriteIndex(uint8_t Index, uint8_t byteDate);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdWriteromFlash >                                                 |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdWriteromFlash                                                         |
+ | < @Description       : write Data From Flash Memeory into LCD Buffer                                 |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdWriteromFlash(uint8_t line, uint8_t pos, PGM_P const *date);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdWriteString >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdWriteString                                                           |
+ | < @Description       : write string in cencer pos                                                    |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdWriteString(uint8_t line, PGM_P date);
 #endif
 #endif
 

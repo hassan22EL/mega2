@@ -18,13 +18,7 @@
  */
 
 
-
-
-
-#include <stdint-gcc.h>
-
 #include "../../../inc/mega.h"
-
 
 
 /*
@@ -74,14 +68,6 @@
 #define  RTC_BASE_TIME           (2000UL)
 /*
  -----------------------------------------------------------------------------------------------------------------
- |                          < Leap Year Check >                                                                  |  
- -----------------------------------------------------------------------------------------------------------------
- */
-#define  RTC_LEAP_YEAR(Y)            ((Y>0) && (!(Y%4)) && ((Y%100) || (!(Y%400))))
-
-
-/*
- -----------------------------------------------------------------------------------------------------------------
  |                                 < Basic Function Definition >                                                 |
  -----------------------------------------------------------------------------------------------------------------
  | < @const ascmonths     : name of the monthes per year                                                         |
@@ -89,13 +75,19 @@
  -----------------------------------------------------------------------------------------------------------------
  */
 #if COMPILER_TYPE == GCC
-const char PROGMEM ascmonths[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
-const char PROGMEM ascdays[] = "SunMonTueWedThuFriSat";
-#elif COMPILER_TYPE == XC
-const char ascmonths[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
-const char ascdays[] = "SunMonTueWedThuFriSat";
-#endif
 
+
+/**
+  Number of days in each month, from January to November. December is not
+ */
+const uint8_t PROGMEM daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30};
+const char PROGMEM monthsOfTheYear[12][4] = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+const char PROGMEM dOfTheWeek[7][4] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+#elif COMPILER_TYPE == XC
+const uint8_t daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30};
+const char monthsOfTheYear[12][4] = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+const char dOfTheWeek[7][4] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+#endif
 
 
 /*
@@ -103,53 +95,33 @@ const char ascdays[] = "SunMonTueWedThuFriSat";
  |                                 < Basic Function Definition >                                                 |
  -----------------------------------------------------------------------------------------------------------------
  */
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < timeEquation >                                                              |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : int  timeEquation                                                                      |
- | < @Description       : PF = a*sin(seta) , seta = W*t , W = 2*Pi/Ta , t = t-t0                                 |
- |                      : PF = a*sin((2*Pi/Ta)*(t-t0))  , PF = a*sin((t-t0)/ANOMALISTIX_CYCLE_TIME)              |
- |                      : ANOMALISTIX_CYCLE_TIME = Ta/2*Pi   , t0 = PERIHELION_DATE                              |
- |                      : t = reminder of the divide current time by ANOMALISTIX_YEAR , a = 1AU                  |
- |                      : dv = 2e*Pf                                                                             |
- |                      : sf = a*sin(2*(2*Pi/Ts)*(t-t0) + dv)                                                    |
- |                      : a = 1AU , Ts = SOLAR_YEAR  , t  =   reminder of the divide current time by             |
- |                      : SOLAR_YEAR and t0 = SOLSTICE_DATE  a*sin(2*(t-t0)/SOLAR_CYCLE_TIME)                    |  
- | < @Param  time       : pointer of the timestamp value                                                         |             
- | < @return            : signed interger of the Time                                                            |                                                            
- -----------------------------------------------------------------------------------------------------------------
- */
-static int timeEquation(time_t *time);
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < month_length >                                                              |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : uint8_t month_length                                                                   | 
- | < @Description       : number of days per month                                                               |
- | < @Param year        : year  number                                                                           |
- | < @Param month       : month in the year                                                                      |                    
- | < @return            : number of days per month                                                               |
- -----------------------------------------------------------------------------------------------------------------
- */
-static uint8_t month_length(uint8_t year, uint8_t month);
 
 
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < __print_2Digit >                                                            |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : time_t __print_2Digit                                                                  | 
- | < @Description       : current number as 2 Digit value 20/10 = 2 , 20 %10 = 0                                 |
- |                      : and assign as a string into buffer                                                     |
- | < @Param i           : number as 2 digit to convert as a string                                               |
- | < @Param buffer      : pointer of the  buffer as a store a monthes and days name                              |
- | < @Param s           : Sperate char with time such as pirnt 00:00:00  12-4-2000, s = ':', s  = '-'            |                     
- | < @return            : void                                                                                   |
- -----------------------------------------------------------------------------------------------------------------
- */
-static void __print_2Digit(int i, uint8_t *buffer, char s);
 
+/**************************************************************************/
+/*!
+    @brief  Given a date, return number of days since 2000/01/01,
+            valid for 2000--2099
+    @param y Year
+    @param m Month
+    @param d Day
+    @return Number of days
+ */
+
+/**************************************************************************/
+static uint16_t date2days(uint16_t y, uint8_t m, uint8_t d);
+/**************************************************************************/
+/*!
+    @brief  Given a number of days, hours, minutes, and seconds, return the
+   total seconds
+    @param days Days
+    @param h Hours
+    @param m Minutes
+    @param s Seconds
+    @return Number of seconds total
+ */
+/**************************************************************************/
+static uint32_t time2ulong(uint16_t days, uint8_t h, uint8_t m, uint8_t s);
 
 /*
  -----------------------------------------------------------------------------------------------------------------
@@ -157,92 +129,41 @@ static void __print_2Digit(int i, uint8_t *buffer, char s);
  -----------------------------------------------------------------------------------------------------------------
  */
 
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < timeEquation >                                                              |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : int  timeEquation                                                                      |
- | < @Description       : PF = a*sin(seta) , seta = W*t , W = 2*Pi/Ta , t = t-t0                                 |
- |                      : PF = a*sin((2*Pi/Ta)*(t-t0))  , PF = a*sin((t-t0)/ANOMALISTIX_CYCLE_TIME)              |
- |                      : ANOMALISTIX_CYCLE_TIME = Ta/2*Pi   , t0 = PERIHELION_DATE                              |
- |                      : t = reminder of the divide current time by ANOMALISTIX_YEAR , a = 1AU                  |
- |                      : dv = 2e*Pf                                                                             |
- |                      : sf = a*sin(2*(2*Pi/Ts)*(t-t0) + dv)                                                    |
- |                      : a = 1AU , Ts = SOLAR_YEAR  , t  =   reminder of the divide current time by             |
- |                      : SOLAR_YEAR and t0 = SOLSTICE_DATE  a*sin(2*(t-t0)/SOLAR_CYCLE_TIME)                    |  
- | < @Param  time       : pointer of the timestamp value                                                         |             
- | < @return            : signed interger of the Time                                                            |                                                            
- -----------------------------------------------------------------------------------------------------------------
+/**************************************************************************/
+/*!
+    @brief  Given a date, return number of days since 2000/01/01,
+            valid for 2000--2099
+    @param y Year
+    @param m Month
+    @param d Day
+    @return Number of days
  */
-static int timeEquation(time_t *time) __attribute__((unused));
 
-static int timeEquation(time_t *time) {
-    int32_t u32Perihlion;
-    int32_t u32Solstice;
-    double PF, SF, dv;
-
-    u32Perihlion = *time % ANOMALISTIX_YEAR;
-    u32Perihlion += PERIHELION_DATE; /*t-t0 ==> t-(-t0) = t+t0*/
-    PF = u32Perihlion;
-    PF /= ANOMALISTIX_CYCLE_TIME; /*(t-t0 / (Ta*2PI))  */
-    PF = sin(PF); /*pf = a sin seta*/
-    dv = ECCENTRICITY_EARTH * PF;
-    u32Solstice = *time % SOLAR_YEAR; /*t*/
-    u32Solstice += SOLSTICE_DATE; /*t-t0 ==> t-(-t0) = t+t0*/
-    u32Solstice *= 2;
-    SF /= SOLAR_CYCLE_TIME;
-    SF += dv;
-    SF = sin(SF);
-    /*7.66 min*/
-    PF *= 459.6;
-    /*9.87 min*/
-    SF *= 592.2;
-    u32Solstice = SF + PF;
-    return -u32Solstice;
+/**************************************************************************/
+static uint16_t date2days(uint16_t y, uint8_t m, uint8_t d) {
+    if (y >= RTC_BASE_TIME)
+        y -= RTC_BASE_TIME;
+    uint16_t days = d;
+    for (uint8_t i = 1; i < m; ++i)
+        days += pgm_read_byte(daysInMonth + i - 1);
+    if (m > 2 && y % 4 == 0)
+        ++days;
+    return (days + (365 * y) + ((y + 3) >> 2) - 1);
 }
-
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < __print_2Digit >                                                            |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : time_t __print_2Digit                                                                  | 
- | < @Description       : current number as 2 Digit value 20/10 = 2 , 20 %10 = 0                                 |
- |                      : and assign as a string into buffer                                                     |
- | < @Param i           : number as 2 digit to convert as a string                                               |
- | < @Param buffer      : pointer of the  buffer as a store a monthes and days name                              |
- | < @Param s           : Sperate char with time such as pirnt 00:00:00  12-4-2000, s = ':', s  = '-'            |                     
- | < @return            : void                                                                                   |
- -----------------------------------------------------------------------------------------------------------------
+/**************************************************************************/
+/*!
+    @brief  Given a number of days, hours, minutes, and seconds, return the
+   total seconds
+    @param days Days
+    @param h Hours
+    @param m Minutes
+    @param s Seconds
+    @return Number of seconds total
  */
 
-static void __print_2Digit(int i, uint8_t *buffer, char s) {
-    div_t res;
-    res = div(i, 10);
-    *buffer++ = res.quot + '0';
-    *buffer++ = res.rem + '0';
-    *buffer = (uint8_t) s;
-}
-
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < month_length >                                                              |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : uint8_t month_length                                                                   | 
- | < @Description       : number of days per month                                                               |
- | < @Param year        : year  number                                                                           |
- | < @Param month       : month in the year                                                                      |                    
- | < @return            : number of days per month                                                               |
- -----------------------------------------------------------------------------------------------------------------
- */
-static uint8_t month_length(uint8_t year, uint8_t month) __attribute__((unused));
-
-static uint8_t month_length(uint8_t year, uint8_t month) {
-    if (month == 2)
-        return 28 + RTC_LEAP_YEAR(year);
-
-    if (month > 7)
-        month++;
-    return 30 + (month & 1);
+/**************************************************************************/
+static uint32_t time2ulong(uint16_t days, uint8_t h, uint8_t m, uint8_t s) {
+    return ((days * 24UL + h) * 60 + m) * 60 + s;
 }
 
 
@@ -255,82 +176,6 @@ static uint8_t month_length(uint8_t year, uint8_t month) {
 
 /*
  -----------------------------------------------------------------------------------------------------------------
- |                                 < getTime >                                                                   |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : time_t getTime                                                                         |
- | < @Description       : convert current time form date to timestamp                                            |
- | < @Param timeptr     : ponter of the date time struct                                                         | 
- | < @return            : timestamp                                                                              |
- -----------------------------------------------------------------------------------------------------------------
- */
-time_t getTime(tm_t *timeptr) {
-    time_t ret;
-    uint32_t tmp;
-    uint8_t n, m, d, leaps;
-    n = (timeptr->tm_year); /*22 , 21 , 23 , 24 number of years from 2000*/
-    /*one year has a 365 days, 5 hours, 48 minutes, 45 seconds.*/
-    /*every 4 years the years is 366  (4*6 hour ) = 24 Hour*/
-    /*for example n = 22 the m = 21*/
-    leaps = 0;
-    if (n) {
-        m = n - 1;
-        /*leaps = ((current year -1 )/4) - ((current year-1) /100) = 21/4 -21/100 = 5*/
-        /*number of leaps and remove all year is div by 100*/
-        leaps = m / 4; /**/
-        leaps -= m / 100;
-        leaps++; /*leaps +1 = 6*/
-    }
-    /*current time of the years from 2000 to year 365 * number of years form 2*/
-    tmp = (365UL * n) + leaps;
-    d = timeptr->tm_mday - 1; /*month day start from 1 to 31 */
-    /* handle Jan/Feb as a special case */
-    if (timeptr->tm_mon < 2) {
-        /*0 is jan , 1 is feb*/
-        if (timeptr->tm_mon) {
-            /*month is 1 the add jan days*/
-            d += 31;
-        }
-    } else {
-        /*month current is large than the 2  */
-        /*add the month 0 (jan ) , month 1 (feb ) = 31 + 28 = 59 with add current is leap year or not */
-        n = 59 + RTC_LEAP_YEAR(timeptr->tm_year + RTC_BASE_TIME); /*22+2000*/
-        d += n; /*add number of days */
-        /*reminder from month 2 (march) */
-        n = timeptr->tm_mon - MARCH; /*reminder monthes*/
-        if (n > JULY - MARCH) {
-            /*n is > form different between 2(march) , 6(july)*/
-            /*add the number of days from 2 , 6 (2,3,4,5,6) , (7,8,9,10,11)
-             (march , april , may , june , july) , (*/
-            /*31+30+31+30+31 = 153 */
-            d += 153;
-        }
-        /*since the work as a 10 month 2 to 6 is 5 month and  7 to 11 is five month
-         div this group by 2 group (31 day group ) , (30 day group)
-         * 30+31 = 61 day
-         */
-        n %= 5; /*number of month ref of the two group  0 to 4 , 5 to 9 */
-        m = n / 2; /*even and odd month month (march , may , july is odd have a 31 day
-                 and AUGUST , oct and dec is odd and have a 31 day
-                 */
-        m *= 61; /*add two group 30 and 31 */
-        d += m;
-        if (n & 1) /*with odd month */
-            d += 31;
-    }
-    /*calculate hour and min and second*/
-    tmp += d;
-    tmp *= SECS_PER_DAY; /*days to number of seconds*/
-    ret = tmp;
-    tmp = timeptr->tm_hour;
-    tmp *= SECS_PER_HOUR; /*convert hour to seconds*/
-    tmp += timeptr->tm_min * SECS_PER_MIN;
-    tmp += timeptr->tm_sec;
-    ret += tmp;
-    return ret;
-}
-
-/*
- -----------------------------------------------------------------------------------------------------------------
  |                                 < getDate >                                                                   |
  -----------------------------------------------------------------------------------------------------------------
  | < @Function          : void getDate                                                                           |
@@ -339,175 +184,236 @@ time_t getTime(tm_t *timeptr) {
  | < @return            : void                                                                                   |
  -----------------------------------------------------------------------------------------------------------------
  */
-void getDate(tm_t *timeptr) {
-    time_t Time;
-    uint32_t fract;
-    ldiv_t lresult;
-    div_t result;
-    uint16_t days, n, leapyear, years;
-    Time = systemNow();
-    days = Time / SECS_PER_DAY; /*number of days from 2000*/
-    fract = Time % SECS_PER_DAY; /*day */
-    /*get hour , min , second*/
-    lresult = ldiv(fract, 60L);
-    timeptr->tm_sec = lresult.rem; /*fract % 60*/
-    result = div(lresult.quot, 60);
-    timeptr->tm_min = result.rem;
-    timeptr->tm_hour = result.quot;
-    /* Determine day of week ( the epoch was a Saturday ) */
-    n = days + SATURDAY; /*days + 6*/
-    n %= 7; /*week have a 7 day a reminder of */
-    timeptr->tm_wday = n;
+void DateTimeFromTimeStamp(tm_t *tm, time_t t) {
 
-    /*one year have a 365 day , 5 hour , 48 min , 45 sec = 365.25
-     100 year = 100 * 365.25 = 36525
-     4  year  = 4 *365.25 = 1461
-     to find is a leap year
-     */
-    /* map into a 100 year cycle */
-    /*example 22 year + 6day leap  number of days = 22*365 + 6 = 8036 day*/
-    /*days + day months with a 8036/36525 = 0 *100 = 0 year*/
-    lresult = ldiv((long) days, 36525L);
-    years = 100 * lresult.quot;
-    /* map into a 4 year cycle  example 8036 % 36525L /1461L = 5  */
-    lresult = ldiv(lresult.rem, 1461L);
-    years += 4 * lresult.quot; /*4 *5 = 20 the 2020 is last year*/
-    days = lresult.rem; /*days is 731*/
-    if (years > 100)
-        days++;
-    /*years is eq 100 year is leap year is 0*/
-    leapyear = 1; /*inform the last leap year*/
-    if (years == 100)
-        leapyear = 0;
-    n = 364 + leapyear; /*add day 365 or 364 */
-    if (days > n) {
-        /*number of days is > 365 or 364 is add year by div days by 365*/
-        days -= leapyear; /*remove leap day to work with only 365 day by not 366*/
-        leapyear = 0;
-        result = div(days, 365); /*731 / 365  = 2year*/
-        years += result.quot;
-        days = result.rem; /*number of days in this year less than 365*/
+    tm->tm_sec = t % 60;
+    t /= 60;
+    tm->tm_min = t % 60;
+    t /= 60;
+    tm->tm_hour = t % 24;
+    uint16_t days = t / 24;
+    uint8_t leap;
+    for (tm->tm_year = 0;; ++tm->tm_year) {
+        leap = tm->tm_year % 4 == 0;
+        if (days < 365U + leap)
+            break;
+        days -= 365 + leap;
     }
-    timeptr->tm_year = years;
-    timeptr->tm_yday = days; /*number of days per year*/
-    /*28+31 + leap day*/
-    n = 59 + leapyear;
-    if (days < n) {
-        /*the months is jan and feb*/
-        result = div(days, 31);
-        timeptr->tm_mon = result.quot; /*ndays is 55/31 = 1 = feb */
-        timeptr->tm_mday = result.rem; /*55%31 = 24*/
-    } else {
-        days -= n; /*remove the feb and jun from days*/
-        result = div(days, 153); /*form  month agust and dec is 153 day and march to july is 153 day*/
-        timeptr->tm_mon = 2 + result.quot * 5; /*2 is jun and feb months + 5 is days > 153 is second group else is first group*/
-        /* map into a 61 day  of months 30 +31 */
-        result = div(result.rem, 61);
-        timeptr->tm_mon += result.quot * 2; /*2 is two group*/
-        /*get day by month*/
-        result = div(result.rem, 31);
-        timeptr->tm_mon += result.quot;
-        timeptr->tm_mday = result.rem;
+    for (tm->tm_mon = 1; tm->tm_mon < 12; ++tm->tm_mon) {
+        uint8_t daysPerMonth = pgm_read_byte(daysInMonth + tm->tm_mon - 1);
+        if (leap && tm->tm_mon == 2)
+            ++daysPerMonth;
+        if (days < daysPerMonth)
+            break;
+        days -= daysPerMonth;
     }
-    timeptr->tm_mday++; /* start form 1 */
+    tm->tm_mday = days + 1;
+    tm->tm_wday = (days + 6) % 7; // Jan 1, 2000 is a Saturday, i.e. returns 6
+}
+/**************************************************************************/
+/*!
+    @brief  Constructor from (year, month, day, hour, minute, second).
+    @warning If the provided parameters are not valid (e.g. 31 February),
+           the constructed DateTime will be invalid.
+    @see   The `isValid()` method can be used to test whether the
+           constructed DateTime is valid.
+    @param year Either the full year (range: 2000--2099) or the offset from
+        year 2000 (range: 0--99).
+    @param month Month number (1--12).
+    @param day Day of the month (1--31).
+    @param hour,min,sec Hour (0--23), minute (0--59) and second (0--59).
+ */
+
+/**************************************************************************/
+void DateTimeFromUserTime(tm_t *tm, uint16_t year, uint8_t month, uint8_t day, uint8_t hour,
+        uint8_t min, uint8_t sec) {
+    if (year >= RTC_BASE_TIME)
+        year -= RTC_BASE_TIME;
+    tm->tm_year = year;
+    tm->tm_mon = month;
+    tm->tm_mday = day;
+    tm->tm_hour = hour;
+    tm->tm_min = min;
+    tm->tm_sec = sec;
 }
 
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < PrintDate >                                                                 |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : void PrintDate                                                                         |
- | < @Description       : convert the date to assii  format sat jan 1  00:00:00                                                            |
- | < @Param timeptr     : ponter of the date time struct                                                         | 
- | < @Param buffer      : pinter to store date                                                                   |
- | < @return            : void                                                                                   |
- -----------------------------------------------------------------------------------------------------------------
+/**************************************************************************/
+/*!
+    @brief  Constructor for generating the build time.
+    This constructor expects its parameters to be strings in the format
+    generated by the compiler's preprocessor macros `__DATE__` and
+    `__TIME__`. Usage:
+    ```
+    DateTime buildTime(__DATE__, __TIME__);
+    ```
+    @note The `F()` macro can be used to reduce the RAM footprint, see
+        the next constructor.
+    @param date Date string, e.g. "Fri 15 APR 2016".
+    @param time Time string, e.g. "18:34:56".
  */
-//void PrintDate(tm_t * timeptr, char *buffer) {
-//    uint8_t i, m, d;
-//    div_t result;
-//    d = timeptr->tm_wday * 3; /*name of the day week has 3 char */
-//    m = timeptr->tm_mon * 3; /*name of the month is 3 char*/
-//    for (i = 0; i < 3; i++) {
-//        buffer[i] = pgm_read_byte(ascdays + d++); /*0 to 2 and space is index 3 ++*/
-//        buffer[i + 4] = pgm_read_byte(ascmonths + m++); /*4 to 6 and space in index 7*/
-//    }
-//    buffer[3] = ',';
-//    buffer[7] = ' ';
-//    buffer += 8; /*start index of the time*/
-//    __print_2Digit(timeptr->tm_mday, buffer, ' '); /*SAT  jan 5*/
-//    buffer += 3; /*mday has 3 char 2 char digit and 1 char space*/
-//    /*show the clock*/
-//    __print_2Digit(timeptr->tm_hour, buffer, ':');
-//    buffer += 3;
-//    __print_2Digit(timeptr->tm_min, buffer, ':');
-//    buffer += 3;
-//    __print_2Digit(timeptr->tm_sec, buffer, ' ');
-//    buffer += 3;
-//    result = div(timeptr->tm_year + RTC_BASE_TIME, 100);
-//    __print_2Digit(result.quot, buffer, ' ');
-//    buffer += 2;
-//    __print_2Digit(result.rem, buffer, 0);
-//}
 
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < PrintDate >                                                                 |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : void PrintDate                                                                         |
- | < @Description       : convert the date to assii  format Fri, 20 Jan 2023                                                            |
- | < @Param timeptr     : ponter of the date time struct                                                         | 
- | < @Param buffer      : pinter to store date                                                                   |
- | < @return            : void                                                                                   |
- -----------------------------------------------------------------------------------------------------------------
+/**************************************************************************/
+void DateTimeFromString(tm_t *tm, uint8_t *date, uint8_t *time) {
+    tm->tm_mday = conv2d(date);
+    tm->tm_mon = conv2d(date + 3);
+    tm->tm_year = conv2d(date + 8);
+    tm->tm_hour = conv2d(time);
+    tm->tm_min = conv2d(time + 3);
+    tm->tm_sec = conv2d(time + 6);
+}
+/**************************************************************************/
+/*!
+    @brief  Memory friendly constructor for generating the build time.
+    This version is intended to save RAM by keeping the date and time
+    strings in program memory. Use it with the `F()` macro:
+    ```
+    DateTime buildTime(F(__DATE__), F(__TIME__));
+    ```
+    @param date Date PROGMEM string, e.g. F("Apr 16 2020").
+    @param time Time PROGMEM string, e.g. F("18:34:56").
  */
-void PrintDate(tm_t * timeptr, uint8_t *buffer) {
-    uint8_t m, d;
-    div_t result;
-    d = timeptr->tm_wday * 3; /*name of the day week has 3 char */
-    m = timeptr->tm_mon * 3; /*name of the month is 3 char*/
+
+/**************************************************************************/
+void DateTimeFromFlash(tm_t *tm, PGM_P const *date, PGM_P const *time) {
+    char buff[11];
+    memcpy_P(buff, date, PRINT_BUF_DATE_lENGTH);
+    tm->tm_mday = conv2d((uint8_t *) buff);
+    tm->tm_mon = conv2d((uint8_t *) buff + 3);
+    tm->tm_year = conv2d((uint8_t *) buff + 8);
+
+    memcpy_P(buff, time, PRINT_BUF_TIME_lENGTH);
+    tm->tm_hour = conv2d((uint8_t *) buff);
+    tm->tm_min = conv2d((uint8_t *) buff + 3);
+    tm->tm_sec = conv2d((uint8_t *) buff + 6);
+
+}
+
+/**************************************************************************/
+/*!
+    @brief  Return Unix time: seconds since 1 Jan 1970.
+    @see The `DateTime::DateTime(uint32_t)` constructor is the converse of
+        this method.
+    @return Number of seconds since 1970-01-01 00:00:00.
+ */
+
+/**************************************************************************/
+time_t DateTimeUnixtime(tm_t *tm) {
+    time_t t;
+    uint16_t days = date2days(tm->tm_year, tm->tm_mon, tm->tm_mday);
+    t = time2ulong(days, tm->tm_hour, tm->tm_min, tm->tm_sec);
+    return t;
+}
+/**************************************************************************/
+/*!
+    @brief  Constructor for creating a DateTime from an ISO8601 date string.
+    This constructor expects its parameters to be a string in the
+    https://en.wikipedia.org/wiki/ISO_8601 format, e.g:
+    "2020-06-25T15:29:37"
+    Usage:
+    ```
+    DateTime dt("2020-06-25T15:29:37");
+    ```
+    @note The year must be > 2000, as only the yOff is considered.
+    @param iso8601dateTime
+           A dateTime string in iso8601 format,
+           e.g. "2020-06-25T15:29:37".
+ */
+
+/**************************************************************************/
+void DateTimeFromISO8601(tm_t *tm, const char *iso8601dateTime) {
+    char ref[] = "2000-01-01T00:00:00";
+    memcpy(ref, iso8601dateTime, min(strlen(ref), strlen(iso8601dateTime)));
+    tm->tm_year = conv2d((uint8_t *) ref + 2);
+    tm->tm_mon = conv2d((uint8_t *) ref + 5);
+    tm->tm_mday = conv2d((uint8_t *) ref + 8);
+    tm->tm_hour = conv2d((uint8_t *) ref + 11);
+    tm->tm_min = conv2d((uint8_t *) ref + 14);
+    tm->tm_sec = conv2d((uint8_t *) ref + 17);
+}
+/**************************************************************************/
+/*!
+    @brief  Check whether this DateTime is valid.
+    @return true if valid, false if not.
+ */
+
+/**************************************************************************/
+uint8_t DateTimeisValid(tm_t *tm) {
+    tm_t other;
+    time_t t;
+    if (tm->tm_year >= 100)
+        return 0;
+    t = DateTimeUnixtime(tm);
+    DateTimeFromTimeStamp(&other, t);
+    return (tm->tm_year == other.tm_year) && (tm->tm_mon == other.tm_mon) && (tm->tm_mday == other.tm_mday) && (tm->tm_hour == other.tm_hour) &&
+            (tm->tm_min == other.tm_min) && (tm->tm_sec == other.tm_sec);
+}
+
+
+/**************************************************************************/
+/*!
+    @brief  Return the day of the week.
+    @return Day of week as an integer from 0 (Sunday) to 6 (Saturday).
+ */
+
+/**************************************************************************/
+uint8_t DateTimeDayOfTheWeek(tm_t *tm) {
+    uint16_t day = date2days(tm->tm_year, tm->tm_mon, tm->tm_mday);
+    return (day + 6) % 7; // Jan 1, 2000 is a Saturday, i.e. returns 6
+}
+
+
+/**************************************************************************/
+/*!
+      @brief  Return the hour in 12-hour format.
+      @return Hour (1--12).
+ */
+
+/**************************************************************************/
+uint8_t DateTimetwelveHour(tm_t *tm) {
+    if (tm->tm_hour == 0 || tm->tm_hour == 12) { // midnight or noon
+        return 12;
+    } else if (tm->tm_hour > 12) { // 1 o'clock or later
+        return tm->tm_hour - 12;
+    } else { // morning
+        return tm->tm_hour;
+    }
+}
+
+
+
+
+/**************************************************************************/
+/*!
+    @brief  Convert the DateTime to seconds since 1 Jan 2000
+    The result can be converted back to a DateTime with:
+    DateTime(SECONDS_FROM_1970_TO_2000 + value)
+    @return Number of seconds since Fri 15 APR 2016.
+ */
+
+/**************************************************************************/
+void PrintTime(tm_t *tm, uint8_t *buf) {
+    print2d(tm->tm_hour, buf, 0);
+    buf[2] = ':';
+    print2d(tm->tm_min, buf, 3);
+    buf[5] = ':';
+    print2d(tm->tm_sec, buf, 6);
+}
+
+/**************************************************************************/
+/*!   @brief  Print Date Sat 23 NOV 1996   
+ */
+
+/**************************************************************************/
+void PrintDate(tm_t *tm, uint8_t *buf) {
     for (uint8_t i = 0; i < 3; i++) {
-#if COMPILER_TYPE == GCC
-        buffer[i] = pgm_read_byte(ascdays + d++); /*0 to 2 and space is index 3 ++*/
-#elif COMPILER_TYPE == XC
-        buffer[i] = (ascdays[d++]); /*0 to 2 and space is index 3 ++*/
-#endif
+        buf[i] = pgm_read_byte(&dOfTheWeek[tm->tm_wday][i]);
+        buf[i + 7] = pgm_read_byte(&monthsOfTheYear[tm->tm_mon-1][i]);
     }
-    buffer[3] = ',';
-    buffer += 4; /*start index of the date*/
-    __print_2Digit(timeptr->tm_mday, buffer, ' '); /*SAT  jan 5*/
-    for (uint8_t i = 0; i < 3; i++) {
-#if COMPILER_TYPE == GCC
-        buffer[i + 3] = pgm_read_byte(ascmonths + m++); /*0 to 2 and space is index 3 ++*/
-#elif COMPILER_TYPE == XC
-        buffer[i + 3] = (ascmonths [m++]); /*0 to 2 and space is index 3 ++*/
-#endif
-
-    }
-    buffer[6] = ' ';
-    buffer += 7; /*start index of the Year*/
-    result = div(timeptr->tm_year + RTC_BASE_TIME, 100);
-    __print_2Digit(result.quot, buffer, ' ');
-    buffer += 2;
-    __print_2Digit(result.rem, buffer, 0);
+    buf[3] = ' ';
+    print2d(tm->tm_mday, buf, 4);
+    buf[6] = ' ';
+    buf[10] = ' ';
+    buf[11] = '2';
+    buf[12] = '0';
+    print2d(tm->tm_year, buf, 13);
 }
-
-/*
- -----------------------------------------------------------------------------------------------------------------
- |                                 < PrintTime >                                                                 |
- -----------------------------------------------------------------------------------------------------------------
- | < @Function          : void PrintDate                                                                         |
- | < @Description       : convert the date to assii  format  00:00:00                                                            |
- | < @Param timeptr     : ponter of the date time struct                                                         | 
- | < @Param buffer      : pinter to store date                                                                   |
- | < @return            : void                                                                                   |
- -----------------------------------------------------------------------------------------------------------------
- */
-void PrintTime(tm_t * timeptr, uint8_t *buffer) {
-    __print_2Digit(timeptr->tm_hour, buffer, ':');
-    buffer += 3;
-    __print_2Digit(timeptr->tm_min, buffer, ':');
-    buffer += 3;
-    __print_2Digit(timeptr->tm_sec, buffer, ' ');
-}
-

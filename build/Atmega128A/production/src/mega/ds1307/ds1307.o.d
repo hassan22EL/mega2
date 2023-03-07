@@ -19,12 +19,13 @@ build/Atmega128A/production/src/mega/ds1307/ds1307.o.d \
  src/mega/ds1307/../../../inc/mega/clock.h \
  src/mega/ds1307/../../../inc/mega/../resource.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/mega/ds1307/../../../inc/mega/mainTones.h \
  src/mega/ds1307/../../../inc/mega/buffers.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
- src/mega/ds1307/../../../inc/mega/ui.h \
+ src/mega/ds1307/../../../inc/mega/utility.h \
  src/mega/ds1307/../../../inc/resource.h \
  src/mega/ds1307/../../../inc/mega/macros.h \
  src/mega/ds1307/../../../inc/mega/bootloadercmd.h \
@@ -51,7 +52,9 @@ build/Atmega128A/production/src/mega/ds1307/ds1307.o.d \
  src/mega/ds1307/../../../inc/mega/eeprom.h \
  src/mega/ds1307/../../../inc/mega/signalGenerator.h \
  src/mega/ds1307/../../../inc/mega/keypad.h \
- src/mega/ds1307/../../../inc/mega/button.h
+ src/mega/ds1307/../../../inc/mega/button.h \
+ src/mega/ds1307/../../../inc/mega/Tone.h \
+ src/mega/ds1307/../../../inc/mega/ZLP.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
@@ -89,17 +92,19 @@ src/mega/ds1307/../../../inc/mega/../resource.h:
 
 src/mega/ds1307/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+src/mega/ds1307/../../../inc/mega/mainTones.h:
 
 src/mega/ds1307/../../../inc/mega/buffers.h:
 
 src/mega/ds1307/../../../inc/mega/../mega.h:
 
-src/mega/ds1307/../../../inc/mega/ui.h:
+src/mega/ds1307/../../../inc/mega/utility.h:
 
 src/mega/ds1307/../../../inc/resource.h:
 
@@ -154,3 +159,7 @@ src/mega/ds1307/../../../inc/mega/signalGenerator.h:
 src/mega/ds1307/../../../inc/mega/keypad.h:
 
 src/mega/ds1307/../../../inc/mega/button.h:
+
+src/mega/ds1307/../../../inc/mega/Tone.h:
+
+src/mega/ds1307/../../../inc/mega/ZLP.h:

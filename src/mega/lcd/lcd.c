@@ -91,7 +91,7 @@
  ------------------------------------------------------------------------------------------------------- 
  */
 #define LCD_4BIT_COMMAND           (0x20) 
-#define LCD_2LINE_COMMAND          (0x28)   
+#define LCD_2LINE_COMMAND          (0x28)   /*000101100*/
 
 /*
  -------------------------------------------------------------------------------------------------------
@@ -168,13 +168,13 @@ static volatile uint8_t gu8LCDPosition;
 /*
  *  < @LCD Size   : LCD number of line * lcd number of char per line
  */
-static volatile uint8_t gu8LCDBuffer[LCD_SIZE];
+static uint8_t gu8LCDBuffer[LCD_SIZE] = {' '};
 /*
 --------------------------------------------------------------------------------------------------------
 |                                 <  custome char tables >                                             |
 --------------------------------------------------------------------------------------------------------
  */
-
+#if LCD_CUSTOM_CHAR_EN
 #if COMPILER_TYPE == GCC
 static const PROGMEM uint8_t CGRAM_ZERO[] = {
 #elif COMPILER_TYPE == XC
@@ -261,7 +261,7 @@ static const uint8_t CGRAM_FIVE[] = {
     0b11111
 };
 
-
+#endif
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -277,7 +277,7 @@ static const uint8_t CGRAM_FIVE[] = {
  | < @return            : void                                                                          |                                                             
  --------------------------------------------------------------------------------------------------------
  */
-static inline void Pulse_En();
+static void Pulse_En();
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -290,7 +290,7 @@ static inline void Pulse_En();
  | < @return            : void                                                                          |                                                             
  --------------------------------------------------------------------------------------------------------
  */
-static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos);
+static uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos);
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < lcdInit >                                                          |
@@ -365,7 +365,10 @@ static void lcdSend(uint8_t u8Data);
  | < @return            : read byte                                                                     |                                                             
  --------------------------------------------------------------------------------------------------------
  */
+#if __DEPUG_BY_PROUTES == 0
 static uint8_t lcdReadByte();
+#endif
+
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < lcdSendCommdHigh >                                                 |
@@ -376,6 +379,26 @@ static uint8_t lcdReadByte();
  --------------------------------------------------------------------------------------------------------
  */
 static void lcdSendCommdHigh(uint8_t u8Data);
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < setlcdInputPin >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  setlcdInputPin                                                          |
+ | < @Description       : set lcd is input and active Read Operation                                    |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static void setlcdInputPin();
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < setlcdOutPin >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  setlcdOutPin                                                             |
+ | < @Description       : set lcd pin as out with active write Operation                                   |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static void setlcdOutPin();
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < Basic Function Implementions >                                     |
@@ -391,9 +414,9 @@ static void lcdSendCommdHigh(uint8_t u8Data);
  --------------------------------------------------------------------------------------------------------
  */
 
-static inline void Pulse_En() __attribute__((always_inline, unused));
+static void Pulse_En() __attribute__((unused));
 
-static inline void Pulse_En() {
+static void Pulse_En() {
     digitalPinWrite(LCD_EN, GPIO_HIGH);
     _delay_us(1);
     digitalPinWrite(LCD_EN, GPIO_LOW);
@@ -411,22 +434,75 @@ static inline void Pulse_En() {
  --------------------------------------------------------------------------------------------------------
  */
 
-static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos) __attribute__((always_inline, unused));
+static uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos) __attribute__((unused));
 
-static inline uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos) {
+static uint8_t lcdPosToAddress(uint8_t u8line, uint8_t u8pos) {
     uint8_t u8Address;
     u8pos &= 0x3F;
     u8line &= 0x03;
+#if LCD_NUMBER_OF_LINE == 4
     if (u8line == 3) {
-        u8Address = ((LCD_LINE1_START + (LCD_NUMBER_OF_BYTE)) + u8pos);
+        u8Address = ((LCD_LINE3_START + (LCD_NUMBER_OF_BYTE)) + u8pos);
     } else if (u8line == 2) {
-        u8Address = ((LCD_LINE0_START + (LCD_NUMBER_OF_BYTE)) + u8pos);
+        u8Address = ((LCD_LINE2_START + (LCD_NUMBER_OF_BYTE)) + u8pos);
     } else if (u8line == 1) {
         u8Address = ((LCD_LINE1_START) + u8pos);
     } else {
         u8Address = ((LCD_LINE0_START) + u8pos);
     }
+#elif LCD_NUMBER_OF_LINE == 3
+    if (u8line == 2) {
+        u8Address = ((LCD_LINE2_START + (LCD_NUMBER_OF_BYTE)) + u8pos);
+    } else if (u8line == 1) {
+        u8Address = ((LCD_LINE1_START) + u8pos);
+    } else {
+        u8Address = ((LCD_LINE0_START) + u8pos);
+    }
+#elif LCD_NUMBER_OF_LINE == 2
+    if (u8line == 1) {
+        u8Address = ((LCD_LINE1_START) + u8pos);
+    } else {
+        u8Address = ((LCD_LINE0_START) + u8pos);
+    }
+#else 
+    u8Address = ((LCD_LINE0_START) + u8pos);
+#endif
     return (u8Address);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < setlcdInputPin >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  setlcdInputPin                                                          |
+ | < @Description       : set lcd is input and active Read Operation                                    |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static void setlcdInputPin() {
+    digitalpinMode(LCD_D4, MODE_INPUT); /* 600ns*/
+    digitalpinMode(LCD_D5, MODE_INPUT); /*600ns*/
+    digitalpinMode(LCD_D6, MODE_INPUT); /*600ns*/
+    digitalpinMode(LCD_D7, MODE_INPUT); /*600ns*/
+    digitalPinWrite(LCD_RS, GPIO_LOW); //RS=0; /*600ns*/
+    digitalPinWrite(LCD_RW, GPIO_HIGH); //RW=1 /*600ns*/
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < setlcdOutPin >                                                      |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void  setlcdOutPin                                                             |
+ | < @Description       : set lcd pin as out with active write Operation                                   |                     
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+static void setlcdOutPin() {
+    digitalpinMode(LCD_D4, MODE_OUTPUT);
+    digitalpinMode(LCD_D5, MODE_OUTPUT);
+    digitalpinMode(LCD_D6, MODE_OUTPUT);
+    digitalpinMode(LCD_D7, MODE_OUTPUT);
+    digitalPinWrite(LCD_RW, GPIO_LOW);
 }
 
 /*
@@ -443,12 +519,7 @@ static void lcdWaitBusy() {
     uint8_t state;
     state = 0;
     uint16_t timeout;
-    digitalpinMode(LCD_D4, MODE_INPUT); /* 600ns*/
-    digitalpinMode(LCD_D5, MODE_INPUT); /*600ns*/
-    digitalpinMode(LCD_D6, MODE_INPUT); /*600ns*/
-    digitalpinMode(LCD_D7, MODE_INPUT); /*600ns*/
-    digitalPinWrite(LCD_RS, GPIO_LOW); //RS=0; /*600ns*/
-    digitalPinWrite(LCD_RW, GPIO_HIGH); //RW=1 /*600ns*/
+    setlcdInputPin();
     timeout = microsecondsToClockCycles(100);
     do {
         digitalPinWrite(LCD_EN, GPIO_HIGH);
@@ -461,11 +532,7 @@ static void lcdWaitBusy() {
     if (!timeout) {
         gu8LCDFlags.b7 = 1;
     }
-    digitalpinMode(LCD_D4, MODE_OUTPUT);
-    digitalpinMode(LCD_D5, MODE_OUTPUT);
-    digitalpinMode(LCD_D6, MODE_OUTPUT);
-    digitalpinMode(LCD_D7, MODE_OUTPUT);
-    digitalPinWrite(LCD_RW, GPIO_LOW);
+    setlcdOutPin();
 }
 
 /*
@@ -521,6 +588,7 @@ static void lcdSend(uint8_t u8Data) {
     digitalPinWrite(LCD_D7, BitCheck(u8Data, 3)); /*800ns = 600ns write + 200ns bit check*/
     Pulse_En(); /*1300ns*/
 }
+#if __DEPUG_BY_PROUTES == 0
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -535,13 +603,7 @@ static uint8_t lcdReadByte() {
     uint8_t u8Byte;
     u8Byte = 0;
     lcdWaitBusy();
-    digitalpinMode(LCD_D4, MODE_INPUT);
-    digitalpinMode(LCD_D5, MODE_INPUT);
-    digitalpinMode(LCD_D6, MODE_INPUT);
-    digitalpinMode(LCD_D7, MODE_INPUT);
-    digitalPinWrite(LCD_RS, GPIO_LOW); //RS = 0
-    digitalPinWrite(LCD_RW, GPIO_HIGH); //RW=1
-
+    setlcdInputPin();
     digitalPinWrite(LCD_EN, GPIO_HIGH);
     if (digitalPinRead(LCD_D4))
         u8Byte |= 0x10;
@@ -559,14 +621,10 @@ static uint8_t lcdReadByte() {
         u8Byte |= 0x04;
     if (digitalPinRead(LCD_D7))
         u8Byte |= 0x08;
-    digitalPinWrite(LCD_EN, GPIO_LOW);
-    digitalpinMode(LCD_D4, MODE_OUTPUT);
-    digitalpinMode(LCD_D5, MODE_OUTPUT);
-    digitalpinMode(LCD_D6, MODE_OUTPUT);
-    digitalpinMode(LCD_D7, MODE_OUTPUT);
-    digitalPinWrite(LCD_RW, GPIO_LOW); //R=1
+    setlcdOutPin();
     return (u8Byte);
 }
+#endif
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -597,6 +655,7 @@ static void lcdSendCommdHigh(uint8_t u8Data) {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t lcdUpdate() {
+#if __DEPUG_BY_PROUTES == 0
     if (!gu8LCDFlags.b1) {
         lcdSendCommand(LCD_CGRAM_ADDRESS_CHECK);
         if ((lcdReadByte()) != (LCD_CGRAM_ADDRESS_CHECK)) {
@@ -612,7 +671,7 @@ static uint8_t lcdUpdate() {
             gu8LCDFlags.b1 = 1;
         }
     }
-
+#endif
     if (gu8LcdBufferIndex < LCD_SIZE) {
         if (gu8LcdBufferIndex % LCD_NUMBER_OF_BYTE == 0) {
             lcdSendCommand(lcdPosToAddress((gu8LcdBufferIndex / LCD_NUMBER_OF_BYTE), 0));
@@ -645,6 +704,7 @@ static uint8_t lcdUpdate() {
  | < @return            : LCD_ERROR    LCD not ready                                                    |
  --------------------------------------------------------------------------------------------------------
  */
+
 static uint8_t lcdInit() {
     digitalPinWrite(LCD_BL, GPIO_LOW);
     gu8LcdOPtion = LCD_DISPLAY_ON_COMMAND; /*the display on*/
@@ -667,13 +727,14 @@ static uint8_t lcdInit() {
         gu8LCDFlags.b7 = 0;
         return LCD_ERORR;
     }
+#if LCD_CUSTOM_CHAR_EN
     lcdCreateChar(0, CGRAM_ZERO);
     lcdCreateChar(1, CGRAM_ONE);
     lcdCreateChar(2, CGRAM_TWO);
     lcdCreateChar(3, CGRAM_THREE);
     lcdCreateChar(4, CGRAM_FOUR);
     lcdCreateChar(5, CGRAM_FIVE);
-
+#endif
     return LCD_SUCCSS;
 }
 
@@ -693,7 +754,7 @@ static uint8_t lcdInit() {
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-inline void lcdNoBlink() {
+void lcdNoBlink() {
     bitClear(gu8LcdOPtion, LCD_BLINK);
 }
 
@@ -710,7 +771,7 @@ inline void lcdNoBlink() {
  --------------------------------------------------------------------------------------------------------
  */
 
-void inline lcdBlink(uint8_t u8line, uint8_t u8pos) {
+void lcdBlink(uint8_t u8line, uint8_t u8pos) {
     gu8LCDPosition = lcdPosToAddress(u8line, u8pos);
     bitSet(gu8LcdOPtion, LCD_BLINK);
 }
@@ -758,17 +819,6 @@ inline void lcdCursor(uint8_t u8line, uint8_t u8pos) {
 void lcdHwInit() {
     /*4 bit mode*/
     gu8LCDFlags.byte = 0x00;
-    for (uint8_t i = 0; i < LCD_SIZE; i++)
-        gu8LCDBuffer[i] = ' ';
-    if ((LCD_RS == NOT_A_PIN) ||
-            (LCD_EN == NOT_A_PIN) ||
-            (LCD_RW == NOT_A_PIN) ||
-            (LCD_D4 == NOT_A_PIN) ||
-            (LCD_D5 == NOT_A_PIN) ||
-            (LCD_D6 == NOT_A_PIN) ||
-            (LCD_D7 == NOT_A_PIN))
-
-        return;
     digitalpinMode(LCD_RS, MODE_OUTPUT);
     digitalpinMode(LCD_EN, MODE_OUTPUT);
     digitalpinMode(LCD_RW, MODE_OUTPUT);
@@ -777,6 +827,9 @@ void lcdHwInit() {
     digitalpinMode(LCD_D6, MODE_OUTPUT);
     digitalpinMode(LCD_D7, MODE_OUTPUT);
     digitalpinMode(LCD_BL, MODE_OUTPUT);
+#if __DEPUG_BY_PROUTES ==1 
+    lcdInit();
+#endif
 }
 
 /*
@@ -795,34 +848,8 @@ void lcdHwInit() {
  */
 void lcdwritebuf(uint8_t line, uint8_t pos, uint8_t *buf, uint8_t Length) {
     uint8_t newPos;
-    if (pos != LCD_TEXT_CENTER) {
-        newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
-    } else {
-        newPos = (line * LCD_NUMBER_OF_BYTE) + ((LCD_NUMBER_OF_BYTE - Length) / 2) + 1;
-    }
-    for (uint8_t i = 0; i < Length; i++)
-        gu8LCDBuffer[newPos + i] = buf[i];
-}
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                                 < lcdIsCurrentNumber >                                               |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : uint8_t lcdIsCurrentNumber                                                    |
- | < @Description       : check is specific position is a number or not into buffer                     |
- | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
- | < @Param  pos        : write in specific char (y) in line and                                        |
- |                      : y is 0 to max number of byte per line                                         |
- | < @return            : 0  is buffer not contains a number in position and                            |
- |                      : 1 if the position is a number                                                 |                         
- --------------------------------------------------------------------------------------------------------
- */
-uint8_t lcdIsCurrentNumber(uint8_t line, uint8_t pos) {
-    uint8_t newPos;
-    newPos = line * LCD_NUMBER_OF_BYTE + pos;
-    if (gu8LCDBuffer[newPos] >= '0' && gu8LCDBuffer[newPos] <= '9')
-        return (1);
-    return (0);
+    newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
+    copyBuff(&gu8LCDBuffer[newPos], buf, Length);
 }
 
 /*
@@ -840,14 +867,9 @@ uint8_t lcdIsCurrentNumber(uint8_t line, uint8_t pos) {
  */
 void lcdwrite(uint8_t line, uint8_t pos, const char *string) {
     uint8_t newPos;
-    if (pos != LCD_TEXT_CENTER) {
-        newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
-    } else {
-        newPos = (line * LCD_NUMBER_OF_BYTE) + ((LCD_NUMBER_OF_BYTE - strlen(string)) / 2) + 1;
-    }
-    for (uint8_t i = 0; i < strlen(string); i++) {
-        gu8LCDBuffer[newPos + i] = string[i];
-    }
+    uint8_t length = strlen(string);
+    newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
+    copyBuff(gu8LCDBuffer + newPos, (char *) string, length);
 }
 
 /*
@@ -897,34 +919,6 @@ void lcdwriteCGRAM(uint8_t line, uint8_t pos, uint8_t index) {
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                                 < getlcdData >                                                       |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void getlcdData                                                               |
- | < @Description       : get data frome lcd buffer start form pos                                      |
- |                      : assignment into pointer of the string read and max length data to be get is   |
- |                      : max size of the data pointer can to be read                                   |
- | < @Param  str        : pointer to assignment data read from buffer                                   |
- | < @Param  line       : write in specific line x and x from 0 to max line per lcd                     |
- | < @Param  pos        : write in specific char (y) in line and                                        |
- |                      : y is 0 to max number of byte per line                                         |
- | < @return            : void                                                                          |
- --------------------------------------------------------------------------------------------------------
- */
-void getlcdData(char *str, uint8_t line, uint8_t pos) {
-    uint8_t i, u8count;
-    i = line * LCD_NUMBER_OF_BYTE + pos;
-    u8count = 0;
-    while (gu8LCDBuffer[i] != 0x20) {
-        str[u8count++] = gu8LCDBuffer[i];
-        i++;
-        if (i % LCD_NUMBER_OF_BYTE == 0) {
-            break;
-        }
-    }
-}
-
-/*
- --------------------------------------------------------------------------------------------------------
  |                                 < lcdClearlines >                                                    |
  --------------------------------------------------------------------------------------------------------
  | < @Function          : void lcdClearlines                                                            |
@@ -935,10 +929,10 @@ void getlcdData(char *str, uint8_t line, uint8_t pos) {
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-void lcdClearlines(uint8_t from) {
-    for (uint8_t i = from * LCD_NUMBER_OF_BYTE; i < LCD_SIZE; i++) {
-        gu8LCDBuffer[i] = 0x20;
-    }
+void lcdClearlines(bool from) {
+    uint8_t x = 0x20;
+    for (uint8_t i = 0; i < LCD_NUMBER_OF_BYTE; i++)
+        gu8LCDBuffer[i + (from * LCD_NUMBER_OF_BYTE)] = x;
 }
 
 /*
@@ -952,10 +946,8 @@ void lcdClearlines(uint8_t from) {
  --------------------------------------------------------------------------------------------------------
  */
 void lcdClear() {
-    for (uint8_t j = 0; j < LCD_SIZE; j++) {
-        gu8LCDBuffer[j] = 0x20;
-    }
-
+    lcdClearlines(1);
+    lcdClearlines(0);
 }
 
 /*
@@ -969,13 +961,11 @@ void lcdClear() {
  */
 
 void lcdDriver() {
-    uint8_t state;
+
     if (!gu8LCDFlags.b0)
         return;
-    state = lcdUpdate();
-    if (state == LCD_SUCCSS) {
-        gu8LCDFlags.b0 = 0;
-    } else if (state == LCD_ERORR) {
+    uint8_t state = lcdUpdate();
+    if (state == LCD_SUCCSS || state == LCD_ERORR) {
         gu8LCDFlags.b0 = 0;
     }
 }
@@ -1004,6 +994,63 @@ uint8_t lcdIsBusy() {
  */
 void lcdUpdateNow() {
     gu8LCDFlags.b0 = 1;
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdGetLineDate >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdGetLineDate                                                           |
+ | < @Description       : assignment Line Date Into app Buffer                                          |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdGetLineDate(uint8_t *u8Data, uint8_t Line) {
+    copyBuff(u8Data, (gu8LCDBuffer + (LCD_NUMBER_OF_BYTE * Line)), LCD_NUMBER_OF_BYTE);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < LcdWriteIndex >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void LcdWriteIndex                                                           |
+ | < @Description       : assignment Index By this Function                                        |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void LcdWriteIndex(uint8_t Index, uint8_t byteDate) {
+    gu8LCDBuffer[Index] = byteDate;
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdWriteromFlash >                                                 |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdWriteromFlash                                                         |
+ | < @Description       : write Data From Flash Memeory into LCD Buffer                                 |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdWriteromFlash(uint8_t line, uint8_t pos, PGM_P const *date) {
+    uint8_t newPos;
+    uint8_t strleng = strlen_P((const char *) date);
+    newPos = (line * LCD_NUMBER_OF_BYTE) + pos;
+    memcpy_P((char *) (gu8LCDBuffer + newPos), (const char *) date, strleng);
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                                 < lcdWriteString >                                                   |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : void lcdWriteString                                                           |
+ | < @Description       : write string in cencer pos                                                    |                                           
+ | < @return            : void                                                                          |                                                             
+ --------------------------------------------------------------------------------------------------------
+ */
+void lcdWriteString(uint8_t line, PGM_P date) {
+    uint8_t len;
+    len = strlen_P(date);
+    lcdWriteromFlash(line, (LCD_NUMBER_OF_BYTE - len) >> 1, (PGM_P const *) date);
 }
 #endif
 #endif

@@ -18,10 +18,7 @@ build/ATmega16/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
+ d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h \
  src/mega/buffers/../../../inc/mega/../mega/mainTones.h \
  src/mega/buffers/../../../inc/mega/../mega/buffers.h \
  src/mega/buffers/../../../inc/mega/../mega/utility.h \
@@ -30,6 +27,7 @@ build/ATmega16/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/macros.h \
  src/mega/buffers/../../../inc/mega/../mega/bootloadercmd.h \
  src/mega/buffers/../../../inc/mega/../mega/types.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
@@ -92,13 +90,7 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
+d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h:
 
 src/mega/buffers/../../../inc/mega/../mega/mainTones.h:
 
@@ -115,6 +107,8 @@ src/mega/buffers/../../../inc/mega/../mega/macros.h:
 src/mega/buffers/../../../inc/mega/../mega/bootloadercmd.h:
 
 src/mega/buffers/../../../inc/mega/../mega/types.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 

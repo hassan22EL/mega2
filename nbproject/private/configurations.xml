@@ -40,7 +40,7 @@
       </runprofile>
     </conf>
     <conf name="ATmega16" type="3">
-      <platformToolSN>noToolString</platformToolSN>
+      <platformToolSN></platformToolSN>
       <languageToolchainDir>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>

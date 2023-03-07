@@ -55,6 +55,7 @@
 #define UART0_DATA     UDR
 #define UART0_UDRIE    UDRIE
 #define  Empty_BUFFER0()                 ((UCSRA & (1<<UDRE)))
+
 #elif defined(__AVR_ATmega8U2__) \
    || defined(__AVR_ATmega16U2__) \
    || defined(__AVR_ATmega16U4__) \
@@ -298,6 +299,12 @@
 #define     USART0_BIT_DURATION                 ((uint16_t) ((1000000) / (float) (UART0_BUADRATE)) + .5)            
 #define     USART0_BYTE_DURATION                ((uint16_t) ((100000) / (float) (UART0_BUADRATE)) + .5) 
 #endif
+
+#define  ENABLE_RECEIVE0_INTERRUPT()          UART0_CONTROL |= _BV(RXCIE)
+#define  DISABLE_RECEIVE0_INTERRUPT()         UART0_CONTROL &= ~(_BV(RXCIE))
+#define  ENABLE_TRANSMIT0_INTERRUPT()         UART0_CONTROL |=_BV(TXCIE) 
+#define  DISABLE_TRANSMIT0_INTERRUPT()        UART0_CONTROL &= ~_BV(TXCIE) 
+
 
 /*
   ---------------------------------------------------------------------------------------------------------

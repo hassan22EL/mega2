@@ -118,15 +118,15 @@ typedef enum {
 #define     DS1307_PERDIOC_READ_PER_MIN                         (5UL)
 #endif
 
-#define    DS1307_PERDIOC_READ                        (DS1307_PERDIOC_READ_PER_MIN * 60UL)
+#define    DS1307_PERDIOC_READ                        (DS1307_PERDIOC_READ_PER_MIN * 60UL*1000UL)
 /*
  -------------------------------------------------------------------------------------------------------
  |                               < DS1307 Status>                                                      |
  -------------------------------------------------------------------------------------------------------
  */
 
-static byte_Flags_t gu8ds1307States;
-
+static uint8_t gu8ds1307States;
+static uint8_t gu8UserState;
 /*
  -------------------------------------------------------------------------------------------------------
  |                               < DS1307 Buffer>                                                      |
@@ -165,82 +165,29 @@ static twi_package_t gstDs1307TwiPag;
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < ds1307Write  >                                                          |
+ |                            < ds1307Reset  >                                                          |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void  ds1307Write                                                             |
- | < @Description       : write data from buffer to hardware                                            |
- | < @return            : 0 write operation in progress                                                 |
- |                      : 1 write operation is done                                                     |
- --------------------------------------------------------------------------------------------------------
- */
-static uint8_t ds1307Write();
-/*
- --------------------------------------------------------------------------------------------------------
- |                            < ds1307Read>                                                             |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void  ds1307Read                                                              |
- | < @Description       : write data from hardware into buffer                                          |
- | < @return            : 0 write operation in progress                                                 |
- |                      : 1 write operation is done                                                     |
+ | < @Function          : void  ds1307Reset                                                             |
+ | < @Description       : Reset System to default state                                                 |
+ | < @return            : void                                                |                                              |
  --------------------------------------------------------------------------------------------------------
  */
-static uint8_t ds1307Read();
+static void ds1307Reset();
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < ds1307Write  >                                                          |
+ |                            < ds1307Reset  >                                                          |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : void  ds1307Write                                                             |
- | < @Description       : write data from buffer to hardware                                            |
- | < @return            : 0 write operation in progress                                                 |
- |                      : 1 write operation is done                                                     |
+ | < @Function          : void  ds1307Reset                                                             |
+ | < @Description       : Reset System to default state                                                 |
+ | < @return            : void                                                |                                              |
  --------------------------------------------------------------------------------------------------------
  */
-static uint8_t ds1307Write() {
-    if (twi_master_write(&gstDs1307TwiPag) == TWI_SUCCESS) {
-        return (1);
-    }
-    if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
-        /*call back memory error*/
-        gu8ds1307States.b2 = 0; /*write operation is done with error*/
-        return (1);
-    }
-    return (0);
+static void ds1307Reset() {
+    sysSetPeriodMS(&gsDs1307TimeOut, DS1307_PERDIOC_READ);
+    gu8ds1307States = 0;
+    gu8UserState = 0;
 }
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                            < ds1307Read>                                                             |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : void  ds1307Read                                                              |
- | < @Description       : write data from hardware into buffer                                          |
- | < @return            : 0 write operation in progress                                                 |
- |                      : 1 write operation is done                                                     |
- --------------------------------------------------------------------------------------------------------
- */
-static uint8_t ds1307Read() {
-    tm_t tm;
-    time_t time;
-    if (twi_master_read(&gstDs1307TwiPag) == TWI_SUCCESS) {
-        /*convert bcd to decimal*/
-        tm.tm_sec = BcdToDec(gu8ds1307Buffer[ds1307_sec]);
-        tm.tm_min = BcdToDec(gu8ds1307Buffer[ds1307_min]);
-        tm.tm_hour = BcdToDec(gu8ds1307Buffer[ds1307_hour]);
-        tm.tm_wday = BcdToDec(gu8ds1307Buffer[ds1307_dayw]) - 1;
-        tm.tm_mday = BcdToDec(gu8ds1307Buffer[ds1307_daym]);
-        tm.tm_mon = BcdToDec(gu8ds1307Buffer[ds1307_month]) - 1;
-        tm.tm_year = BcdToDec(gu8ds1307Buffer[ds1307_year]);
-        time = getTime(&tm);
-        sysUpdateNow(time);
-        return (1);
-    }
-    if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
-        /*call back Ds1307 error*/
-        return (1);
-    }
-    return (0);
-}
-
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -258,7 +205,6 @@ static uint8_t ds1307Read() {
  --------------------------------------------------------------------------------------------------------
  */
 void ds1307Init() {
-    gu8ds1307States.byte = 0x00;
     /* DS1307 Chip defined */
     gstDs1307TwiPag.chip = DS1307_ADDRESS;
     gstDs1307TwiPag.addr[0] = 0x00;
@@ -267,10 +213,10 @@ void ds1307Init() {
     gstDs1307TwiPag.length = DS1307_DATA_LENGTH;
     /*DS - Chip Speed*/
     gstDs1307TwiPag.baud_reg = TWI_100KHZ;
-    gu8ds1307States.b1 = 1;
+    gu8ds1307States = 2; /*Read Operation*/
     for (uint8_t i = 0; i < DS1307_DATA_LENGTH; i++)
-        gu8ds1307Buffer[i] = 0x00;
-
+        gu8ds1307Buffer[i] = 0;
+   
 }
 
 /*
@@ -283,30 +229,45 @@ void ds1307Init() {
  --------------------------------------------------------------------------------------------------------
  */
 void ds1307Driver() {
-    if (gu8ds1307States.b0) {
-        if (ds1307Write()) {
-            gu8ds1307States.b0 = 0;
-            /*active read to update time with new time set*/
-            gu8ds1307States.b1 = 1;
-            /*re- init timer period last read*/
-            sysSetPeriodMS(&gsDs1307TimeOut, 30);
-        }
+    time_t time;
+    switch (gu8ds1307States) {
+        case 0:
+            /*current soft update*/
+            if (sysIsTimeoutMs(&gsDs1307TimeOut) == 0) {
+                /*read is start and set time out 30 ms*/
+                sysSetPeriodMS(&gsDs1307TimeOut, 30);
+                gu8ds1307States = 2; /*Read Operation*/
+            }
+            return;
+            break;
+        case 1:
+            if (twi_master_write(&gstDs1307TwiPag) == TWI_SUCCESS) {
+                /*active read to update time with new time set*/
+                gu8ds1307States = 2;
+                /*re- init timer period last read*/
+                sysSetPeriodMS(&gsDs1307TimeOut, 30);
+            }
+            break;
+        case 2:
+            if (twi_master_read(&gstDs1307TwiPag) == TWI_SUCCESS) {
+                /*convert bcd to decimal*/
+                for (uint8_t i = 0; i < 7; i++) {
+                    gu8ds1307Buffer[i] = BcdToDecFun(gu8ds1307Buffer[i]);
+                }
+                time = DateTimeUnixtime((tm_t *) gu8ds1307Buffer);
+                sysUpdateNow(time);
+                ds1307Reset();
+                return;
+            }
+            break;
+        default:
+            gu8ds1307States = 0;
+            return;
+            break;
     }
-    if (gu8ds1307States.b1) {
-        if (ds1307Read()) {
-            /*re- init timer period last read*/
-            sysSetPeriodS(&gsDs1307TimeOut, DS1307_PERDIOC_READ);
-            gu8ds1307States.b1 = 0;
-            gu8ds1307States.b2 = 0; /*write operation with verification is done*/
-        }
-        return;
-    }
-    /*current soft update*/
-    if (sysIsTimeoutS(&gsDs1307TimeOut) == 0) {
-        /*read is start and set time out 30 ms*/
-        sysSetPeriodMS(&gsDs1307TimeOut, 30);
-        gu8ds1307States.b1 = 1;
-        return;
+
+    if (!sysIsTimeoutMs(&gsDs1307TimeOut)) { /*time out of any operation*/
+        ds1307Reset();
     }
 }
 
@@ -321,8 +282,9 @@ void ds1307Driver() {
  --------------------------------------------------------------------------------------------------------
  */
 uint8_t ds1307IsSetDone() {
+
     /*read and write is done*/
-    return gu8ds1307States.b2;
+    return gu8UserState;
 }
 
 /*
@@ -337,16 +299,14 @@ uint8_t ds1307IsSetDone() {
  */
 void ds1307SetDate(tm_t *tm) {
     /*assign tm into internal tm*/
-    gu8ds1307Buffer[ds1307_sec] = decToBcd(tm->tm_sec) & 0x7F; // Clear CH bit in seconds register
-    gu8ds1307Buffer[ds1307_min] = decToBcd(tm->tm_min) & 0x7F;
-    gu8ds1307Buffer[ds1307_hour] = decToBcd(tm->tm_hour) & 0x3F;
-    gu8ds1307Buffer[ds1307_dayw] = decToBcd(tm->tm_wday + 1) & 0x07; /*start from 0 */
-    gu8ds1307Buffer[ds1307_daym] = decToBcd(tm->tm_mday) & 0x3F; /*start from 0 */
-    gu8ds1307Buffer[ds1307_month] = decToBcd(tm->tm_mon + 1) & 0x1F;
-    gu8ds1307Buffer[ds1307_year] = decToBcd(tm->tm_year);
+    uint8_t *Byte = (uint8_t *) tm;
+    for (uint8_t i = 0; i < 7; i++) {
+        gu8ds1307Buffer[i] = DecToBcdFun(Byte[i]);
+    }
+    gu8ds1307Buffer[ds1307_sec] = gu8ds1307Buffer[ds1307_sec] & 0x7F;
     sysSetPeriodMS(&gsDs1307TimeOut, 30);
-    gu8ds1307States.b0 = 1; /*active write operation */
-    gu8ds1307States.b2 = 1; /*reset after read operation*/
+    gu8ds1307States = 1; /*write Operation*/
+    gu8UserState = 1;
 }
 #endif
 #endif

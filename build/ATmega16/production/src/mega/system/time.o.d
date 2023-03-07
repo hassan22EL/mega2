@@ -1,6 +1,5 @@
 build/ATmega16/production/src/mega/system/time.o.d \
  build/ATmega16/production/src/mega/system/time.o: src/mega/system/time.c \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  src/mega/system/../../../inc/mega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
@@ -18,10 +17,7 @@ build/ATmega16/production/src/mega/system/time.o.d \
  src/mega/system/../../../inc/mega/clock.h \
  src/mega/system/../../../inc/mega/../resource.h \
  src/mega/system/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
+ d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h \
  src/mega/system/../../../inc/mega/mainTones.h \
  src/mega/system/../../../inc/mega/buffers.h \
  src/mega/system/../../../inc/mega/../mega.h \
@@ -30,6 +26,7 @@ build/ATmega16/production/src/mega/system/time.o.d \
  src/mega/system/../../../inc/mega/macros.h \
  src/mega/system/../../../inc/mega/bootloadercmd.h \
  src/mega/system/../../../inc/mega/types.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
@@ -55,8 +52,6 @@ build/ATmega16/production/src/mega/system/time.o.d \
  src/mega/system/../../../inc/mega/button.h \
  src/mega/system/../../../inc/mega/Tone.h \
  src/mega/system/../../../inc/mega/ZLP.h
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 src/mega/system/../../../inc/mega.h:
 
@@ -92,13 +87,7 @@ src/mega/system/../../../inc/mega/../resource.h:
 
 src/mega/system/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
+d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h:
 
 src/mega/system/../../../inc/mega/mainTones.h:
 
@@ -115,6 +104,8 @@ src/mega/system/../../../inc/mega/macros.h:
 src/mega/system/../../../inc/mega/bootloadercmd.h:
 
 src/mega/system/../../../inc/mega/types.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 

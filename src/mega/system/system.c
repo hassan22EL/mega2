@@ -8,12 +8,12 @@
 | < Version                : Mega2v241022                                                                                   |
 | < References             : no-used references in this documents                                                           |
 | < SRAM_USAGE             : 17 Byte                                                                                        |
-| < PROGRAM_USAGE          : 552 byte (347 Instruction)                                                                     |
+| < PROGRAM_USAGE          : 559 byte (347 Instruction)                                                                     |
 | < Hardware Usage         : Timer 0                                                                                        |
 | < File Created           : 24-10-2022                                                                                     |
 -----------------------------------------------------------------------------------------------------------------------------
  */
-#include <stdint-gcc.h>
+
 
 #include "../../../inc/mega.h"
 /*
@@ -69,7 +69,7 @@
 #endif
 
 // set timer 0 prescale factor to 64
-#if defined(__AVR_ATmega128__) ||  defined(__AVR_ATmega128A__)
+#if defined(__AVR_ATmega128__) ||  defined(__AVR_ATmega128A__) 
 // CPU specific: different values for the ATmega128
 #define  PRESCALLER2         (sbi(TCCR0 , CS02))
 #define  TIMER_MODE1         (sbi(TCCR0, WGM01))
@@ -102,10 +102,20 @@
 #define  TIMER_MODE0    (cbi(TCCR0A, WGM00))
 #endif
 
+
+
 // set timer 0 prescale factor to 64
 #if defined(__AVR_ATmega128__) ||  defined(__AVR_ATmega128A__)
 // CPU specific: different values for the ATmega128
-#define  PRESCALLER2         (sbi(TCCR0 , CS02))
+#define  PRESCALLER2            (sbi(TCCR0 , CS02))
+#define  PRESCALLER1            (cbi(TCCR0, CS01))
+#define  PRESCALLER0            (cbi(TCCR0, CS00))
+#define  TIMER_MODE1            (sbi(TCCR0, WGM01))
+#define  TIMER_MODE0            (cbi(TCCR0, WGM00))
+#elif defined(__AVR_ATmega16A__) ||  defined(__AVR_ATmega16__)
+#define  PRESCALLER2         (cbi(TCCR0 , CS02))
+#define  PRESCALLER1         (sbi(TCCR0, CS01))
+#define  PRESCALLER0         (sbi(TCCR0, CS00))
 #define  TIMER_MODE1         (sbi(TCCR0, WGM01))
 #define  TIMER_MODE0         (cbi(TCCR0, WGM00))
 #elif defined(TCCR0) && defined(CS01) && defined(CS00)
@@ -114,6 +124,8 @@
 #define  PRESCALLER1            (sbi(TCCR0, CS01))
 #define  PRESCALLER0            (sbi(TCCR0, CS00))
 /*the timer in normal MODE*/
+
+
 #elif defined(TCCR0B) && defined(CS01) && defined(CS00)
 // this combination is for the standard 168/328/1280/2560
 #define PRESCALLER1          (sbi(TCCR0B, CS01))
@@ -302,7 +314,7 @@
 #define MILLIS_INC (MICROSECONDS_PER_TIMER0_OVERFLOW / 1000)
 #define FRACT_INC ((MICROSECONDS_PER_TIMER0_OVERFLOW % 1000) >> 3)
 #define FRACT_MAX (1000 >> 3)
-#define  TICK_PER_SEC ((1000000UL/MICROSECONDS_PER_TIMER0_OVERFLOW))
+#define  TICK_PER_SEC (1000000UL/(2UL *MICROSECONDS_PER_TIMER0_OVERFLOW))-1
 
 /*
  ----------------------------------------------------------------------------------------------------------------------------
@@ -327,10 +339,6 @@ static volatile time_t gu32SystemTime;
  */
 static volatile uint8_t gu8NumberOFusPerMs;
 /*
- * < @var gu8PerdiocTasks : run tasks as a Periodically from isr such as scan seven segment and scan keypad or keys
- */
-static volatile uint8_t gu8PerdiocTasks;
-/*
  * < @var gu16SecondEvent : update second
  */
 static volatile uint16_t gu16SecondEvent;
@@ -338,6 +346,10 @@ static volatile uint16_t gu16SecondEvent;
  * < @var Second Event      : Informe System Have New Second
  */
 static volatile uint8_t gu8SecondEventFlag;
+/*
+ * < @var Second Event      : Informe System Have New Second
+ */
+static volatile uint8_t gu8halfSecondEvent;
 /*
  ----------------------------------------------------------------------------------------------------------------------------
  |                                 < system Interrupt >                                                                     |
@@ -369,13 +381,19 @@ ISR(TIMER0_OVF_vect)
      |  if (m % 1000 == 0)  this condition is have error because fraction for example  999m + 2 ms  = 1001 %1000 == 1 error     |
      ----------------------------------------------------------------------------------------------------------------------------
      */
-    gu16SecondEvent++;
-    if (gu16SecondEvent >= TICK_PER_SEC) {
-        gu16SecondEvent -= TICK_PER_SEC; /*Reset The Counter*/
-        /*second Event update*/
+
+
+    if (gu16SecondEvent < TICK_PER_SEC) {
+        gu16SecondEvent++;
+    } else {
+        gu16SecondEvent = 0; /*Reset The Counter*/
+        gu8halfSecondEvent ^= 0x01;
         gu8SecondEventFlag = 1;
-        gu32SystemTime++;
+        if (gu8halfSecondEvent == 0) {
+            gu32SystemTime++;
+        }
     }
+
     /*periodically task Operation*/
 #if defined KEYPAD_MODULE       
 #if   KEYPAD_MODULE == MODULE_ENABLE
@@ -391,17 +409,7 @@ ISR(TIMER0_OVF_vect)
     }
 #endif
 #endif    
-
-    if (++gu8PerdiocTasks == MAX_PERODIC_TASKS_TIME) {
-        gu8PerdiocTasks = 0;
-    }
-
     gu32SystemTick++;
-
-
-
-
-
 #if defined(TIMSK) &&  defined (OCIE0)
     /*auto reload*/
 #elif  defined(TIMSK) && defined (TOIE0)
@@ -425,8 +433,10 @@ ISR(TIMER0_OVF_vect)
 void systemInit() {
     gu32SystemTick = 0;
     gu32TimeMs = 0;
+    gu8halfSecondEvent = 0;
     gu8SecondEventFlag = 1;
     gu32SystemTime = 0;
+
     gu8NumberOFusPerMs = 0;
     gu16SecondEvent = 0;
 }
@@ -765,6 +775,8 @@ void sysUpdateNow(time_t now) {
     /*reset system*/
     gu32SystemTime = now;
     gu16SecondEvent = 0;
+    gu8halfSecondEvent = 0;
+    gu8SecondEventFlag = 1;
     ATOMIC_END
 }
 
@@ -772,7 +784,7 @@ void sysUpdateNow(time_t now) {
  ----------------------------------------------------------------------------------------------------------------------------
  |                                 < systemSecondEvent >                                                                         |
  ----------------------------------------------------------------------------------------------------------------------------
- | < @Function          : millis_t systemSecondEvent                                                                             |  
+ | < @Function          : uint8_T systemSecondEvent                                                                             |  
  | < @Description       : system Have a new Second                                                                    |                                                                 |                    
  | < @return            : 1 System Have Second , 0 System at same Secod                                                                           |
  ----------------------------------------------------------------------------------------------------------------------------
@@ -780,9 +792,22 @@ void sysUpdateNow(time_t now) {
 uint8_t systemSecondEvent() {
     if (gu8SecondEventFlag) {
         gu8SecondEventFlag = 0;
-        return 1;
+        return (1);
     }
     return (0);
+}
+
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < ClearsystemSecondEvent >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void systemSecondEvent                                                                             |  
+ | < @Description       : forced system Have a new Second                                                                    |                                                                 |                    
+ | < @return            :                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
+void ClearsystemSecondEvent() {
+    gu8SecondEventFlag = 1;
 }
 
 /*
@@ -897,6 +922,23 @@ time_t systemNow() {
 
 /*
  ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemReadHalfSecond >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void systemReadHalfSecond                                                                                | 
+ | < @Description       : get Half Event Value                                                                         |                                                                 |                    
+ | < @return            : 0 or 1 (second Period)                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
+uint8_t systemReadHalfSecond() {
+    uint8_t Value;
+    ATOMIC_BEGIN
+    Value = gu8halfSecondEvent;
+    ATOMIC_END
+    return (Value);
+}
+
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
  |                                 < setupHwTimer0 >                                                                        |
  ----------------------------------------------------------------------------------------------------------------------------
  | < @Function          : void setupHwTimer0                                                                                | 
@@ -917,9 +959,19 @@ void setupHwTimer0() {
 
 
 
+
+
 #if defined(__AVR_ATmega128__) ||  defined(__AVR_ATmega128A__)
     // CPU specific: different values for the ATmega128
     PRESCALLER2;
+    TIMER_MODE1;
+    TIMER_MODE0;
+    /*load ctc value*/
+    OCR0 = TIME_VALUE;
+#elif defined(__AVR_ATmega16A__) ||  defined(__AVR_ATmega16__)
+    PRESCALLER2;
+    PRESCALLER1;
+    PRESCALLER0;
     TIMER_MODE1;
     TIMER_MODE0;
     /*load ctc value*/

@@ -26,7 +26,7 @@
 #include "mega/bootloadercmd.h"
 #include "mega/types.h"
 
-
+#include <stdint-gcc.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -52,6 +52,8 @@
 #include "mega/button.h"
 #include "mega/Tone.h"
 #include "mega/ZLP.h"
+
+
 extern int main(void);
 // Application Functions
 extern void appMain(void);

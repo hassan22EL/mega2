@@ -19,12 +19,13 @@ build/Atmega128A/production/src/mega/signalGenertor/signalGenertor.o.d \
  src/mega/signalGenertor/../../../inc/mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/mega/signalGenertor/../../../inc/mega/mainTones.h \
  src/mega/signalGenertor/../../../inc/mega/buffers.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- src/mega/signalGenertor/../../../inc/mega/ui.h \
+ src/mega/signalGenertor/../../../inc/mega/utility.h \
  src/mega/signalGenertor/../../../inc/resource.h \
  src/mega/signalGenertor/../../../inc/mega/macros.h \
  src/mega/signalGenertor/../../../inc/mega/bootloadercmd.h \
@@ -51,7 +52,9 @@ build/Atmega128A/production/src/mega/signalGenertor/signalGenertor.o.d \
  src/mega/signalGenertor/../../../inc/mega/eeprom.h \
  src/mega/signalGenertor/../../../inc/mega/signalGenerator.h \
  src/mega/signalGenertor/../../../inc/mega/keypad.h \
- src/mega/signalGenertor/../../../inc/mega/button.h
+ src/mega/signalGenertor/../../../inc/mega/button.h \
+ src/mega/signalGenertor/../../../inc/mega/Tone.h \
+ src/mega/signalGenertor/../../../inc/mega/ZLP.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
@@ -89,17 +92,19 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+src/mega/signalGenertor/../../../inc/mega/mainTones.h:
 
 src/mega/signalGenertor/../../../inc/mega/buffers.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-src/mega/signalGenertor/../../../inc/mega/ui.h:
+src/mega/signalGenertor/../../../inc/mega/utility.h:
 
 src/mega/signalGenertor/../../../inc/resource.h:
 
@@ -154,3 +159,7 @@ src/mega/signalGenertor/../../../inc/mega/signalGenerator.h:
 src/mega/signalGenertor/../../../inc/mega/keypad.h:
 
 src/mega/signalGenertor/../../../inc/mega/button.h:
+
+src/mega/signalGenertor/../../../inc/mega/Tone.h:
+
+src/mega/signalGenertor/../../../inc/mega/ZLP.h:

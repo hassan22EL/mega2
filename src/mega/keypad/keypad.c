@@ -170,9 +170,9 @@ typedef union {
  ---------------------------------------------------------------------------------------------------          
  */
 #if COMPILER_TYPE == GCC
-const keypadConstantCode_t PROGMEM NO_CODE = {0xFF, 0, 0, (keypadConstantCode_t *) NULL};
+const keypadConstantCode_t PROGMEM NO_CODE = {0xFF, 0, (keypadConstantCode_t *) NULL};
 #elif COMPILER_TYPE == XC
-const keypadConstantCode_t  NO_CODE = {0xFF, 0, 0, (keypadConstantCode_t *) NULL};
+const keypadConstantCode_t NO_CODE = {0xFF,0, (keypadConstantCode_t *) NULL};
 #endif
 
 /*
@@ -347,17 +347,6 @@ static const keypadConstantCode_t * getNextCode(const keypadConstantCode_t *Code
  --------------------------------------------------------------------------------------------------------
  */
 static const uint8_t getCode(const keypadConstantCode_t *Code);
-/*
- --------------------------------------------------------------------------------------------------------
- |                                 < getTone >                                                          |
- --------------------------------------------------------------------------------------------------------
- | < @Function           : uint8_t  getTone                                                                |
- | < @Description        : return Tone Generate                                                         |    
- | < @Param Code         : pointer to constant code                                                     |           
- | < @return            : Const tone                                                                    |                                                             
- --------------------------------------------------------------------------------------------------------
- */
-static const uint16_t getTone(const keypadConstantCode_t *Code);
 /*
  --------------------------------------------------------------------------------------------------------
  |                                 < getIndex >                                                          |
@@ -596,9 +585,6 @@ static void KeyAssignCode(void) {
 
     // Set all row pins to output low
     /*scan Col*/
-
-
-
     if (((guKeyScanRow == MAX_VALUE_READ_ROW) && (guKeyScanCOL != MAX_VALUE_READ_COL)) || ((guKeyScanRow != MAX_VALUE_READ_ROW) && (guKeyScanCOL == MAX_VALUE_READ_COL))) {
         gpFunKeyScan = RowsInputColsOutput; /*Repeat Reading*/
         return;
@@ -661,7 +647,7 @@ static void KeypadGetFromQueue(void) {
                     /*tone Generation*/
 #if defined TONE_MODULE
 #if TONE_MODULE
-                    Toneplay(TONE_PIN0_GPIO, 0, getTone(i), 50, 100);
+                    Toneplay(TONE_PIN0_GPIO, 0, 0, 50, 100);
 #endif
 #endif
                     guKeypadFlags.NewCallBackHandle = 1;
@@ -694,10 +680,10 @@ static void KeypadPutIntoQueue(void) {
 
     if (gu8CurrentCode == gu8KeyCode) {
         /*same key check long press time out */
-        if ((guKeypadFlags.LongTabFlag) && (!sysIsTimeoutS(&gstKeyLongPreeTimeOut))) {
+        if ((guKeypadFlags.LongTabFlag) && (!sysIsTimeoutMs(&gstKeyLongPreeTimeOut))) {
             /*Long Tab is Done */
             key.Keycode = gu8CurrentCode;
-            key.UserState.State = LONG_TAP;
+            key.State = LONG_TAP;
             guKeypadFlags.LongTabFlag = 0;
             putStruct(&gstKeyQueueStructDescriptor, &key); /*Put Key Into Queue*/
             return;
@@ -715,26 +701,26 @@ static void KeypadPutIntoQueue(void) {
     ATOMIC_END
     if (gu8CurrentCode == NO_KEY) {
         /*release action*/
-        key.UserState.State = KEY_RELEASE;
+        key.State = KEY_RELEASE;
         guKeypadFlags.LongTabFlag = 0;
     } else if (!KeypadIsMultiKeyPress(gu8CurrentCode) && gu8LastCode == NO_KEY) {/*press before*/
         /*Press Action*/
-        sysSetPeriodS(&gstKeyLongPreeTimeOut, KEYPAD_LONGPREE_TIMEOUT); /*active Long Press Time*/
+        sysSetPeriodMS(&gstKeyLongPreeTimeOut, KEYPAD_LONGPREE_TIMEOUT); /*active Long Press Time*/
         guKeypadFlags.LongTabFlag = 1; /*long Press is OK*/
-        if (gu8CurrentCode == gu8BeforeLastCode && (sysIsTimeoutS(&gstKeyMultiTabTimeOut)) && !guKeypadFlags.MultiTabFlag) {
-            key.UserState.TabCounter = guKeypadFlags.TabCounter++;
-            key.UserState.State = MULTI_TAP;
+        if (gu8CurrentCode == gu8BeforeLastCode && (sysIsTimeoutMs(&gstKeyMultiTabTimeOut)) && !guKeypadFlags.MultiTabFlag) {
+            key.TabCounter = ++guKeypadFlags.TabCounter;
+            key.State = MULTI_TAP;
         } else {
             /*time Out of the Multi tap or last not equles before lastkey */
             guKeypadFlags.TabCounter = 0;
-            key.UserState.TabCounter = 0;
+            key.TabCounter = 0;
             guKeypadFlags.MultiTabFlag = 0;
-            key.UserState.State = KEY_PRESS;
+            key.State = KEY_PRESS;
         }
-        sysSetPeriodS(&gstKeyMultiTabTimeOut, KEYPAD_MULTITAP_TIMEOUT);
+        sysSetPeriodMS(&gstKeyMultiTabTimeOut, KEYPAD_MULTITAP_TIMEOUT);
     } else {
         /*multi key Press*/
-        key.UserState.State = MULTI_KEY_PRESS;
+        key.State = MULTI_KEY_PRESS;
         guKeypadFlags.TabCounter = 0;
         guKeypadFlags.LongTabFlag = 0;
     }
@@ -802,23 +788,6 @@ static const uint8_t getCode(const keypadConstantCode_t *Code) {
 #endif
 }
 
-/*
- --------------------------------------------------------------------------------------------------------
- |                                 < getTone >                                                          |
- --------------------------------------------------------------------------------------------------------
- | < @Function           : uint8_t  getTone                                                                |
- | < @Description        : return Tone Generate                                                         |    
- | < @Param Code         : pointer to constant code                                                     |           
- | < @return            : Const tone                                                                    |                                                             
- --------------------------------------------------------------------------------------------------------
- */
-static const uint16_t getTone(const keypadConstantCode_t *Code) {
-#if COMPILER_TYPE == GCC
-    return (const uint16_t) pgm_read_byte(&Code->Tone); /*gcc-compiler*/
-#elif COMPILER_TYPE == XC
-    return (const uint8_t) (Code->Tone); /*xc-compiler*/
-#endif
-}
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -882,18 +851,18 @@ void keyInit() {
     gu8CurrentCode = NO_KEY;
     gpcKeyEvents = &NO_CODE;
     gpFunKeyEvent = NULL;
-    structBufferInit(&gstKeyQueueStructDescriptor, gKeyEventQueue, KEYS_QUEUE_SIZE, sizeof (stkey_t));
+    structBufferInit(&gstKeyQueueStructDescriptor, gKeyEventQueue, KEYS_QUEUE_SIZE, 3);
     for (uint8_t i = 0; i < KEYPAD_MAX_EVENT; i++) {
         gpFunKeyEvents[i] = NULL;
     }
     for (uint8_t i = 0; i < KEYS_QUEUE_SIZE; i++) {
-        gKeyEventQueue[i].UserState.State = KEY_RELEASE;
-        gKeyEventQueue[i].UserState.TabCounter = 0;
+        gKeyEventQueue[i].State = KEY_RELEASE;
+        gKeyEventQueue[i].TabCounter = 0;
         gKeyEventQueue[i].Keycode = 0xFF;
     }
     gGetKey.Keycode = 0xFF;
-    gGetKey.UserState.State = KEY_RELEASE;
-    gGetKey.UserState.TabCounter = 0;
+    gGetKey.State = KEY_RELEASE;
+    gGetKey.TabCounter = 0;
     guKeypadFlags.Flags = 0x00;
 }
 
@@ -919,6 +888,7 @@ void KeypadAssignCosntEvents(const keypadConstantCode_t *keyEvents) {
  | < @Description       : register call back function into Array                                         | 
  | < @Param callback    : callback Function                                                              |
  | < @Param Index       : Event Index                                                                    | 
+ * < @Param Tab         : 1 key has work multi tab else key work with no mutitab
  | < @return            : void                                                                           |
  ---------------------------------------------------------------------------------------------------------
  */
@@ -947,14 +917,13 @@ void KeypadDriver() {
  ---------------------------------------------------------------------------------------------------------
  | < @Function          : void KeypadResetTabCounter                                                     |  
  | < @Description       : Reset Tab Counter                                                              | 
- | < @Param key         : pointer to assignment key                                                      |
- | < @Param tab         : Support Multitab or not                                                        |
+ | < @Param key         : pointer to assignment key                                                      |                                                   |
  | < @return            : void                                                                           |
  ---------------------------------------------------------------------------------------------------------
  */
 void KeypadResetTabCounter(stkey_t *key, uint8_t Tab) {
     guKeypadFlags.TabCounter = 0;
-    key->UserState.TabCounter = 0;
+    key->TabCounter = 0;
     guKeypadFlags.MultiTabFlag = Tab;
 
 }

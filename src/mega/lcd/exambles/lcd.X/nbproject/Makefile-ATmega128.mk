@@ -44,12 +44,6 @@ else
 COMPARISON_BUILD=
 endif
 
-ifdef SUB_IMAGE_ADDRESS
-
-else
-SUB_IMAGE_ADDRESS_COMMAND=
-endif
-
 # Object Directory
 OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 
@@ -70,8 +64,8 @@ OBJECTFILES=${OBJECTDIR}/src/app.o
 SOURCEFILES=src/app.c
 
 # Pack Options 
-PACK_COMPILER_OPTIONS=-I "${DFP_DIR}/include"
-PACK_COMMON_OPTIONS=-B "${DFP_DIR}/gcc/dev/atmega128a"
+PACK_COMPILER_OPTIONS=
+PACK_COMMON_OPTIONS=
 
 
 
@@ -110,14 +104,14 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/src/app.o: src/app.c  .generated_files/flags/ATmega128/ad3e43370126516e7690bd74cf6e40f51576b8dc .generated_files/flags/ATmega128/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/app.o: src/app.c  .generated_files/flags/ATmega128/9275ab88fc8df210187d60c11226dff24e14408b .generated_files/flags/ATmega128/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/app.o.d 
 	@${RM} ${OBJECTDIR}/src/app.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega128a ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mshort-calls -Wall -MD -MP -MF "${OBJECTDIR}/src/app.o.d" -MT "${OBJECTDIR}/src/app.o.d" -MT ${OBJECTDIR}/src/app.o  -o ${OBJECTDIR}/src/app.o src/app.c  -DXPRJ_ATmega128=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 else
-${OBJECTDIR}/src/app.o: src/app.c  .generated_files/flags/ATmega128/c0a46d89a7bf16311933dc2f375087aec38eb5c3 .generated_files/flags/ATmega128/bdfd0a36b03f2f21722392deadb227e06256b271
+${OBJECTDIR}/src/app.o: src/app.c  .generated_files/flags/ATmega128/4733c2fd555e40190ee96a9059ab09ef36ce11db .generated_files/flags/ATmega128/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/app.o.d 
 	@${RM} ${OBJECTDIR}/src/app.o 

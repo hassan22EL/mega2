@@ -19,10 +19,7 @@ build/ATmega16/production/src/mega/eeprom/eeprom.o.d \
  src/mega/eeprom/../../../inc/mega/clock.h \
  src/mega/eeprom/../../../inc/mega/../resource.h \
  src/mega/eeprom/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
+ d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h \
  src/mega/eeprom/../../../inc/mega/mainTones.h \
  src/mega/eeprom/../../../inc/mega/buffers.h \
  src/mega/eeprom/../../../inc/mega/../mega.h \
@@ -93,13 +90,7 @@ src/mega/eeprom/../../../inc/mega/../resource.h:
 
 src/mega/eeprom/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
+d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h:
 
 src/mega/eeprom/../../../inc/mega/mainTones.h:
 

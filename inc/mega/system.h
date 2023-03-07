@@ -502,7 +502,26 @@ static inline void sysSetPeriodMS(stTimer_TimeOut_t* psTimer, millis_t Period) {
 static inline void sysSetPeriodS(stTimer_TimeOut_t* psTimer, time_t Period) {
     psTimer->EndTime = systemNow() + Period;
 }
-
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < ClearsystemSecondEvent >                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void systemSecondEvent                                                                             |  
+ | < @Description       : forced system Have a new Second                                                                    |                                                                 |                    
+ | < @return            :                                                                         |
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
+void ClearsystemSecondEvent();
+/*
+ ----------------------------------------------------------------------------------------------------------------------------
+ |                                 < systemReadHalfSecond >                                                                        |
+ ----------------------------------------------------------------------------------------------------------------------------
+ | < @Function          : void systemReadHalfSecond                                                                                | 
+ | < @Description       : get Half Event Value                                                                         |                                                                 |                    
+ | < @return            : 0 or 1 (second Period)                                                                                              |
+ ----------------------------------------------------------------------------------------------------------------------------
+ */
+uint8_t systemReadHalfSecond();
 
 #endif	/* XC_SYS_H */
 

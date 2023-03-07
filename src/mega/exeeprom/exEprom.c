@@ -159,10 +159,19 @@ static uint8_t exeeprom_read_buf[EXEEPROM_MEM_MAX_BUFFER]; /*16Byte*/
  |                        : buffer from application to work with page                                   |              
  --------------------------------------------------------------------------------------------------------
  */
+typedef union {
+    uint8_t flags;
 
+    struct {
+        unsigned DS : 2;
+        unsigned RW : 1;
+        unsigned WF : 1;
+    };
+
+} ExEEPROMState;
 
 typedef struct {
-    volatile byte_Flags2Bit_t u8State;
+    volatile ExEEPROMState u8State;
     volatile uint8_t size;
     volatile uint8_t pageIndex;
     volatile uint16_t pageAddress;
@@ -170,6 +179,7 @@ typedef struct {
     uint8_t *data;
     uint8_t *pagedata;
 } exEEPROM_descriptor_t;
+
 
 
 static volatile exEEPROM_descriptor_t exEEPROM_desc;
@@ -198,7 +208,7 @@ stTimer_TimeOut_t gstExeepromTimeOut;
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-static inline void _exeepromAssignAddress(uint8_t *addressbuf, uint32_t address);
+static void _exeepromAssignAddress(uint8_t *addressbuf, memAddresst_t address);
 /*
  --------------------------------------------------------------------------------------------------------
  |                            < __exeepromWriteBlock  >                                                 |
@@ -212,23 +222,7 @@ static inline void _exeepromAssignAddress(uint8_t *addressbuf, uint32_t address)
  |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     
  --------------------------------------------------------------------------------------------------------
  */
-static uint8_t __exeepromWriteBlock(uint32_t address, uint8_t *buf, uint8_t length);
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                            < __exeepromReadBlock  >                                                  |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : unsigned char  __exeepromReadBlock                                            |
- | < @Description       : this function just read data using two wire interface (TWI)                   |
- | < @param  address    : start address of the communication                                            |
- | < @param  buf        : pointer of the data                                                           |
- | < @param  length     : total byte write                                                              |
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
- --------------------------------------------------------------------------------------------------------
- */
-static uint8_t __exeepromReadBlock(uint32_t address, uint8_t *buf, uint8_t length); /*used read data buffer*/
-
+static uint8_t __exeepromWriteBlock(memAddresst_t address, uint8_t *buf, uint8_t length);
 /*
  --------------------------------------------------------------------------------------------------------
  |                            < __exeepromWritePage  >                                                  |
@@ -241,45 +235,37 @@ static uint8_t __exeepromReadBlock(uint32_t address, uint8_t *buf, uint8_t lengt
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t __exeepromWritePage(); /*write page*/
-
 /*
  --------------------------------------------------------------------------------------------------------
- |                                   <  update operations  >                                            |
+ |                            < __exeepromAssignData  >                                                 |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : unsigned char  __exeepromAssignData                                           |
+ | < @Description       : assignData                                                                    |
+ *                      : if not equal is write data                                                    |                                                           
+ | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < __exeepromUpdateBlock  >                                                |
+ |                            < __exeepromAssignData  >                                                 |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : unsigned char  __exeepromUpdateBlock                                          |
- | < @Description       : in first read current address with size of the data and                       |
-                        : the data is different switch to second state to write this data               |
- |                      : in the current address with size specific after write complete                |
- |                      : can read the same data from same address to verifiy this data                 |                                                  
- | < @return            : ExEEPROM_UPDATE_SUCCESS  internal update is done                              |                                                
- |                      : ExEEPROM_UPDATE_PROGRESS internal update in progress                          |                     
+ | < @Function          : unsigned char  __exeepromAssignData                                           |
+ | < @Description       : assignData                                                                    |
+ *                      : if not equal is write data                                                    |                                                           
+ | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-static uint8_t __exeepromUpdateBlock();
-
+static void __exeepromAssignData(memAddresst_t Address, uint8_t *buf, uint8_t length, uint8_t RW);
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < exeepromReadBlock  >                                                    |
+ |                            < __exeepromAssignTWIData  >                                              |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : unsigned char  exeepromReadBlock                                              |
- | < @Description       : this function read data with specific address and size and put into           |
- |                      : interanl read buffer                                                          |                                                          
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
+ | < @Function          : unsigned char  __exeepromAssignTWIData                                        |
+ | < @Description       : assign Data Into TWI                                                          |                                                  |                                                           
+ | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-
-static uint8_t exeepromReadBlock();
-
-
-
-
+static void __exeepromAssignTWIData(memAddresst_t Address, uint8_t *buf, uint8_t length);
 /*
  --------------------------------------------------------------------------------------------------------
  |                                   <  Basic operations  >                                             |
@@ -297,7 +283,7 @@ static uint8_t exeepromReadBlock();
  | < @return            : void                                                                          |
  --------------------------------------------------------------------------------------------------------
  */
-static inline void _exeepromAssignAddress(uint8_t *addressbuf, uint32_t address) {
+static void _exeepromAssignAddress(uint8_t *addressbuf, memAddresst_t address) {
 #if EXEEPROM_MEM_ADDR_LEN == TWI_SLAVE_THREE_BYTE_SIZE
     addressbuf[0] = (uint8_t) (address >> 16);
     addressbuf[1] = (uint8_t) (address >> 8);
@@ -325,22 +311,13 @@ static inline void _exeepromAssignAddress(uint8_t *addressbuf, uint32_t address)
  |                      : ExEEPROM_WRITE_PROGRESS internal operation in progress                        |                     
  --------------------------------------------------------------------------------------------------------
  */
-static uint8_t __exeepromWriteBlock(uint32_t address, uint8_t *buf, uint8_t length) {/*used write data buffer*/
-    if (!exEEPROM_desc.u8State.B0) {
-        exeepromTwiPackage.chip = EXEEPROM_MEM_ADDR;
-        _exeepromAssignAddress(exeepromTwiPackage.addr, address);
-        exeepromTwiPackage.addr_length = EXEEPROM_MEM_ADDR_LEN;
-        exeepromTwiPackage.buffer = buf;
-        exeepromTwiPackage.length = length;
-        sysSetPeriodMS(&gstExeepromTimeOut, 30);
-        exEEPROM_desc.u8State.B0 = 1;
+static uint8_t __exeepromWriteBlock(memAddresst_t address, uint8_t *buf, uint8_t length) {/*used write data buffer*/
+    if (!exEEPROM_desc.u8State.WF) {
+        __exeepromAssignTWIData(address, buf, length);
+        exEEPROM_desc.u8State.WF = 1;
     } else {
         if (twi_master_write(&exeepromTwiPackage) == TWI_SUCCESS) {
-            exEEPROM_desc.u8State.B0 = 0;
-            return (ExEEPROM_WRITE_SUCCESS);
-        } else if (sysIsTimeoutMs(&gstExeepromTimeOut) == 0) {
-            exEEPROM_desc.u8State.B0 = 0;
-            /*run error call back*/
+            exEEPROM_desc.u8State.WF = 0;
             return (ExEEPROM_WRITE_SUCCESS);
         }
     }
@@ -349,36 +326,17 @@ static uint8_t __exeepromWriteBlock(uint32_t address, uint8_t *buf, uint8_t leng
 
 /*
  --------------------------------------------------------------------------------------------------------
- |                            < __exeepromReadBlock  >                                                  |
+ |                            < __exeepromAssignTWIData  >                                              |
  --------------------------------------------------------------------------------------------------------
- | < @Function          : unsigned char  __exeepromReadBlock                                            |
- | < @Description       : this function just read data using two wire interface (TWI)                   |
- | < @param  address    : start address of the communication                                            |
- | < @param  buf        : pointer of the data                                                           |
- | < @param  length     : total byte write                                                              |
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
+ | < @Function          : unsigned char  __exeepromAssignTWIData                                        |
+ | < @Description       : assign Data Into TWI                                                          |                                                  |                                                           
+ | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-static uint8_t __exeepromReadBlock(uint32_t address, uint8_t *buf, uint8_t length) {/*used read data buffer*/
-    if (exEEPROM_desc.u8State.B1 == 0) {
-        exeepromTwiPackage.chip = EXEEPROM_MEM_ADDR;
-        _exeepromAssignAddress(exeepromTwiPackage.addr, address);
-        exeepromTwiPackage.addr_length = EXEEPROM_MEM_ADDR_LEN;
-        exeepromTwiPackage.buffer = buf;
-        exeepromTwiPackage.length = length;
-        exEEPROM_desc.u8State.B1 = 1;
-    } else {
-        if (twi_master_read(&exeepromTwiPackage) == TWI_SUCCESS) {
-            exEEPROM_desc.u8State.B1 = 0;
-            return (ExEEPROM_READ_SUCCESS);
-        } else if (sysIsTimeoutMs(&gstExeepromTimeOut) == 0) {
-            exEEPROM_desc.u8State.B1 = 0;
-            /*run error call back*/
-            return (ExEEPROM_READ_SUCCESS);
-        }
-    }
-    return (ExEEPROM_READ_PROGRESS);
+static void __exeepromAssignTWIData(memAddresst_t Address, uint8_t *buf, uint8_t length) {
+    _exeepromAssignAddress(exeepromTwiPackage.addr, Address);
+    exeepromTwiPackage.buffer = buf;
+    exeepromTwiPackage.length = length;
 }
 
 /*
@@ -397,7 +355,7 @@ static uint8_t __exeepromWritePage() {/*write page*/
     volatile uint8_t byteIndex;
     if (exEEPROM_desc.pageIndex > 0) {
         bytesUntilPageBoundary = EXEEPROM_MEM_PAGE_SIZE - exEEPROM_desc.pageAddress % EXEEPROM_MEM_PAGE_SIZE;
-        byteIndex = 16;
+        byteIndex = EXEEPROM_MEM_MAX_BUFFER;
         if (byteIndex > exEEPROM_desc.pageIndex)
             byteIndex = exEEPROM_desc.pageIndex;
         if (byteIndex > bytesUntilPageBoundary)
@@ -415,79 +373,6 @@ static uint8_t __exeepromWritePage() {/*write page*/
     }
     return (ExEEPROM_WRITE_PROGRESS);
 }
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                                   <  update operations  >                                            |
- --------------------------------------------------------------------------------------------------------
- */
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                            < __exeepromUpdateBlock  >                                                |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : unsigned char  __exeepromUpdateBlock                                          |
- | < @Description       : in first read current address with size of the data and                       |
-                        : the data is different switch to second state to write this data               |
- |                      : in the current address with size specific after write complete                |
- |                      : can read the same data from same address to verifiy this data                 |                                                                                                             
- | < @return            : ExEEPROM_UPDATE_SUCCESS  internal update is done                              |                                                
- |                      : ExEEPROM_UPDATE_PROGRESS internal update in progress                          |                     
- --------------------------------------------------------------------------------------------------------
- */
-static uint8_t __exeepromUpdateBlock() {
-
-    /*three sate read , write , read b4 ,b5*/
-    switch (exEEPROM_desc.u8State.b2_3) {
-        case 0:
-            if (__exeepromReadBlock(exEEPROM_desc.u16address, exeeprom_read_buf, exEEPROM_desc.size) == ExEEPROM_READ_SUCCESS) {
-                if (memcmp(exEEPROM_desc.data, exeeprom_read_buf, exEEPROM_desc.size) != 0) {
-                    exEEPROM_desc.u8State.b2_3 = 1;
-                } else {
-                    return ExEEPROM_UPDATE_SUCCESS;
-                }
-            }
-            break;
-        case 1:
-            if (__exeepromWritePage() == ExEEPROM_WRITE_SUCCESS) {
-                exEEPROM_desc.u8State.b2_3 = 2;
-            }
-            break;
-        case 2:
-            if (__exeepromReadBlock(exEEPROM_desc.u16address, exeeprom_read_buf, exEEPROM_desc.size) == ExEEPROM_READ_SUCCESS) {
-                exEEPROM_desc.u8State.b2_3 = 0;
-                if (memcmp(exEEPROM_desc.data, exeeprom_read_buf, exEEPROM_desc.size) == 0)
-                    return ExEEPROM_UPDATE_SUCCESS;
-            }
-            break;
-        default:
-            break;
-    }
-
-    return (ExEEPROM_UPDATE_PROGRESS);
-}
-
-/*
- --------------------------------------------------------------------------------------------------------
- |                            < exeepromReadBlock  >                                                    |
- --------------------------------------------------------------------------------------------------------
- | < @Function          : unsigned char  exeepromReadBlock                                              |
- | < @Description       : this function read data with specific address and size and put into           |
- |                      : interanl read buffer                                                          |                                                          
- | < @return            : ExEEPROM_READ_SUCCESS  internal Read is done                                  |                                                
- |                      : ExEEPROM_READ_PROGRESS internal Read in progress                              |                     
- --------------------------------------------------------------------------------------------------------
- */
-
-static uint8_t exeepromReadBlock() {
-    /*one state*/
-    if (__exeepromReadBlock(exEEPROM_desc.u16address, exeeprom_read_buf, exEEPROM_desc.size) == ExEEPROM_READ_SUCCESS) {
-        return (ExEEPROM_READ_SUCCESS);
-    }
-    return (ExEEPROM_READ_PROGRESS);
-}
-
-
 /*
  --------------------------------------------------------------------------------------------------------
  |                                   <  user operations  >                                               |
@@ -525,7 +410,6 @@ void exeepromReset() {
         _NOP();
         _NOP();
         _NOP();
-
         digitalPinWrite(TWI_SCL_PIN, GPIO_HIGH);
     }
     digitalpinMode(TWI_SCL_PIN, MODE_INPUT_PULLUP); /*restore the default case*/
@@ -546,7 +430,7 @@ void exeepromReset() {
  */
 uint8_t exeepromReady() {
     /*no assign data before check is wait state or not*/
-    if (exEEPROM_desc.u8State.b4_5)
+    if (exEEPROM_desc.u8State.DS != 0)
         return (0);
     return (1);
 }
@@ -565,20 +449,39 @@ uint8_t exeepromReady() {
  --------------------------------------------------------------------------------------------------------
  */
 
-void exeepromWriteBuffer(uint32_t address, uint8_t *buf, uint8_t length) {
+void exeepromWriteBuffer(memAddresst_t address, uint8_t *buf, uint8_t length) {
     if (length > EXEEPROM_MEM_MAX_BUFFER) {
         /*error call back with memory  register as buffer error */
         return;
     }
     /*assign data into buffer*/
-    exEEPROM_desc.u16address = address;
-    exEEPROM_desc.pageAddress = address;
+
+    __exeepromAssignData(address, buf, length, 0);
+
+}
+
+/*
+ --------------------------------------------------------------------------------------------------------
+ |                            < __exeepromAssignData  >                                                 |
+ --------------------------------------------------------------------------------------------------------
+ | < @Function          : unsigned char  __exeepromAssignData                                           |
+ | < @Description       : assignData                                                                    |
+ *                      : if not equal is write data                                                    |                                                           
+ | < @return            : void                                                                          |                     
+ --------------------------------------------------------------------------------------------------------
+ */
+static void __exeepromAssignData(memAddresst_t Address, uint8_t *buf, uint8_t length, uint8_t RW) {
+    exEEPROM_desc.u16address = Address;
+    exEEPROM_desc.pageAddress = Address;
     exEEPROM_desc.size = length;
     exEEPROM_desc.pageIndex = length;
     exEEPROM_desc.data = buf;
     exEEPROM_desc.pagedata = buf;
     /*active write operation*/
-    exEEPROM_desc.u8State.b4_5 = 1;
+    exEEPROM_desc.u8State.DS = 1;
+    exEEPROM_desc.u8State.RW = RW;
+    __exeepromAssignTWIData(Address, exeeprom_read_buf, length);
+    sysSetPeriodMS(&gstExeepromTimeOut, 100);
 }
 
 /*
@@ -593,18 +496,9 @@ void exeepromWriteBuffer(uint32_t address, uint8_t *buf, uint8_t length) {
  | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-void exeepromWriteByte(uint32_t address, uint8_t byte) {
+void exeepromWriteByte(memAddresst_t address, uint8_t byteD) {
     /*no assign data before check is wait state or not*/
-
-    /*assign data into buffer*/
-    exEEPROM_desc.u16address = address;
-    exEEPROM_desc.pageAddress = address;
-    exEEPROM_desc.size = 1;
-    exEEPROM_desc.pageIndex = 1;
-    exEEPROM_desc.data = &byte;
-    exEEPROM_desc.pagedata = &byte;
-    /*active write operation*/
-    exEEPROM_desc.u8State.b4_5 = 1;
+    __exeepromAssignData(address, &byteD, 1, 0);
 }
 
 /*
@@ -620,18 +514,12 @@ void exeepromWriteByte(uint32_t address, uint8_t byte) {
  | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-void exeepromRequestSteram(uint32_t address, uint8_t length) {
+void exeepromRequestSteram(memAddresst_t address, uint8_t length) {
     if (length > EXEEPROM_MEM_MAX_BUFFER) {
         /*error call back with memory  register as buffer error */
         return;
     }
-    /*assign data into buffer*/
-    exEEPROM_desc.u16address = address;
-    exEEPROM_desc.size = length;
-    exEEPROM_desc.pageIndex = length;
-    exEEPROM_desc.data = exeeprom_read_buf;
-    /*active read operation*/
-    exEEPROM_desc.u8State.b4_5 = 2;
+    __exeepromAssignData(address, exeeprom_read_buf, length, 1);
 }
 
 /*
@@ -648,13 +536,9 @@ void exeepromRequestSteram(uint32_t address, uint8_t length) {
  */
 
 
-void exeepromRequestByte(uint32_t address) {
+void exeepromRequestByte(memAddresst_t address) {
     /*assign data into buffer*/
-    exEEPROM_desc.u16address = address;
-    exEEPROM_desc.size = 1;
-    exEEPROM_desc.data = exeeprom_read_buf;
-    /*active read operation*/
-    exEEPROM_desc.u8State.b4_5 = 2;
+    __exeepromAssignData(address, exeeprom_read_buf, 1, 1);
 }
 
 /*
@@ -672,23 +556,39 @@ void exeepromRequestByte(uint32_t address) {
  */
 
 void exeepromDriver() {
-    /*wait operation*/
-    if (!exEEPROM_desc.u8State.b4_5) {
-        return;
+    switch (exEEPROM_desc.u8State.DS) {
+        case 0:
+            break;
+        case 1:
+            if (twi_master_read(&exeepromTwiPackage) == TWI_SUCCESS) {
+                if (exEEPROM_desc.u8State.RW) {
+                    exEEPROM_desc.u8State.DS = 0;
+                    return;
+                }
+                exEEPROM_desc.u8State.DS = 2;
+            }
+            break;
+        case 2:
+            if (Match_2BUF(exEEPROM_desc.data, exeeprom_read_buf, exEEPROM_desc.size)) {
+                exEEPROM_desc.u8State.DS = 0;
+                return;
+            }
+            exEEPROM_desc.u8State.DS = 3;
+            break;
+        case 3:
+            if (__exeepromWritePage() == ExEEPROM_WRITE_SUCCESS) {
+                __exeepromAssignTWIData(exEEPROM_desc.u16address, exeeprom_read_buf, exEEPROM_desc.size);
+                exEEPROM_desc.u8State.DS = 1;
+            }
+            break;
+        default:
+            break;
     }
 
-    if (exEEPROM_desc.u8State.b4_5 == 1) {
-        if (__exeepromUpdateBlock() == ExEEPROM_UPDATE_SUCCESS) {
-            exEEPROM_desc.u8State.b4_5 = 0;
-        }
-        return;
+    if (sysIsTimeoutMs(&gstExeepromTimeOut) == 0) {
+        exEEPROM_desc.u8State.DS = 0;
     }
-    if (exEEPROM_desc.u8State.b4_5 == 2) {
-        if (exeepromReadBlock() == ExEEPROM_READ_SUCCESS) {
-            exEEPROM_desc.u8State.b4_5 = 0;
-        }
-        return;
-    }
+
 }
 
 /*
@@ -709,7 +609,10 @@ void exEepromInit() {
     exEEPROM_desc.data = NULL;
     exEEPROM_desc.size = 0;
     exEEPROM_desc.u16address = 0x0000;
-    exEEPROM_desc.u8State.byte = 0x00;
+    exEEPROM_desc.u8State.flags = 0x00;
+    exEEPROM_desc.u8State.DS = 0;
+    exeepromTwiPackage.chip = EXEEPROM_MEM_ADDR;
+    exeepromTwiPackage.addr_length = EXEEPROM_MEM_ADDR_LEN;
 }
 
 /*
@@ -722,9 +625,7 @@ void exEepromInit() {
  --------------------------------------------------------------------------------------------------------
  */
 void exEepromRead(uint8_t *buf) {
-    for (uint8_t i = 0; i < exEEPROM_desc.size; i++) {
-        buf[i] = exeeprom_read_buf[i];
-    }
+    copyBuff(buf , &exeeprom_read_buf[0] ,exEEPROM_desc.size );
 }
 
 #endif

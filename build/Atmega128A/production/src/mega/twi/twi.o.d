@@ -17,12 +17,14 @@ build/Atmega128A/production/src/mega/twi/twi.o.d \
  src/mega/twi/../../../inc/mega/clock.h \
  src/mega/twi/../../../inc/mega/../resource.h \
  src/mega/twi/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/mega/twi/../../../inc/mega/mainTones.h \
  src/mega/twi/../../../inc/mega/buffers.h \
  src/mega/twi/../../../inc/mega/../mega.h \
- src/mega/twi/../../../inc/mega/ui.h src/mega/twi/../../../inc/resource.h \
+ src/mega/twi/../../../inc/mega/utility.h \
+ src/mega/twi/../../../inc/resource.h \
  src/mega/twi/../../../inc/mega/macros.h \
  src/mega/twi/../../../inc/mega/bootloadercmd.h \
  src/mega/twi/../../../inc/mega/types.h \
@@ -48,7 +50,9 @@ build/Atmega128A/production/src/mega/twi/twi.o.d \
  src/mega/twi/../../../inc/mega/eeprom.h \
  src/mega/twi/../../../inc/mega/signalGenerator.h \
  src/mega/twi/../../../inc/mega/keypad.h \
- src/mega/twi/../../../inc/mega/button.h
+ src/mega/twi/../../../inc/mega/button.h \
+ src/mega/twi/../../../inc/mega/Tone.h \
+ src/mega/twi/../../../inc/mega/ZLP.h
 
 src/mega/twi/../../../inc/mega.h:
 
@@ -84,17 +88,19 @@ src/mega/twi/../../../inc/mega/../resource.h:
 
 src/mega/twi/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+src/mega/twi/../../../inc/mega/mainTones.h:
 
 src/mega/twi/../../../inc/mega/buffers.h:
 
 src/mega/twi/../../../inc/mega/../mega.h:
 
-src/mega/twi/../../../inc/mega/ui.h:
+src/mega/twi/../../../inc/mega/utility.h:
 
 src/mega/twi/../../../inc/resource.h:
 
@@ -149,3 +155,7 @@ src/mega/twi/../../../inc/mega/signalGenerator.h:
 src/mega/twi/../../../inc/mega/keypad.h:
 
 src/mega/twi/../../../inc/mega/button.h:
+
+src/mega/twi/../../../inc/mega/Tone.h:
+
+src/mega/twi/../../../inc/mega/ZLP.h:

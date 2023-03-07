@@ -34,3 +34,4 @@ MP_CPPC_DIR="C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-too
 MP_AS_DIR="C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin"
 MP_LD_DIR="C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin"
 MP_AR_DIR="C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin"
+DFP_DIR=C:/Users/hassa/.mchp_packs/Microchip/ATmega_DFP/2.4.131

@@ -18,10 +18,7 @@ build/ATmega16/production/src/mega/lcd/lcd.o.d \
  src/mega/lcd/../../../inc/mega/clock.h \
  src/mega/lcd/../../../inc/mega/../resource.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
+ d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h \
  src/mega/lcd/../../../inc/mega/mainTones.h \
  src/mega/lcd/../../../inc/mega/buffers.h \
  src/mega/lcd/../../../inc/mega/../mega.h \
@@ -92,13 +89,7 @@ src/mega/lcd/../../../inc/mega/../resource.h:
 
 src/mega/lcd/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
+d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h:
 
 src/mega/lcd/../../../inc/mega/mainTones.h:
 

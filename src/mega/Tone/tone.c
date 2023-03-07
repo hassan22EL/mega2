@@ -59,9 +59,9 @@ static void myTone(gpio_t pin, EN_GPIO_t defalutstate, stTone_t *tone) {
 
 
     if (sysIsTimeoutMs(&tone->duration)) {
-        if (!sysIsTimeoutUs(&tone->Freq)) {
+        if (!sysIsTimeoutMs(&tone->Freq)) {
             if (tone->Period != 0) {
-                sysSetPeriodUs(&tone->Freq, tone->Period);
+                sysSetPeriodMS(&tone->Freq, tone->Period);
                 digitalPinWrite(pin, GPIO_TGL);
             }
         }

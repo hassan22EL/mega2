@@ -2,6 +2,7 @@
 #include <stdint-gcc.h>
 
 #include "../../../inc/mega.h"
+static volatile uint8_t position = 0;
 /*
   ---------------------------------------------------------------------------------------------------------
  |                            < uxxTOASII  >                                                             |
@@ -116,7 +117,7 @@ uint8_t power2(uint8_t x) {
                         : 1 two buffer match                                                              |
   ---------------------------------------------------------------------------------------------------------
  */
-uint8_t Match_2BUF(volatile uint8_t *buf1, volatile uint8_t *buf2, volatile uint8_t Length) {
+uint8_t Match_2BUF(uint8_t *buf1, uint8_t *buf2, uint8_t Length) {
     for (uint8_t i = 0; i < Length; i++) {
         if (buf1[i] != buf2[i]) {
             return (0);
@@ -203,4 +204,127 @@ void cpyStringToBuff(const char *s, uint8_t *x, uint8_t len) {
  */
 uint8_t u32TOASII(uint8_t *s, uint32_t x) {
     return uXXToASII(s, x, 10);
+}
+
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < Edit2Digit >                                                       |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void Edit2Digit                                                                |  
+ | < @Description       : Edit Digit Into Number                                                         |                                                    |
+ | < @return            : New Number Value                                                               |                                                                                                              |
+ ---------------------------------------------------------------------------------------------------------
+ */
+uint8_t Edit2Digit(uint8_t Number, uint8_t DigitIndex, uint8_t Value) {
+    uint8_t NewNumber;
+    uint8_t s[3];
+    u8TOASII(s, Number);
+    s[DigitIndex] = Value + '0';
+    NewNumber = (((s[1] - '0')*10) + (s[2] - '0'));
+    return NewNumber;
+}
+
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < scllormessage>                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void scllormessage                                                             |  
+ | < @Description       :sclloer message into buffer                                                     |                                                        |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void scllormessage(uint8_t *buffer, uint8_t *s, uint8_t MessageLength, uint8_t BufferSize) {
+    // shift the buffer
+
+    uint8_t buffsize = BufferSize;
+    uint8_t wordsize = MessageLength;
+    uint8_t icstsize = wordsize + buffsize;
+    for (uint8_t i = 0; i < (buffsize - 1); i++)
+        buffer[i] = buffer[i + 1];
+    buffer[buffsize - 1] = position < wordsize ? s[position] : ' ';
+    position = (position + 1) % icstsize;
+}
+
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < DecToBcdFun>                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void DecToBcdFun                                                             |  
+ | < @Description       :convert number decmal to BCD                                                     |                                                        |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+uint8_t DecToBcdFun(uint8_t value) {
+    return (((value % 10) & (0x0F)) + (((value / 10) << 4) & (0xF0)));
+}
+
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < BcdToDecFun>                                                       |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void BcdToDecFun                                                               |  
+ | < @Description       :convert number BCD to Decimal                                                   |                                                        |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+uint8_t BcdToDecFun(uint8_t value) {
+    return ((value & 0x0F) + (((value >> 4) & (0x0F)) * 10));
+}
+
+/**************************************************************************/
+/*!
+    @brief  Convert a string containing two digits to uint8_t, e.g. "09" returns
+   9
+    @param p Pointer to a string containing two digits
+ */
+
+/**************************************************************************/
+uint8_t conv2d(uint8_t *p) {
+    uint8_t v = 0;
+    if ('0' <= *p && *p <= '9')
+        v = *p - '0';
+    return 10 * v + *++p - '0';
+}
+
+void print2d(uint8_t value, uint8_t * p, uint8_t start) {
+    p[start] = (value / 10) + '0';
+    p[start + 1 ] = (value % 10) + '0';
+}
+
+void print3d(uint8_t value, uint8_t *p, uint8_t start) {
+    print2d((value / 10), p, start);
+    p[start + 2 ] = (value % 10) + '0';
+}
+
+void ResetScollMessage() {
+    position = 0;
+}
+
+void copyBuff(void *des, void *src, uint8_t len) {
+    uint8_t *srcbuf;
+    uint8_t *desbuf;
+    srcbuf = (uint8_t *) (src);
+    desbuf = (uint8_t *) (des);
+    for (uint8_t h = 0; h < len; h++) {
+        desbuf[h] = srcbuf[h];
+    }
+}
+
+
+/*
+  --------------------------------------------------------------------------------------------------------
+  |                            < PrintMessage  >                                                   |
+  --------------------------------------------------------------------------------------------------------
+  | < @Function          : void  PrintMessage                                                       |
+  | < @Description       : Print Message Into Buffer Array                                                    |
+  |                      : PrintMessage                                   |                                                  |                                                           
+  | < @return            : void                                                                          |                     
+  --------------------------------------------------------------------------------------------------------
+ */
+ uint8_t PrintMessage(uint8_t *buf, uint8_t start, uint8_t MsgIndex , PGM_P const *message) {
+    const char *date = (const char *) pgm_read_word(&message[MsgIndex]);
+    uint8_t strleng = strlen_P(date);
+    memcpy_P((char *) (buf + start), date, strleng);
+    return strleng;
+
 }

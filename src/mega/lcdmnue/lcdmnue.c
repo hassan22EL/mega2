@@ -400,8 +400,19 @@ static uint8_t menuItemAction() {
         callback = (pFuncMenueCallBack_t) (gpCurrentMenuItem->menuCallback);
 #endif
         if (callback) {
-            return ((*callback)());
+            if ((*callback)()) {
+                lcdNoBlink(); /*close any lcd blink at any position*/
+                if (getmenuParent(getmenuParent(gpCurrentMenuItem)) != &NullItem) {
+                    showMenueItem(getmenuParent(gpCurrentMenuItem)); /*show parent of the current event with chlid*/
+                } else {
+                    showMenueItem(gpCurrentMenuItem);
+                }
+                return (1);
+            }
         } else {
+            if (getmenuChlid(gpCurrentMenuItem) && getmenuChlid(gpCurrentMenuItem) != &NullItem) {
+                showMenueItem(getmenuChlid(gpCurrentMenuItem));
+            }
             return (1);
         }
     }
@@ -420,9 +431,6 @@ static uint8_t menuItemAction() {
 static void menuAction() {
     if (menuItemAction()) {
 
-        if (getmenuChlid(gpCurrentMenuItem) && getmenuChlid(gpCurrentMenuItem) != &NullItem) {
-            showMenueItem(getmenuChlid(gpCurrentMenuItem));
-        }
         MenuRegisterKey(1); /*set all register */
         /*menu action done*/
         gu8OPenMenueFlag.b0 = 0;
@@ -507,21 +515,16 @@ static void menuLCDReader() {
     }
     lcdClear();
 #if COMPILER_TYPE == GCC
-    uint8_t len;
     /*copy to ram location and return pointer to string*/
-    const char * PROGMEM Sparent = (getmenuLable(getmenuParent(gpCurrentMenuItem))) + 2;
-    len = strlen_P(Sparent);
-    char s [len];
-    strcpy_P(s, Sparent);
-    lcdwrite(0, LCD_TEXT_CENTER, s);
+    PGM_P  Sparent = (getmenuLable(getmenuParent(gpCurrentMenuItem))) + 2;
+    lcdWriteString(0, Sparent);
+    // lcdwrite(0, , s);
 #if LCD_NUMBER_OF_LINE >2
     menuItemPos();
 #else
-    const char *PROGMEM lable = getmenuLable(gpCurrentMenuItem);
-    len = strlen_P(lable);
-    char s1 [len];
-    strcpy_P(s1, lable);
-    lcdwrite(1, 0, s1); /*update lcd */
+    PGM_P  lable = getmenuLable(gpCurrentMenuItem);
+    lcdWriteromFlash(1, 0, (PGM_P const *) lable);
+    lcdUpdateNow();
 #endif
 
 #elif COMPILER_TYPE == XC
@@ -548,11 +551,12 @@ static void menuLCDReader() {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t menueEnterEvent(stkey_t *key) {
-    gu8OPenMenueFlag.b0 = 1; /*menu action update*/
-    MenuRegisterKey(0); /*Remove all register */
+    if (key->State == KEY_PRESS) {
+        gu8OPenMenueFlag.b0 = 1; /*menu action update*/
+        MenuRegisterKey(0); /*Remove all register */
+    }
     KeypadResetTabCounter(key, 1);
     return (1);
-
 }
 
 /*
@@ -565,7 +569,7 @@ static uint8_t menueEnterEvent(stkey_t *key) {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t menueCencelEvent(stkey_t *key) {
-    if (key->UserState.State == KEY_PRESS) {
+    if (key->State == KEY_PRESS) {
         if (getmenuParent(getmenuParent(gpCurrentMenuItem)) == &NullItem) {
             gpCurrentMenuItem = &NullItem;
             lcdClear();
@@ -599,7 +603,7 @@ static uint8_t menueCencelEvent(stkey_t *key) {
  */
 static uint8_t menueUpEvent(stkey_t *key) {
 
-    if (key->UserState.State == KEY_PRESS) {
+    if (key->State == KEY_PRESS) {
         showMenueItem(getmenuNext(gpCurrentMenuItem));
         gu8OPenMenueFlag.b1 = 1; /*menu show data update*/
 
@@ -643,7 +647,7 @@ static void MenuRegisterKey(uint8_t type) {
  --------------------------------------------------------------------------------------------------------
  */
 static uint8_t menueDownEventEvent(stkey_t *key) {
-    if (key->UserState.State == KEY_PRESS) {
+    if (key->State == KEY_PRESS) {
         showMenueItem(getmenuPrev(gpCurrentMenuItem));
         gu8OPenMenueFlag.b1 = 1; /*menu show data update*/
     }

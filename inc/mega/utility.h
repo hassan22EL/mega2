@@ -48,7 +48,7 @@ uint8_t power2(uint8_t x);
                         : 1 two buffer match                                                              |
   ---------------------------------------------------------------------------------------------------------
  */
-uint8_t Match_2BUF(volatile uint8_t *buf1, volatile uint8_t *buf2, volatile uint8_t Length);
+uint8_t Match_2BUF(uint8_t *buf1, uint8_t *buf2, uint8_t Length);
 /*
   ---------------------------------------------------------------------------------------------------------
  |                            < u16TOASII  >                                                             |
@@ -102,5 +102,78 @@ void cpyStringToBuff(const char *s, uint8_t *x, uint8_t len);
   ---------------------------------------------------------------------------------------------------------
  */
 uint8_t u32TOASII(uint8_t *s, uint32_t x);
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < Edit2Digit >                                                       |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void Edit2Digit                                                                |  
+ | < @Description       : Edit Digit Into Number                                                         |                                                    |
+ | < @return            : New Number Value                                                               |                                                                                                              |
+ ---------------------------------------------------------------------------------------------------------
+ */
+uint8_t Edit2Digit(uint8_t Number, uint8_t DigitIndex, uint8_t Value);
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < scllormessage>                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void scllormessage                                                             |  
+ | < @Description       :sclloer message into buffer                                                     |                                                        |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+void scllormessage(uint8_t *buffer, uint8_t *s, uint8_t MessageLength, uint8_t BufferSize);
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < DecToBcdFun>                                                      |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void DecToBcdFun                                                             |  
+ | < @Description       :convert number decmal to BCD                                                     |                                                        |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+uint8_t DecToBcdFun(uint8_t value);
+/*
+ ---------------------------------------------------------------------------------------------------------
+ |                                 < BcdToDecFun>                                                       |
+ ---------------------------------------------------------------------------------------------------------
+ | < @Function          : void BcdToDecFun                                                               |  
+ | < @Description       :convert number BCD to Decimal                                                   |                                                        |
+ | < @return            : void                                                                           |                                                                         |
+ ---------------------------------------------------------------------------------------------------------
+ */
+uint8_t BcdToDecFun(uint8_t value);
+
+/**************************************************************************/
+/*!
+    @brief  Convert a string containing two digits to uint8_t, e.g. "09" returns
+   9
+    @param p Pointer to a string containing two digits
+ */
+
+/**************************************************************************/
+uint8_t conv2d(uint8_t *p);
+
+/**************************************************************************/
+/*!
+    @brief  number a string containing two digits to uint8_t, e.g. "09" returns
+    @param p Pointer to a string containing two digits
+ */
+
+/**************************************************************************/
+void print2d(uint8_t value, uint8_t * p, uint8_t start);
+void print3d(uint8_t value, uint8_t *p, uint8_t start);
+void ResetScollMessage();
+void copyBuff(void *des, void *src, uint8_t len) ;
+/*
+  --------------------------------------------------------------------------------------------------------
+  |                            < PrintMessage  >                                                   |
+  --------------------------------------------------------------------------------------------------------
+  | < @Function          : void  PrintMessage                                                       |
+  | < @Description       : Print Message Into Buffer Array                                                    |
+  |                      : PrintMessage                                   |                                                  |                                                           
+  | < @return            : void                                                                          |                     
+  --------------------------------------------------------------------------------------------------------
+ */
+ uint8_t PrintMessage(uint8_t *buf, uint8_t start, uint8_t MsgIndex , PGM_P const *message);
 #endif	/* UTILITY_H */
 

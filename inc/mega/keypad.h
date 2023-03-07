@@ -47,18 +47,10 @@ typedef enum {
     NO_KEY = 0xFF
 } KeyPadCode;
 
-typedef union {
-    uint8_t u8User;
-
-    struct {
-        unsigned State : 4;
-        unsigned TabCounter : 4;
-    };
-} ukeyUserStates_t;
-
 typedef struct {
     uint8_t Keycode;
-    ukeyUserStates_t UserState;
+    uint8_t State;
+    uint8_t TabCounter;
 } stkey_t;
 /*
  *Key Call back
@@ -79,8 +71,7 @@ typedef uint8_t(*pFunckeyEvent_t)(stkey_t *);
  */
 typedef struct keypadConstantCode {
     const uint8_t Code; /*pin ass*/
-    const uint16_t const Tone;
-    const uint8_t const Index;
+    const uint8_t Index;
     struct keypadConstantCode const *Next;
 } keypadConstantCode_t;
 /*
@@ -103,13 +94,13 @@ extern const keypadConstantCode_t NO_CODE;
  ---------------------------------------------------------------------------------------------------          
  */
 #if COMPILER_TYPE == GCC
-#define KeypadCreateEvent(Name,Code, Tone ,Index, Next) \
+#define KeypadCreateEvent(Name,Code,Index, Next) \
 extern const keypadConstantCode_t PROGMEM   Next; \
-    const keypadConstantCode_t PROGMEM Name = {Code,Tone ,Index,&Next};
+    const keypadConstantCode_t PROGMEM Name = {Code,Index,&Next};
 #elif COMPILER_TYPE == XC
-#define KeypadCreateEvent(Name,Code, Tone ,Index, Next) \
+#define KeypadCreateEvent(Name,Code ,Index, Next) \
 extern const keypadConstantCode_t    Next; \
-    const keypadConstantCode_t  Name = {Code,Tone ,Index,&Next};
+    const keypadConstantCode_t  Name = {Code ,Index,&Next};
 #endif
 /*
  ---------------------------------------------------------------------------------------------------------
@@ -160,6 +151,7 @@ void KeypadAssignCosntEvents(const keypadConstantCode_t *keyEvents);
  | < @Description       : register call back function into Array                                         | 
  | < @Param callback    : callback Function                                                              |
  | < @Param Index       : Event Index                                                                    | 
+ * < @Param Tab         : 1 key has work multi tab else key work with no mutitab
  | < @return            : void                                                                           |
  ---------------------------------------------------------------------------------------------------------
  */
@@ -171,8 +163,7 @@ void KeypadRegisterEvent(pFunckeyEvent_t callback, uint8_t Index);
  ---------------------------------------------------------------------------------------------------------
  | < @Function          : void KeypadResetTabCounter                                                     |  
  | < @Description       : Reset Tab Counter                                                              | 
- | < @Param key         : pointer to assignment key                                                      |
- | < @Param tab         : Support Multitab or not                                                        |
+ | < @Param key         : pointer to assignment key                                                      |                                                   |
  | < @return            : void                                                                           |
  ---------------------------------------------------------------------------------------------------------
  */

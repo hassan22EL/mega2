@@ -18,11 +18,12 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/mega/buffers/../../../inc/mega/../mega/mainTones.h \
  src/mega/buffers/../../../inc/mega/../mega/buffers.h \
- src/mega/buffers/../../../inc/mega/../mega/ui.h \
+ src/mega/buffers/../../../inc/mega/../mega/utility.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
  src/mega/buffers/../../../inc/mega/../resource.h \
  src/mega/buffers/../../../inc/mega/../mega/macros.h \
@@ -50,7 +51,9 @@ build/Atmega128A/production/src/mega/buffers/buffers.o.d \
  src/mega/buffers/../../../inc/mega/../mega/eeprom.h \
  src/mega/buffers/../../../inc/mega/../mega/signalGenerator.h \
  src/mega/buffers/../../../inc/mega/../mega/keypad.h \
- src/mega/buffers/../../../inc/mega/../mega/button.h
+ src/mega/buffers/../../../inc/mega/../mega/button.h \
+ src/mega/buffers/../../../inc/mega/../mega/Tone.h \
+ src/mega/buffers/../../../inc/mega/../mega/ZLP.h
 
 src/mega/buffers/../../../inc/mega/buffers.h:
 
@@ -88,15 +91,17 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
+src/mega/buffers/../../../inc/mega/../mega/mainTones.h:
+
 src/mega/buffers/../../../inc/mega/../mega/buffers.h:
 
-src/mega/buffers/../../../inc/mega/../mega/ui.h:
+src/mega/buffers/../../../inc/mega/../mega/utility.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
@@ -153,3 +158,7 @@ src/mega/buffers/../../../inc/mega/../mega/signalGenerator.h:
 src/mega/buffers/../../../inc/mega/../mega/keypad.h:
 
 src/mega/buffers/../../../inc/mega/../mega/button.h:
+
+src/mega/buffers/../../../inc/mega/../mega/Tone.h:
+
+src/mega/buffers/../../../inc/mega/../mega/ZLP.h:

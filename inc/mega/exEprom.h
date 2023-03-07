@@ -2,17 +2,17 @@
 ------------------------------------------------------------------------------------------
 |                          < Module  Definition >                                        | 
 ------------------------------------------------------------------------------------------
-| < FILE                   : exeeprom.h                                                  |                                  
+| < FILE                   : exeeprom.c                                                  |                                  
 | < Author                 : Hassan Elsaied                                              | 
 | < Version                : Mega2v241022                                                |
 | < References             : no-used references in this documents                        |
-| < SRAM_USAGE             : 40 Byte                                                     |
+| < SRAM_USAGE             : 39 Byte                                                     |
 |                          : @TWI  9 Byte Used                                           |
 |                          : @Time Out  4 Byte                                           |
-|                          : @eeprom description 11 Byte                                 |
+|                          : @eeprom description 10 Byte                                 |
 |                          : @Internal Read Buffer default used 16 Byte                  |
-| < PROGRAM_USAGE          : 944 byte (501 Instruction)                                 |
-| < Hardware Usage         : I2C  as a master                                            |
+| < PROGRAM_USAGE          : 442 byte (221 Instruction)                                 |
+| < Hardware Usage         : I2C  as Master                                              |
 | < File Created           : 24-10-2022                                                  |
 -------------------------------------------------------------------------------------------
  */
@@ -30,7 +30,15 @@
  |                                   <  user operations  >                                               |
  --------------------------------------------------------------------------------------------------------
  */
-
+#if EXEEPROM_MEM_ADDR_LEN == TWI_SLAVE_THREE_BYTE_SIZE
+typedef uint32_t memAddresst_t;
+#elif EXEEPROM_MEM_ADDR_LEN == TWI_SLAVE_TWO_BYTE_SIZE
+typedef uint16_t memAddresst_t;
+#elif EXEEPROM_MEM_ADDR_LEN == TWI_SLAVE_ONE_BYTE_SIZE
+typedef uint8_t memAddresst_t;
+#elif EXEEPROM_MEM_ADDR_LEN == TWI_SLAVE_NO_INTERNAL_ADDRESS
+return;
+#endif
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -60,7 +68,7 @@ void exeepromReset();
  --------------------------------------------------------------------------------------------------------
  */
 
-void exeepromWriteBuffer(uint32_t address, uint8_t *buf, uint8_t length);
+void exeepromWriteBuffer(memAddresst_t address, uint8_t *buf, uint8_t length);
 /*
  --------------------------------------------------------------------------------------------------------
  |                            < exeepromWriteByte  >                                                    |
@@ -74,7 +82,7 @@ void exeepromWriteBuffer(uint32_t address, uint8_t *buf, uint8_t length);
  --------------------------------------------------------------------------------------------------------
  */
 
-void exeepromWriteByte(uint32_t address, uint8_t byte);
+void exeepromWriteByte(memAddresst_t address, uint8_t byte);
 /*
  --------------------------------------------------------------------------------------------------------
  |                            < exeepromRequestSteram  >                                                |
@@ -88,7 +96,7 @@ void exeepromWriteByte(uint32_t address, uint8_t byte);
  | < @return            : void                                                                          |                     
  --------------------------------------------------------------------------------------------------------
  */
-void exeepromRequestSteram(uint32_t address, uint8_t length);
+void exeepromRequestSteram(memAddresst_t address, uint8_t length);
 
 /*
  --------------------------------------------------------------------------------------------------------
@@ -103,7 +111,7 @@ void exeepromRequestSteram(uint32_t address, uint8_t length);
  --------------------------------------------------------------------------------------------------------
  */
 
-void exeepromRequestByte(uint32_t address);
+void exeepromRequestByte(memAddresst_t address);
 /*
  --------------------------------------------------------------------------------------------------------
  |                            < exeepromDriver  >                                                       |

@@ -19,10 +19,7 @@ build/ATmega16/production/src/mega/ds1307/ds1307.o.d \
  src/mega/ds1307/../../../inc/mega/clock.h \
  src/mega/ds1307/../../../inc/mega/../resource.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
- d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h \
+ d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h \
  src/mega/ds1307/../../../inc/mega/mainTones.h \
  src/mega/ds1307/../../../inc/mega/buffers.h \
  src/mega/ds1307/../../../inc/mega/../mega.h \
@@ -93,13 +90,7 @@ src/mega/ds1307/../../../inc/mega/../resource.h:
 
 src/mega/ds1307/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
-
-d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appmenu.h:
+d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h:
 
 src/mega/ds1307/../../../inc/mega/mainTones.h:
 

@@ -20,8 +20,7 @@ build/ATmega16/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/clock.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/mainTones.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/buffers.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
@@ -30,6 +29,7 @@ build/ATmega16/production/src/mega/ds1307/example/ds1307.X/src/app.o.d \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/macros.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/bootloadercmd.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega/types.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
@@ -94,9 +94,7 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\resource.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
-
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\serialtools2.x\inc\res.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/mainTones.h:
 
@@ -113,6 +111,8 @@ d:\company\smart\mega\new\ lib\mega2.x\inc\mega/macros.h:
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/bootloadercmd.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega/types.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 

@@ -19,12 +19,13 @@ build/Atmega128A/production/src/mega/lcdmnue/lcdmnue.o.d \
  src/mega/lcdmnue/../../../inc/mega/clock.h \
  src/mega/lcdmnue/../../../inc/mega/../resource.h \
  src/mega/lcdmnue/../../../inc/mega/../mega.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h \
- d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h \
+ d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h \
  d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h \
+ src/mega/lcdmnue/../../../inc/mega/mainTones.h \
  src/mega/lcdmnue/../../../inc/mega/buffers.h \
  src/mega/lcdmnue/../../../inc/mega/../mega.h \
- src/mega/lcdmnue/../../../inc/mega/ui.h \
+ src/mega/lcdmnue/../../../inc/mega/utility.h \
  src/mega/lcdmnue/../../../inc/resource.h \
  src/mega/lcdmnue/../../../inc/mega/macros.h \
  src/mega/lcdmnue/../../../inc/mega/bootloadercmd.h \
@@ -51,7 +52,9 @@ build/Atmega128A/production/src/mega/lcdmnue/lcdmnue.o.d \
  src/mega/lcdmnue/../../../inc/mega/eeprom.h \
  src/mega/lcdmnue/../../../inc/mega/signalGenerator.h \
  src/mega/lcdmnue/../../../inc/mega/keypad.h \
- src/mega/lcdmnue/../../../inc/mega/button.h
+ src/mega/lcdmnue/../../../inc/mega/button.h \
+ src/mega/lcdmnue/../../../inc/mega/Tone.h \
+ src/mega/lcdmnue/../../../inc/mega/ZLP.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint-gcc.h:
 
@@ -89,17 +92,19 @@ src/mega/lcdmnue/../../../inc/mega/../resource.h:
 
 src/mega/lcdmnue/../../../inc/mega/../mega.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\res.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\res.h:
 
-d:\company\smart\mega\new\ lib\serialtools.x\inc\appRes.h:
+d:\company\smart\mega\new\ lib\mega2.x\src\mega\exeeprom\examples\exeepromexamples.x\inc\appRes.h:
 
 d:\company\smart\mega\new\ lib\mega2.x\inc\mega.h:
+
+src/mega/lcdmnue/../../../inc/mega/mainTones.h:
 
 src/mega/lcdmnue/../../../inc/mega/buffers.h:
 
 src/mega/lcdmnue/../../../inc/mega/../mega.h:
 
-src/mega/lcdmnue/../../../inc/mega/ui.h:
+src/mega/lcdmnue/../../../inc/mega/utility.h:
 
 src/mega/lcdmnue/../../../inc/resource.h:
 
@@ -154,3 +159,7 @@ src/mega/lcdmnue/../../../inc/mega/signalGenerator.h:
 src/mega/lcdmnue/../../../inc/mega/keypad.h:
 
 src/mega/lcdmnue/../../../inc/mega/button.h:
+
+src/mega/lcdmnue/../../../inc/mega/Tone.h:
+
+src/mega/lcdmnue/../../../inc/mega/ZLP.h:

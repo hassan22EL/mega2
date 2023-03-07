@@ -24,8 +24,8 @@
  | < @ note  :include the res.h from  application                                      |
  ---------------------------------------------------------------------------------------
  */
-#include "../../SerialTools.X/inc/res.h"
-
+#include "../../SerialTools2.X/inc/res.h"
+#define   __DEPUG_BY_PROUTES             (0)
 #endif
 
 
